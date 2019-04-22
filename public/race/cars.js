@@ -6,13 +6,14 @@
     maxSpeed: 6,
     turnRate: 5,
     originalFriction: 0.06,
-    friction: 0.01,
+    friction: 0.06,
     heading: 0,
-    grip: 1,
+    grip: 4, // max speed what it can turn without slide
     isMoving: false,
+    reverse: false,
     weight: 10,
     centerPoint: null,
-    controls: {accelerate: false, braking: false, turnLeft: false, turnRight: false}
+    //controls: {accelerate: false, braking: false, turnLeft: false, turnRight: false}
   }
   
   let pieces = {

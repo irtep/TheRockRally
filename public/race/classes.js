@@ -24,12 +24,16 @@ class Car {
       this.statuses.friction += this.statuses.braking;
     }
   }
-  
+  /*
   releaseBrake() {
     car1.statuses.braking = false;
     this.statuses.friction -= this.statuses.braking;
   }
+  */
   
+  reverse() {
+  
+  }
   turnLeft() {
     
     if (this.statuses.isMoving === true) {
