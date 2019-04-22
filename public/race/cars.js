@@ -25,12 +25,11 @@
     rightRearWindow: {name: 'rightRearWindow', color: 'lightBlue', h: 1},
     rearWindow: {name: 'rearWindow', color: 'lightBlue', w: 1.5},
     description: 'Classic from iconic fabricant Rond. Comet has powerful engine and good armours. Fast, but a bit clumsy.',
-    motor: 'Comet V8',
+    motor: 'Rond V8',
     tires: 'Rockstone standard',
-    armour: 'Rond heavy'
+    armour: 'Defender XL',
+    chassis: 'Rond Comet'
   };
-
-  // make centerPoint
 
   // new car:
   let car1 = new Car('fordFocus', pieces, statuses);
