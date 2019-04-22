@@ -1,6 +1,6 @@
 function getSpeeds (rotation, speed) {
   const TO_RADIANS = Math.PI/180;
-  // -45 to 45 is ok like this...
+  
   return {
 		y: Math.sin(rotation * TO_RADIANS) * speed,
 		x: Math.cos(rotation * TO_RADIANS) * speed * -1,
@@ -33,6 +33,11 @@ function checkKeyPressed(pressed){
       car1.statuses.turnRight = true;
     break;
       
+    // 'r' for reverse:
+    case 'KeyR':
+      car1.statuses.reverse = true;  
+    break;
+      
     default: console.log('not found this key(pressed)');  
   }
 }
@@ -58,6 +63,10 @@ function checkKeyReleased(released){
     // right  
     case 'ArrowRight': 
       car1.statuses.turnRight = false;
+    break;      
+    // 'r' for reverse:
+    case 'KeyR':
+      car1.statuses.reverse = false;  
     break;
       
     default: console.log('not found this key(released) ');  
