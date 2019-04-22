@@ -1,0 +1,24 @@
+/* CSS FOR MAIN MENU SCREEN */
+* { 
+  font-family: sans-serif;
+} 
+
+#inCenter {
+  display: grid;
+}
+
+#infoPlace {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+#canvasPlace {
+  grid-column: 1;
+  grid-row: 2;
+
+}
+#kanveesi {
+  background-color: lightGrey;
+  border-radius: 5px;
+}
+
