@@ -4,27 +4,41 @@ const keyUpListeners = window.addEventListener("keyup", checkKeyReleased, false)
 
 function carMovement(car) {
   const stats = car.statuses;
-
+  
+  // give lost control back if slow enough
+  if (stats.grip > stats.speed) {stats.outOfControl = false;}
+  
   // if advancing
   if (stats.speed > 0) {
+    const speeds = getSpeeds(stats.heading, stats.speed);
     // decrease of speed by friction
     stats.isMoving = true;
     stats.speed -= stats.friction; 
    
-    // if too much speed for grip, some slide is added:
-    if (stats.speed > stats.grip && stats.turnLeft === true) {
-      // - to heading
+    // if too much speed for grip and turning, car is out of control:
+    if (stats.speed > stats.grip) {
+      if (stats.turnRight === true || stats.turnLeft === true) {
+        let slideDir = null;
+        const slideValue = (stats.speed + stats.weight - stats.grip) / 5; // this prolly changes
+        //stats.turnRight ? slideDir = 'right' : slideDir = 'left'; // slideDir not really needed i think...
+        const speedsWithSlide = getSpeedsSliding(stats.heading, stats.speed, slideValue) 
+        
+        stats.outOfControl = true;
+        // sliding
+        car.pieces.hull.x += -speedsWithSlide.x;
+        car.pieces.hull.y += speedsWithSlide.y;
+        // right was + to heading 
+      } else {
+        // not sliding
+        car.pieces.hull.x += -speeds.x;
+        car.pieces.hull.y += speeds.y;
+      }
+    } else {
+      // not sliding
+      car.pieces.hull.x += -speeds.x;
+      car.pieces.hull.y += speeds.y;
     }
-    // if too much speed for grip, some slide is added:
-    if (stats.speed > stats.grip && stats.turnRight === true) {
-      // + to heading 
-    }
-    
-    const speeds = getSpeeds(stats.heading, stats.speed);
-    
-    car.pieces.hull.x += -speeds.x;
-    car.pieces.hull.y += speeds.y;
-
+  
   }
     
     // if stopped
@@ -43,7 +57,7 @@ function carMovement(car) {
     }
   
     // if accelerating
-    if (stats.accelerate === true) { 
+    if (stats.accelerate === true && stats.outOfControl === false) { 
       car.accelerate();    
     }
     // if braking

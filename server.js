@@ -11,6 +11,11 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.get("/", (request, response) => {
   console.log("get received");
+  response.sendFile(__dirname + '/views/raceMenu/raceMenu.html');
+});
+
+app.get("/race", (request, response) => {
+  console.log("get received race");
   response.sendFile(__dirname + '/views/race/race.html');
 });
 

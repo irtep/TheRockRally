@@ -45,12 +45,7 @@ function paintCar(partsToPaint, degrees, id) {
   const drawPoint = {x: -(partsToPaint.hull.w/1.5), y: -(partsToPaint.hull.h/1.5)};
   
   // need to give coordinates to windowparts and some widths and heights
-  /*
-  partsToPaint.leftFrontWindow.x = partsToPaint.hull.x + (partsToPaint.hull.w / 2);
-  partsToPaint.leftFrontWindow.y = partsToPaint.hull.y + 1;
-  partsToPaint.leftFrontWindow.w = (partsToPaint.hull.w / 4) / 2;
-  */
-  
+  // i need to figure out to make better way for this...
   partsToPaint.leftFrontWindow.x = drawPoint.x + (partsToPaint.hull.w / 2);
   partsToPaint.leftFrontWindow.y = drawPoint.y + 1;
   partsToPaint.leftFrontWindow.w = (partsToPaint.hull.w / 4) / 2;
@@ -74,9 +69,6 @@ function paintCar(partsToPaint, degrees, id) {
   partsToPaint.rearWindow.x = drawPoint.x + (partsToPaint.hull.w / 6);
   partsToPaint.rearWindow.y = drawPoint.y + 1.5;
   partsToPaint.rearWindow.h = partsToPaint.hull.h - 3;
-  
-  // get rotation point, about where frontWindow is 
- // const turningPoint = {x: partsToPaint.hull.x + partsToPaint.hull.w - (partsToPaint.hull.w / 3.5), y: partsToPaint.hull.y + (partsToPaint.hull.h / 2)};
   
   // make list of other parts of the car.
   const parts = [partsToPaint.rightFrontWindow, partsToPaint.leftFrontWindow, partsToPaint.leftRearWindow, partsToPaint.rightRearWindow, partsToPaint.frontWindow, partsToPaint.rearWindow];
@@ -109,4 +101,18 @@ function paintCar(partsToPaint, degrees, id) {
   ctx.fill;
   
   ctx.restore(); // restore coords.
+  
+  // some other stuff to track:
+  
+  ctx.beginPath();
+  ctx.fillStyle = 'black';
+  ctx.rect(100, 150, 100, 100);
+  ctx.fill();
+  ctx.closePath();
+  
+  ctx.beginPath();
+  ctx.fillStyle = 'black';
+  ctx.rect(340, 250, 100, 100);
+  ctx.fill();
+  ctx.closePath();
 }
