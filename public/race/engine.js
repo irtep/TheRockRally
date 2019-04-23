@@ -19,8 +19,16 @@ function carMovement(car) {
     if (stats.speed > stats.grip) {
       if (stats.turnRight === true || stats.turnLeft === true) {
         let slideDir = null;
-        const slideValue = (stats.speed + stats.weight - stats.grip) / 5; // this prolly changes
-        //stats.turnRight ? slideDir = 'right' : slideDir = 'left'; // slideDir not really needed i think...
+        const slideValue = (stats.speed + stats.weight - stats.grip) / 4; // this prolly changes
+        stats.turnRight ? slideDir = 'right' : slideDir = 'left'; 
+        
+        // if right + to heading, if left - to heading
+        if (slideDir === 'right') {
+          stats.heading += slideValue;
+        } else {
+          stats.heading -= slideValue;
+        }
+        
         const speedsWithSlide = getSpeedsSliding(stats.heading, stats.speed, slideValue) 
         
         stats.outOfControl = true;
@@ -82,9 +90,10 @@ function carMovement(car) {
 
 function animate(){
   
-  carMovement(car1);
-  car1.draw();
-  giveStats();
+  carMovement(car1); // moves car1... need to move all cars here or causes double movement etc.
+  car1.draw();  // draws car1.. need to draw all cars in same place i think...
+ // car2.draw();  // draws car2
+  giveStats();  // writes info to infoPlace.innerHTML
   window.requestAnimationFrame(animate);
 }
 
@@ -99,8 +108,7 @@ function giveStats() {
 
 //  -------- ONLOAD:  ------------
 window.onload = (()=> { 
-  //setInterval(()=> { // temporary solution to slow things up until few solutions...
-    animate();
+  //setInterval(()=> { // can use this too.. but i think this window.requestAnimationFrame works better...
+  animate();
  // }, 500); 
-  
 });
