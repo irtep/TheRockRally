@@ -115,4 +115,8 @@ function paintCar(partsToPaint, degrees, id) {
   ctx.rect(340, 250, 100, 100);
   ctx.fill();
   ctx.closePath();
+  
+  ctx.beginPath();
+  ctx.arc(550, 175, 50, 0, 2 * Math.PI);
+  ctx.stroke();
 }
