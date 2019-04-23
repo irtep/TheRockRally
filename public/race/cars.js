@@ -12,8 +12,7 @@
     isMoving: false,
     reverse: false,
     weight: 10,
-    centerPoint: null,
-    //controls: {accelerate: false, braking: false, turnLeft: false, turnRight: false}
+    outOfControl: false,
   }
   
   let pieces = {

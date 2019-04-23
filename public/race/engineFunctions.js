@@ -1,9 +1,43 @@
+// with grip
 function getSpeeds (rotation, speed) {
   const TO_RADIANS = Math.PI/180;
   
   return {
 		y: Math.sin(rotation * TO_RADIANS) * speed,
 		x: Math.cos(rotation * TO_RADIANS) * speed * -1,
+	};
+}
+// when lost grip:
+function getSpeedsSliding (rotation, speed, slide) {
+  const TO_RADIANS = Math.PI/180;
+  let speedX = Math.cos(rotation * TO_RADIANS) * speed * -1;
+  let speedY = Math.sin(rotation * TO_RADIANS) * speed;
+  const absolutes = {x: Math.abs(speedX), y: Math.abs(speedY)};
+  
+  // add slide value to that who has smaller absolute number
+  if (absolutes.x >= absolutes.y) {
+    const posOrNeg = Math.sign(speedY);
+    
+    if (posOrNeg == -1) {
+      speedY -= slide;     
+    } else {
+      speedY += slide;
+    }
+       
+  } else {
+    const posOrNeg = Math.sign(speedX);
+    
+    if (posOrNeg == -1) {
+      speedX -= slide;     
+    } else {
+      speedX += slide;
+    }  
+    
+  }
+  
+  return {
+		y: speedY,
+		x: speedX,
 	};
 }
 

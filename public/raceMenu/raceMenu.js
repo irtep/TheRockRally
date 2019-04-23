@@ -12,12 +12,16 @@
       Color: <br>
       <span id= "selectColor"></span><br>
       
-      arrays: vehicles, motors, chassis
+      arrays: vehicles, motors, chassis, armours, tires
 */
 
 // temporary: make those to show what there is
-/*
-for (let i = 0; i < ) {
 
+function quickStart() {
+  window.location = "https://therockrally.glitch.me/race";
 }
-*/
+
+for (let i = 0; i < vehicles.length; i++) {
+  const selectItem = document.getElementById('selectCars');
+  selectItem.innerHTML = selectItem.innerHTML + vehicles[i].name + '<br>';
+}
