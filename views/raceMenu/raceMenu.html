@@ -14,27 +14,28 @@
   
   <body>
     <div id= "inCenter">
-      <input type= "button" value= "quick start" onclick= "quickStart()"><br><br>
       Your name: <br>
-      <span id= "selectName"></span><br>
-      Choose your car: <br><span id= "selectCars"></span><br>
+      <input type= "text" id= "yourName" onchange= "checkFields()"><br><br>
       
-      <form name= "selectCarForm"> 
-        <p id= "carInfo"></p>
+      Select your car:
+      <form name= "selectCarForm" id= "selectCarForm"> 
+        <select id="selectCar" onchange= "checkFields()">
+          <option>Choose a car</option>
+        </select>
       </form>  
-      
+      Select colors:
+      <form name= "selectColorForm" id= "selectColorForm"> 
+        <select id="selectColor" onchange= "checkFields()">
+          <option>Choose a color 1</option>
+        </select>
+      </form>
+      <form name= "selectColorForm2" id= "selectColorForm2"> 
+        <select id="selectColor2" onchange= "checkFields()">
+          <option>Choose a color 2</option>
+        </select>
+      </form>       
       <br>
-      Or build from these parts:<br>
-      Chassis: <br>
-      <span id= "selectChassis"></span><br>
-      Motor: <br>
-      <span id= "selectMotor"></span><br>
-      Armour: <br>
-      <span id= "selectArmour"></span><br>
-      Tires: <br>
-      <span id= "selectTires"></span><br>
-      Color: <br>
-      <span id= "selectColor"></span><br>
+      <input id= "startButton" type= "button" value= "Start" onclick= "quickStart()">
     </div><!--
     <script src="../race/draw.js"></script> -->
     <script src="../pieces/pieces.js"></script>
