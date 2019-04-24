@@ -1,6 +1,7 @@
 
 const keyDownListeners = window.addEventListener("keydown", checkKeyPressed, false); 
 const keyUpListeners = window.addEventListener("keyup", checkKeyReleased, false); 
+let gameObject = null;
 
 function carMovement(car) {
   const stats = car.statuses;
@@ -19,6 +20,8 @@ function carMovement(car) {
     if (stats.speed > stats.grip) {
       if (stats.turnRight === true || stats.turnLeft === true) {
         let slideDir = null;
+        console.log('speed, weight, htip', stats.speed, stats.weight, stats.grip);
+        console.log('stats: ', stats);
         const slideValue = (stats.speed + stats.weight - stats.grip) / 4; // this prolly changes
         stats.turnRight ? slideDir = 'right' : slideDir = 'left'; 
         
@@ -90,8 +93,8 @@ function carMovement(car) {
 
 function animate(){
   
-  carMovement(car1); // moves car1... need to move all cars here or causes double movement etc.
-  car1.draw();  // draws car1.. need to draw all cars in same place i think...
+  carMovement(gameObject.race[0]); // moves car1... need to move all cars here or causes double movement etc.
+  gameObject.race[0].draw();  // draws car1.. need to draw all cars in same place i think...
  // car2.draw();  // draws car2
   giveStats();  // writes info to infoPlace.innerHTML
   window.requestAnimationFrame(animate);
@@ -100,14 +103,18 @@ function animate(){
 function giveStats() {
   const infoPlace = document.getElementById('infoPlace');
   
-  infoPlace.innerHTML = 'speed: '+ car1.statuses.speed+ ' HEadInG: '+ car1.statuses.heading+
-    ' isMoving, acce, bra, tL, tR '+ car1.statuses.isMoving + ' '+ car1.statuses.accelerate+
-     car1.statuses.accelerate + ' ' +car1.statuses.braking + ' '+ car1.statuses.turnLeft+
-    ' '+ car1.statuses.turnRight;
+  infoPlace.innerHTML = 'speed: '+ gameObject.race[0].statuses.speed+ ' HEadInG: '+ gameObject.race[0].statuses.heading+
+    ' isMoving, acce, bra, tL, tR '+ gameObject.race[0].statuses.isMoving + ' '+ gameObject.race[0].statuses.accelerate+
+     gameObject.race[0].statuses.accelerate + ' ' +gameObject.race[0].statuses.braking + ' '+ gameObject.race[0].statuses.turnLeft+
+    ' '+ gameObject.race[0].statuses.turnRight;
 }
 
 //  -------- ONLOAD:  ------------
 window.onload = (()=> { 
+  // load gameObject from localStorage:
+  gameObject = JSON.parse(localStorage.getItem('Go'));  
+  
+  setupRace();
   //setInterval(()=> { // can use this too.. but i think this window.requestAnimationFrame works better...
   animate();
  // }, 500); 
