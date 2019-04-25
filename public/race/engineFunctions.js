@@ -49,27 +49,27 @@ function checkKeyPressed(pressed){
   
     // up  
     case 'ArrowUp': 
-      gameObject.race[0].statuses.accelerate = true;
+      gameObject.race.cars[0].statuses.accelerate = true;
     break;
     
     // down
     case 'ArrowDown': 
-      gameObject.race[0].statuses.braking = true;
+      gameObject.race.cars[0].statuses.braking = true;
     break;
       
     // left  
     case 'ArrowLeft': 
-      gameObject.race[0].statuses.turnLeft = true;
+      gameObject.race.cars[0].statuses.turnLeft = true;
     break;
       
     // right  
     case 'ArrowRight': 
-      gameObject.race[0].statuses.turnRight = true;
+      gameObject.race.cars[0].statuses.turnRight = true;
     break;
       
     // 'r' for reverse:
     case 'KeyR':
-      gameObject.race[0].statuses.reverse = true;  
+      gameObject.race.cars[0].statuses.reverse = true;  
     break;
       
     default: console.log('not found this key(pressed)');  
@@ -81,32 +81,33 @@ function checkKeyReleased(released){
   
     // up  
     case 'ArrowUp': 
-      gameObject.race[0].statuses.accelerate = false;
+      gameObject.race.cars[0].statuses.accelerate = false;
     break;
     
     // down
     case 'ArrowDown': 
-      gameObject.race[0].statuses.braking = false;
+      gameObject.race.cars[0].statuses.braking = false;
     break;
       
     // left  
     case 'ArrowLeft': 
-      gameObject.race[0].statuses.turnLeft = false;
+      gameObject.race.cars[0].statuses.turnLeft = false;
     break;
       
     // right  
     case 'ArrowRight': 
-      gameObject.race[0].statuses.turnRight = false;
+      gameObject.race.cars[0].statuses.turnRight = false;
     break;      
     // 'r' for reverse:
     case 'KeyR':
-      gameObject.race[0].statuses.reverse = false;  
+      gameObject.race.cars[0].statuses.reverse = false;  
     break;
       
     default: console.log('not found this key(released) ');  
   }
 }
 
+// updating weight, cost and car handling stats.
 function updateCar(carOnCase) {
 
   carOnCase.weight = carOnCase.chassis.weight + carOnCase.armour.weight + carOnCase.motor.weight;
@@ -119,7 +120,7 @@ function updateCar(carOnCase) {
   return carOnCase;
 }
 
-function createNewCar(newCar){
+function createNewPlayerCar(newCar){
 //  car: {driver: null, name: null, color: null, chassis: null, motor: null, tires: null, armour: null, pieces: null, statuses: null}
   // search chassis, motor, tires, armour and pieces by cars name:
   
@@ -137,43 +138,73 @@ function createNewCar(newCar){
   
   newCar = updateCar(newCar);
   
+  // array for pieceList
+  newCar.pieces.parts = [];
+  
+  // add stats that will be needed to paint the car.
+  newCar.pieces.drawPoint = newCar.chassis.drawPoint;
+  
+  if (newCar.pieces.leftFrontWindow !== undefined) {
+    newCar.pieces.leftFrontWindow.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2);
+    newCar.pieces.leftFrontWindow.y = newCar.pieces.drawPoint.y + 1;
+    newCar.pieces.leftFrontWindow.w = (newCar.pieces.hull.w / 4) / 2;
+    newCar.pieces.parts.push(newCar.pieces.leftFrontWindow);
+  }
+  if (newCar.pieces.rightFrontWindow !== undefined) {
+    newCar.pieces.rightFrontWindow.x = newCar.pieces.leftFrontWindow.x;
+    newCar.pieces.rightFrontWindow.y = newCar.pieces.drawPoint.y + newCar.pieces.hull.h - newCar.pieces.rightFrontWindow.h - 1;
+    newCar.pieces.rightFrontWindow.w = (newCar.pieces.hull.w / 4) / 2;
+    newCar.pieces.parts.push(newCar.pieces.rightFrontWindow);
+  }
+  if (newCar.pieces.leftRearWindow !== undefined) {
+    newCar.pieces.leftRearWindow.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 4);
+    newCar.pieces.leftRearWindow.y = newCar.pieces.drawPoint.y + 1;
+    newCar.pieces.leftRearWindow.w = (newCar.pieces.hull.w / 4) / 2;
+    newCar.pieces.parts.push(newCar.pieces.leftRearWindow);
+  }
+  if (newCar.pieces.rightRearWindow !== undefined) {
+    newCar.pieces.rightRearWindow.x = newCar.pieces.leftRearWindow.x;
+    newCar.pieces.rightRearWindow.y = newCar.pieces.drawPoint.y + newCar.pieces.hull.h - newCar.pieces.rightRearWindow.h - 1;
+    newCar.pieces.rightRearWindow.w = (newCar.pieces.hull.w / 4) / 2;
+    newCar.pieces.parts.push(newCar.pieces.rightRearWindow);
+  }
+  if (newCar.pieces.frontWindow !== undefined) {
+    newCar.pieces.frontWindow.x = newCar.pieces.drawPoint.x + newCar.pieces.hull.w - (newCar.pieces.hull.w / 3);
+    newCar.pieces.frontWindow.y = newCar.pieces.drawPoint.y + 1.5;
+    newCar.pieces.frontWindow.h = newCar.pieces.hull.h - 3;
+    newCar.pieces.parts.push(newCar.pieces.frontWindow);
+  }
+  if (newCar.pieces.rearWindow !== undefined) {
+    console.log('left front w defined');
+    newCar.pieces.rearWindow.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 6);
+    newCar.pieces.rearWindow.y = newCar.pieces.drawPoint.y + 1.5;
+    newCar.pieces.rearWindow.h = newCar.pieces.hull.h - 3;
+    newCar.pieces.parts.push(newCar.pieces.rearWindow);
+  }
+  if (newCar.pieces.speedStripe !== undefined) {
+    console.log('not undefined!');    
+  } else {console.log('undefined!');}
   //console.log('car: ', newCar);
   // need to fix that below... doesnt add cost and weight! weight at least is mandatory
   const carsRootStats = {name: newCar.name, cost: newCar.cost, weight: newCar.weight};
-  gameObject.race.push(new Car(carsRootStats, newCar.pieces, newCar.statuses));
-  console.log('gameObject ', gameObject);
+  gameObject.race.cars.push(new Car(carsRootStats, newCar.pieces, newCar.statuses));
+  console.log('new car created: gameObject ', gameObject);
 }
 
 function setupRace(){
   // ok, i need atleast: statuses: power, maxSpeed, turnRate, grip, weight, armour.. all else to default values
   
   // players car:
-  createNewCar(gameObject.car);
-  // ai cars:
-
+  createNewPlayerCar(gameObject.car);
+  // ai cars: just to test using creatNewPlayerCar function and giving new x and y
+  /* doesnt work yet.
+  const cloneCar = _.cloneDeep(gameObject.car);
+  createNewPlayerCar(cloneCar);
+  gameObject.race.cars[1].pieces.hull.x = 333;
+  gameObject.race.cars[1].pieces.hull.y = 333;
+  */
 }
 
-/*
-
-function rotatePoint (coords, angle, distance) {
-  const TO_RADIANS = Math.PI/180;
-	return {
-		x: Math.sin(angle * TO_RADIANS) * distance + coords.x,
-		y: Math.cos(angle * TO_RADIANS) * distance * -1 + coords.y,
-	};
-}
-
-function drawPoint (xy) {
-	context.fillRect(xy.x,xy.y,1,1);
-}
-
-function distance (from, to) {
-	var a = from.x > to.x ? from.x - to.x : to.x - from.x,
-		b = from.y > to.y ? from.y - to.y : to.y - from.y
-		;
-	return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2))
-}
-*/
 /**
  * Provides requestAnimationFrame in a cross browser way.
  * http://paulirish.com/2011/requestanimationframe-for-smart-animating/

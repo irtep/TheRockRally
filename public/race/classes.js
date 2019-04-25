@@ -8,10 +8,11 @@ class Car {
     this.statuses = statuses;
   }
   
+  /*  not used as all cars will be drawn same time with new draw function
   draw(){
     paintCar(this.pieces, this.statuses.heading, 1); 
   }
-  
+  */
   accelerate() {
     //console.log(`${this.name} accelerates.`);
     if (this.statuses.maxSpeed > this.statuses.speed){
@@ -23,7 +24,6 @@ class Car {
   brake() {
     
     this.statuses.friction = this.statuses.brakingValue;
-    console.log('friction now: ', this.statuses.friction);
   }
   
   reverse() {

@@ -21,7 +21,8 @@ const chassises = [
       leftRearWindow: {name: 'leftRearWindow', color: 'lightBlue', h: 1},
       rightRearWindow: {name: 'rightRearWindow', color: 'lightBlue', h: 1},
       rearWindow: {name: 'rearWindow', color: 'lightBlue', w: 1.5}
-    }
+    },
+   drawPoint: {x: 1.5, y: -1.5} // {x: -(partsToPaint.hull.w/1.5), y: -(partsToPaint.hull.h/1.5)}
   },
   {name: 'Rond Comet lite', weight: 9, armour: 4, w: 34, h: 10, durability: 9, cost: 350,
     pieces: {
@@ -33,7 +34,7 @@ const chassises = [
       rightRearWindow: {name: 'rightRearWindow', color: 'lightBlue', h: 1},
       rearWindow: {name: 'rearWindow', color: 'lightBlue', w: 1.5}
     },
-   drawPoint: null
+   drawPoint: {x: 1.5, y: -1.5}
   }
 ];
 

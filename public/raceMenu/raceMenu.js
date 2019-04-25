@@ -9,7 +9,7 @@ let gameObject = {
            speed: 0, brakingValue: 0.2, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
          }
        },
-  race: []
+  race: {cars: []}
 }
 
 // when color is chosen, checks all fields if not empty
