@@ -1,9 +1,12 @@
+/*
+// Test default values:
+
 // Rond Comet
   let statuses = {
     name: 'Rond Comet',
     speed: 0,
     power: 0.1,
-    braking: 0.01,
+    brakingValue: 0.2,
     maxSpeed: 9,
     turnRate: 5,
     originalFriction: 0.06,
@@ -40,4 +43,4 @@
   let car1 = new Car(statuses.name, pieces, statuses);
   let car2 = new Car('car2', copyOfPieces, copyOfStatuses);
 
-// Test default values:
+*/

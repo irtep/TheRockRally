@@ -139,7 +139,8 @@ function createNewCar(newCar){
   
   //console.log('car: ', newCar);
   // need to fix that below... doesnt add cost and weight! weight at least is mandatory
-  gameObject.race.push(new Car(newCar.name, newCar.pieces, newCar.statuses));
+  const carsRootStats = {name: newCar.name, cost: newCar.cost, weight: newCar.weight};
+  gameObject.race.push(new Car(carsRootStats, newCar.pieces, newCar.statuses));
   console.log('gameObject ', gameObject);
 }
 
