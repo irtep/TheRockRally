@@ -104,20 +104,21 @@ function carMovement(car) {
 
 function animate(){
   
-  carMovement(gameObject.race[0]); // moves car1... need to move all cars here or causes double movement etc.
-  gameObject.race[0].draw();  // draws car1.. need to draw all cars in same place i think...
+  carMovement(gameObject.race.cars[0]); // moves car1... need to move all cars here or causes double movement etc.
+  //gameObject.race.cars[0].draw();  // draws car1.. need to draw all cars in same place i think...
+  paintAll(gameObject.race);
  // car2.draw();  // draws car2
   giveStats();  // writes info to infoPlace.innerHTML
   window.requestAnimationFrame(animate);
 }
 
-function giveStats() {
+function giveStats() {  // just informal stuff in development and bugfix purposes...
   const infoPlace = document.getElementById('infoPlace');
   
-  infoPlace.innerHTML = 'speed: '+ gameObject.race[0].statuses.speed+ ' HEadInG: '+ gameObject.race[0].statuses.heading+
-    ' isMoving, acce, bra, tL, tR '+ gameObject.race[0].statuses.isMoving + ' '+ gameObject.race[0].statuses.accelerate+
-     gameObject.race[0].statuses.accelerate + ' ' +gameObject.race[0].statuses.braking + ' '+ gameObject.race[0].statuses.turnLeft+
-    ' '+ gameObject.race[0].statuses.turnRight;
+  infoPlace.innerHTML = 'speed: '+ gameObject.race.cars[0].statuses.speed+ ' HEadInG: '+ gameObject.race.cars[0].statuses.heading+
+    ' isMoving, acce, bra, tL, tR '+ gameObject.race.cars[0].statuses.isMoving + ' '+ gameObject.race.cars[0].statuses.accelerate+
+     gameObject.race.cars[0].statuses.accelerate + ' ' +gameObject.race.cars[0].statuses.braking + ' '+ gameObject.race.cars[0].statuses.turnLeft+
+    ' '+ gameObject.race.cars[0].statuses.turnRight;
 }
 
 //  -------- ONLOAD:  ------------
