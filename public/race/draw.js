@@ -1,37 +1,4 @@
 
-/*
-function drawRotatedImage(image, x, y, angle) {
-  const canvas = document.getElementById('kanveesi');
-  const ctx = canvas.getContext("2d");
-  const TO_RADIANS = Math.PI/180;
-  
-	// save the current co-ordinate system
-	ctx.save();
- 
-	// move to the middle of where we want to draw our image
-	ctx.translate(x, y);
- 
-	// rotate around that point, converting our
-	// angle from degrees to radians
-	ctx.rotate(angle * TO_RADIANS);
- 
-	// draw it up and to the left by half the width
-	// and height of the image
-	ctx.drawImage(image, -(image.width/2), -(image.height/2));
- 
-	// and restore the co-ords to how they were when we began
-	ctx.restore();
-}
-*/
-/*
-function rotatePoint (coords, angle, distance) {
-	return {
-		x: Math.sin(angle * TO_RADIANS) * distance + coords.x,
-		y: Math.cos(angle * TO_RADIANS) * distance * -1 + coords.y,
-	};
-}
-*/
-
 function clearCanvas(){
   const canvas = document.getElementById('kanveesi');
   const ctx = canvas.getContext("2d");

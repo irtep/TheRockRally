@@ -6,7 +6,7 @@ let gameObject = {
   playersName: null,                                                             
   car: {driver: null, name: null, color: null, chassis: null, motor: null, tires: null, armour: null, pieces: null, 
          statuses: {
-           speed: 0, braking: 0.01, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
+           speed: 0, brakingValue: 0.2, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
          }
        },
   race: []

@@ -1,7 +1,9 @@
 
 class Car { 
-  constructor(name, pieces, statuses) {
-    this.name = name;
+  constructor(rootStats, pieces, statuses) {
+    this.name = rootStats.name;
+    this.cost = rootStats.cost;
+    this.weight = rootStats.weight;
     this.pieces = pieces; // all pieces
     this.statuses = statuses;
   }
@@ -19,10 +21,9 @@ class Car {
   }
   
   brake() {
-    //this.statuses.speed -= this.statuses.braking;
-    if (this.statuses.speed > 0){
-      this.statuses.friction += this.statuses.braking;
-    }
+    
+    this.statuses.friction = this.statuses.brakingValue;
+    console.log('friction now: ', this.statuses.friction);
   }
   
   reverse() {
@@ -32,29 +33,42 @@ class Car {
     
     if (this.statuses.isMoving === true) {
       
-      this.statuses.heading -= this.statuses.turnRate - (this.statuses.speed/5);
+      if (this.statuses.speed < this.statuses.grip) {
+        this.statuses.heading -= this.statuses.turnRate - (this.statuses.speed/7);
+      } else {
+        this.statuses.heading -= this.statuses.turnRate - (this.statuses.speed/7) + (this.statuses.grip/2);
+      }
     }
   }
-  // this.statuses.heading -= this.statuses.turnRate * (this.statuses.speed / this.statuses.maxSpeed);
   
   turnRight() {
     
-    if (this.statuses.isMoving === true) {
-      this.statuses.heading += this.statuses.turnRate - (this.statuses.speed/5);
-    }
+      if (this.statuses.speed < this.statuses.grip) {
+        this.statuses.heading += this.statuses.turnRate - (this.statuses.speed/7);
+      } else {
+        this.statuses.heading += this.statuses.turnRate - (this.statuses.speed/7) + (this.statuses.grip/2);
+      }
   }
 }
 
-/*
-class Lion extends Cat {
-  speak() {
-    super.speak();
-    console.log(`${this.name} roars.`);
-  }
+class RectBuilding {
+  constructor(x, y, w, h, weight){
+  
+    this.x = x; this.y = y; this.w = w; this.h = h; this.weight = weight;
+  };
+
 }
 
-let l = new Lion('Fuzzy');
-l.speak(); 
-// Fuzzy makes a noise.
-// Fuzzy roars.
-*/
+class CircleBuilding {
+  constructor(x, y, arc, weight){
+  
+  };
+
+}
+
+class CheckPoint {
+  constructor(x, y, w, h, number){
+  
+    this.x = x; this.y = y; this.w = w; this.h = h; this.number = number;
+  };
+}

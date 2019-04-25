@@ -18,19 +18,30 @@ function carMovement(car) {
    
     // if too much speed for grip and turning, car is out of control:
     if (stats.speed > stats.grip) {
-      if (stats.turnRight === true || stats.turnLeft === true) {
+      if (stats.turnRight === true || stats.turnLeft === true || stats.outOfControl === true) {
         let slideDir = null;
-        console.log('speed, weight, htip', stats.speed, stats.weight, stats.grip);
-        console.log('stats: ', stats);
-        const slideValue = (stats.speed + stats.weight - stats.grip) / 4; // this prolly changes
+        //console.log('speed, weight, htip', stats.speed, stats.weight, stats.grip);
+        //console.log('car:  ', car);
+        //const slideValue = (stats.speed + car.weight - stats.grip);
+        const slideValue = 3;
         stats.turnRight ? slideDir = 'right' : slideDir = 'left'; 
+        
+        if (stats.turnRight === false && stats.turnLeft === false) {
+          // if coming here to continue old slide, need to give slideDir
+          slideDir = stats.previousSlide;
+        }
         
         // if right + to heading, if left - to heading
         if (slideDir === 'right') {
           stats.heading += slideValue;
+          stats.previousSlide = 'right'; // need previous to continue old slide, if happens
         } else {
           stats.heading -= slideValue;
+          stats.previousSlide = 'left';
         }
+        
+        // slower speed to get slower slide:
+        //stats.speed = stats.speed - 0.2;
         
         const speedsWithSlide = getSpeedsSliding(stats.heading, stats.speed, slideValue) 
         
@@ -80,12 +91,12 @@ function carMovement(car) {
     }
 
     // if turning
-    if (stats.turnRight === true) { 
+    if (stats.turnRight === true && stats.outOfControl === false) { 
       car.turnRight();    
     }
 
     // if turning
-    if (stats.turnLeft === true) { 
+    if (stats.turnLeft === true && stats.outOfControl === false) { 
       car.turnLeft();    
     }
     // collision detect
