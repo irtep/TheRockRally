@@ -42,7 +42,7 @@ function getSpeedsSliding (rotation, speed, slide) {
 }
 
 
-// key Listeners
+// key Listeners, gameObject.race.cars[0] is players car
 function checkKeyPressed(pressed){ 
   
   switch (pressed.code) {
@@ -107,9 +107,9 @@ function checkKeyReleased(released){
   }
 }
 
-// updating weight, cost and car handling stats.
+// updating weight, color, cost and car handling stats.
 function updateCar(carOnCase) {
-
+  console.log('updating: ', JSON.parse(JSON.stringify(carOnCase.pieces.hull.color)), ' to ', JSON.parse(JSON.stringify(carOnCase.color)));
   carOnCase.weight = carOnCase.chassis.weight + carOnCase.armour.weight + carOnCase.motor.weight;
   carOnCase.cost = carOnCase.chassis.cost + carOnCase.armour.cost + carOnCase.tires.cost + carOnCase.motor.cost;
   carOnCase.statuses.power = carOnCase.motor.power - (carOnCase.weight/10);
@@ -120,74 +120,101 @@ function updateCar(carOnCase) {
   return carOnCase;
 }
 
-function createNewPlayerCar(newCar){
-//  car: {driver: null, name: null, color: null, chassis: null, motor: null, tires: null, armour: null, pieces: null, statuses: null}
+// this will create car to racetrack. playerCar indicates if this is for player or ai
+function createNewCar(newCar, playerCar){
   // search chassis, motor, tires, armour and pieces by cars name:
+  const allPieces = {
+    vehicles: JSON.parse(JSON.stringify(vehicles)),
+    chassises: JSON.parse(JSON.stringify(chassises)),
+    motors: JSON.parse(JSON.stringify(motors)),
+    tires: JSON.parse(JSON.stringify(tires)),
+    armours: JSON.parse(JSON.stringify(armours))
+  };
   
-  const stats = vehicles.filter( (cars) => newCar.name === cars.name);
+  const stats = allPieces.vehicles.filter( (cars) => newCar.name === cars.name);
   
   // chassis has pieces
-  const chassis = chassises.filter( (chas) => stats[0].chassis === chas.name);
+  const chassis = allPieces.chassises.filter( (chas) => stats[0].chassis === chas.name);
   
-  const mot = motors.filter( (moto) => stats[0].motor === moto.name);
-  const tire = tires.filter( (tir) => stats[0].tires === tir.name);
-  const armour = armours.filter( (armo) => stats[0].armour === armo.name);
-  
+  const mot = allPieces.motors.filter( (moto) => stats[0].motor === moto.name);
+  const tire = allPieces.tires.filter( (tir) => stats[0].tires === tir.name);
+  const armour = allPieces.armours.filter( (armo) => stats[0].armour === armo.name);
   newCar.chassis = chassis[0]; newCar.motor = mot[0]; newCar.tires = tire[0]; newCar.armour = armour[0];
   newCar.pieces = chassis[0].pieces;
-  
+
   newCar = updateCar(newCar);
+  //console.log('newCar after update: ', newCar.driver, ' ',  newCar.pieces.hull);
+  //if (playerCar === false) {console.log('CAR 0 ', JSON.parse(JSON.stringify(gameObject.race.cars[0].pieces.hull)));}
+  // if not first car, lets change x and y:
+  playerCar ? newCar.pieces.hull.x = 10 : newCar.pieces.hull.x += gameObject.race.cars.length * 100; 
   
+  //console.log('After x mod: ', newCar.driver, ' ',  newCar.pieces.hull);
+  //if (playerCar === false) {console.log('CAR 0 ', JSON.parse(JSON.stringify(gameObject.race.cars[0].pieces.hull)));}
   // array for pieceList
   newCar.pieces.parts = [];
   
   // add stats that will be needed to paint the car.
   newCar.pieces.drawPoint = newCar.chassis.drawPoint;
   
+  if (newCar.pieces.speedStripe !== undefined) {
+    
+    newCar.pieces.speedStripe.x = newCar.pieces.drawPoint.x;
+    newCar.pieces.speedStripe.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) - 1.5;   
+    newCar.pieces.speedStripe.w = newCar.pieces.hull.w;
+    // if secondary color is selected, apply it:
+    if (newCar.color2 !== 'Choose a color 2') {
+      
+      newCar.pieces.speedStripe.color = newCar.color2;
+    }
+    newCar.pieces.parts.push(newCar.pieces.speedStripe);
+  } 
+  
   if (newCar.pieces.leftFrontWindow !== undefined) {
+    
     newCar.pieces.leftFrontWindow.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2);
     newCar.pieces.leftFrontWindow.y = newCar.pieces.drawPoint.y + 1;
     newCar.pieces.leftFrontWindow.w = (newCar.pieces.hull.w / 4) / 2;
     newCar.pieces.parts.push(newCar.pieces.leftFrontWindow);
   }
   if (newCar.pieces.rightFrontWindow !== undefined) {
+    
     newCar.pieces.rightFrontWindow.x = newCar.pieces.leftFrontWindow.x;
     newCar.pieces.rightFrontWindow.y = newCar.pieces.drawPoint.y + newCar.pieces.hull.h - newCar.pieces.rightFrontWindow.h - 1;
     newCar.pieces.rightFrontWindow.w = (newCar.pieces.hull.w / 4) / 2;
     newCar.pieces.parts.push(newCar.pieces.rightFrontWindow);
   }
   if (newCar.pieces.leftRearWindow !== undefined) {
+    
     newCar.pieces.leftRearWindow.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 4);
     newCar.pieces.leftRearWindow.y = newCar.pieces.drawPoint.y + 1;
     newCar.pieces.leftRearWindow.w = (newCar.pieces.hull.w / 4) / 2;
     newCar.pieces.parts.push(newCar.pieces.leftRearWindow);
   }
   if (newCar.pieces.rightRearWindow !== undefined) {
+    
     newCar.pieces.rightRearWindow.x = newCar.pieces.leftRearWindow.x;
     newCar.pieces.rightRearWindow.y = newCar.pieces.drawPoint.y + newCar.pieces.hull.h - newCar.pieces.rightRearWindow.h - 1;
     newCar.pieces.rightRearWindow.w = (newCar.pieces.hull.w / 4) / 2;
     newCar.pieces.parts.push(newCar.pieces.rightRearWindow);
   }
   if (newCar.pieces.frontWindow !== undefined) {
+    
     newCar.pieces.frontWindow.x = newCar.pieces.drawPoint.x + newCar.pieces.hull.w - (newCar.pieces.hull.w / 3);
     newCar.pieces.frontWindow.y = newCar.pieces.drawPoint.y + 1.5;
     newCar.pieces.frontWindow.h = newCar.pieces.hull.h - 3;
     newCar.pieces.parts.push(newCar.pieces.frontWindow);
   }
   if (newCar.pieces.rearWindow !== undefined) {
-    console.log('left front w defined');
+    
     newCar.pieces.rearWindow.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 6);
     newCar.pieces.rearWindow.y = newCar.pieces.drawPoint.y + 1.5;
     newCar.pieces.rearWindow.h = newCar.pieces.hull.h - 3;
     newCar.pieces.parts.push(newCar.pieces.rearWindow);
   }
-  if (newCar.pieces.speedStripe !== undefined) {
-    console.log('not undefined!');    
-  } else {console.log('undefined!');}
-  //console.log('car: ', newCar);
-  // need to fix that below... doesnt add cost and weight! weight at least is mandatory
+  
   const carsRootStats = {name: newCar.name, cost: newCar.cost, weight: newCar.weight};
-  gameObject.race.cars.push(new Car(carsRootStats, newCar.pieces, newCar.statuses));
+  gameObject.race.cars.push(new Car(newCar.driver, carsRootStats, newCar.pieces, newCar.statuses));
+  
   console.log('new car created: gameObject ', gameObject);
 }
 
@@ -195,14 +222,12 @@ function setupRace(){
   // ok, i need atleast: statuses: power, maxSpeed, turnRate, grip, weight, armour.. all else to default values
   
   // players car:
-  createNewPlayerCar(gameObject.car);
-  // ai cars: just to test using creatNewPlayerCar function and giving new x and y
-  /* doesnt work yet.
-  const cloneCar = _.cloneDeep(gameObject.car);
-  createNewPlayerCar(cloneCar);
-  gameObject.race.cars[1].pieces.hull.x = 333;
-  gameObject.race.cars[1].pieces.hull.y = 333;
-  */
+  createNewCar(gameObject.car, true);
+  // ai cars:
+  
+  createNewCar(aiCars[0], false);
+  createNewCar(aiCars[1], false);
+  createNewCar(aiCars[2], false); 
 }
 
 /**

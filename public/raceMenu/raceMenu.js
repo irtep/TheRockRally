@@ -1,7 +1,7 @@
 
 /* Globals: vehicles at public/pieces/piecesjs */
 
-const colors = ['white','green','darkGreen','black','marine','blue','cyan','orange','gold','yellow','red','burgundy','crimson','silver','gray'];
+const colors = ['white','green','darkGreen','black','navy','blue','cyan','orange','gold','yellow','red','burgundy','crimson','silver','gray'];
 let gameObject = {
   playersName: null,                                                             
   car: {driver: null, name: null, color: null, chassis: null, motor: null, tires: null, armour: null, pieces: null, 
