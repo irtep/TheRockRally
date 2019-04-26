@@ -10,14 +10,14 @@ function clearCanvas(){
 function paintAll(race) {
   const canvas = document.getElementById('kanveesi');
   const ctx = canvas.getContext("2d");
-
-   race.cars.forEach((unit) => {
+   
+  clearCanvas();
+  
+  race.cars.forEach((unit) => {
     const partsToPaint = unit.pieces;
     const drawPoint = partsToPaint.drawPoint;
     const degrees = unit.statuses.heading;
-
-    clearCanvas();
-
+     
     // paint hull of car
     ctx.beginPath();
     ctx.fillStyle = partsToPaint.hull.color;
@@ -30,27 +30,21 @@ function paintAll(race) {
 
     // other parts: 
     const paintIt = partsToPaint.parts.map((part) => {
-
+      
       ctx.beginPath();
       ctx.fillStyle = part.color;
       ctx.rect(part.x, part.y, part.w, part.h);
       ctx.fill();
     }); 
-
+      // write drivers name 
+    ctx.beginPath();
+    ctx.fillStyle = 'black';
+    ctx.fillText (unit.driver, drawPoint.x, drawPoint.y);
+    ctx.fill;
+    
+    ctx.restore(); // restore coords.
   });
 
-
-
-  
-/*
-  // write id number  
-  ctx.beginPath();
-  ctx.fillStyle = 'black';
-  ctx.fillText (id, drawPoint.x, drawPoint.y);
-  ctx.fill;
-  */
-  ctx.restore(); // restore coords.
-  
   // some other stuff to track:
   
   ctx.beginPath();

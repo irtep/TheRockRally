@@ -1,6 +1,7 @@
 
 class Car { 
-  constructor(rootStats, pieces, statuses) {
+  constructor(driver, rootStats, pieces, statuses) {
+    this.driver = driver;
     this.name = rootStats.name;
     this.cost = rootStats.cost;
     this.weight = rootStats.weight;
