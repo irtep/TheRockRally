@@ -1,4 +1,29 @@
 
+class RectObstacle {
+  constructor(x, y, w, h, color, weight) {
+    this.x = x;
+    this.y = y;
+    this.w = w,
+    this.h = h;
+    this.color = color;
+    this.weight = weight;
+    this.name = 'rectO'
+  }
+}
+
+class ArcObstacle {
+  constructor(x, y, a, aS, aE, color, weight) {
+    this.x = x;
+    this.y = y;
+    this.a = a,
+    this.color = color;
+    this.weight = weight;
+    this.aS = aS;
+    this.aE = aE;
+    this.name = 'arcO';
+  }
+}
+
 class Car { 
   constructor(driver, rootStats, pieces, statuses) {
     this.driver = driver;
