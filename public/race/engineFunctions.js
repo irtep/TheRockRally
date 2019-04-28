@@ -1,3 +1,4 @@
+
 // with grip
 function getSpeeds (rotation, speed) {
   const TO_RADIANS = Math.PI/180;
@@ -52,6 +53,11 @@ function checkKeyPressed(pressed){
       gameObject.race.cars[0].statuses.accelerate = true;
     break;
     
+      // shift, for alternative acceleration 
+    case 'ShiftRight': 
+      gameObject.race.cars[0].statuses.accelerate = true;
+    break;
+      
     // down
     case 'ArrowDown': 
       gameObject.race.cars[0].statuses.braking = true;
@@ -81,7 +87,12 @@ function checkKeyReleased(released){
   
     // up  
     case 'ArrowUp': 
+      gameObject.race.cars[0].statuses.accelerate = false;     
+      
+    // shift, for alternative acceleration 
+    case 'ShiftRight': 
       gameObject.race.cars[0].statuses.accelerate = false;
+    break;
     break;
     
     // down
@@ -109,7 +120,7 @@ function checkKeyReleased(released){
 
 // updating weight, color, cost and car handling stats.
 function updateCar(carOnCase) {
-  console.log('updating: ', JSON.parse(JSON.stringify(carOnCase.pieces.hull.color)), ' to ', JSON.parse(JSON.stringify(carOnCase.color)));
+  
   carOnCase.weight = carOnCase.chassis.weight + carOnCase.armour.weight + carOnCase.motor.weight;
   carOnCase.cost = carOnCase.chassis.cost + carOnCase.armour.cost + carOnCase.tires.cost + carOnCase.motor.cost;
   carOnCase.statuses.power = carOnCase.motor.power - (carOnCase.weight/10);
@@ -142,19 +153,85 @@ function createNewCar(newCar, playerCar){
   newCar.chassis = chassis[0]; newCar.motor = mot[0]; newCar.tires = tire[0]; newCar.armour = armour[0];
   newCar.pieces = chassis[0].pieces;
 
+  // updates weight, color, cost, handling stats from pieces. 
+  // separates, as can use that same for example, if someone changes motor/tires etc.
   newCar = updateCar(newCar);
-  //console.log('newCar after update: ', newCar.driver, ' ',  newCar.pieces.hull);
-  //if (playerCar === false) {console.log('CAR 0 ', JSON.parse(JSON.stringify(gameObject.race.cars[0].pieces.hull)));}
+  
   // if not first car, lets change x and y:
   playerCar ? newCar.pieces.hull.x = 10 : newCar.pieces.hull.x += gameObject.race.cars.length * 100; 
   
-  //console.log('After x mod: ', newCar.driver, ' ',  newCar.pieces.hull);
-  //if (playerCar === false) {console.log('CAR 0 ', JSON.parse(JSON.stringify(gameObject.race.cars[0].pieces.hull)));}
   // array for pieceList
   newCar.pieces.parts = [];
+  // array for collision points... only for testing purposes
+  newCar.pieces.cPoints = [];
   
-  // add stats that will be needed to paint the car.
+  // add stats that will be needed to paint the car. For all different parts.
   newCar.pieces.drawPoint = newCar.chassis.drawPoint;
+  
+  // set collision points.
+  const cPoints = newCar.pieces.collisionPoints;
+  const mediumBall = newCar.pieces.hull.h / 10;
+  const bigBall = newCar.pieces.hull.h / 3;
+  
+  cPoints.frontCenter.a = mediumBall;
+  cPoints.frontCenter.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints.frontCenter.a / 2));
+  cPoints.frontCenter.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2);
+  newCar.pieces.cPoints.push(cPoints.frontCenter);
+  
+  cPoints.frontLeft.a = mediumBall;
+  cPoints.frontLeft.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints.frontLeft.a / 2));
+  cPoints.frontLeft.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) - (mediumBall * 3); 
+  newCar.pieces.cPoints.push(cPoints.frontLeft);
+  
+  cPoints.frontRight.a = mediumBall;
+  cPoints.frontRight.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints.frontRight.a / 2));
+  cPoints.frontRight.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) + (mediumBall * 3); 
+  newCar.pieces.cPoints.push(cPoints.frontRight); 
+  
+  cPoints.backCenter.a = mediumBall;
+  cPoints.backCenter.x = newCar.pieces.drawPoint.x + cPoints.backCenter.a / 2;
+  cPoints.backCenter.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2);
+  newCar.pieces.cPoints.push(cPoints.backCenter);
+  
+  cPoints.backLeft.a = mediumBall;
+  cPoints.backLeft.x = newCar.pieces.drawPoint.x + cPoints.backCenter.a / 2;
+  cPoints.backLeft.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) - (mediumBall * 3); 
+  newCar.pieces.cPoints.push(cPoints.backLeft);
+  
+  cPoints.backRight.a = mediumBall;
+  cPoints.backRight.x = newCar.pieces.drawPoint.x + cPoints.backCenter.a / 2;
+  cPoints.backRight.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) + (mediumBall * 3); 
+  newCar.pieces.cPoints.push(cPoints.backRight);
+  
+  cPoints.leftCenter.a = bigBall;
+  cPoints.leftCenter.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2);
+  cPoints.leftCenter.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
+  newCar.pieces.cPoints.push(cPoints.leftCenter);
+  
+  cPoints.leftLeft.a = bigBall;
+  cPoints.leftLeft.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) - (cPoints.leftLeft.a * 2.5);
+  cPoints.leftLeft.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
+  newCar.pieces.cPoints.push(cPoints.leftLeft);
+  
+  cPoints.leftRight.a = bigBall;
+  cPoints.leftRight.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) + (cPoints.leftRight.a * 2.5);
+  cPoints.leftRight.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
+  newCar.pieces.cPoints.push(cPoints.leftRight);
+  
+  cPoints.rightCenter.a = bigBall;
+  cPoints.rightCenter.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2);
+  cPoints.rightCenter.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
+  newCar.pieces.cPoints.push(cPoints.rightCenter);
+  
+  cPoints.rightLeft.a = bigBall;
+  cPoints.rightLeft.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) - (cPoints.rightLeft.a * 2.5);
+  cPoints.rightLeft.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
+  newCar.pieces.cPoints.push(cPoints.rightLeft);
+  
+  cPoints.rightRight.a = bigBall;
+  cPoints.rightRight.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) + (cPoints.rightRight.a * 2.5);
+  cPoints.rightRight.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
+  newCar.pieces.cPoints.push(cPoints.rightRight);
   
   if (newCar.pieces.speedStripe !== undefined) {
     
@@ -218,16 +295,37 @@ function createNewCar(newCar, playerCar){
   console.log('new car created: gameObject ', gameObject);
 }
 
+function collisionTest(car){
+/* circle to rect
+
+
+*/  
+  
+/*
+var circle1 = {radius: 20, x: 5, y: 5};
+var circle2 = {radius: 12, x: 10, y: 5};
+
+var dx = circle1.x - circle2.x;
+var dy = circle1.y - circle2.y;
+var distance = Math.sqrt(dx * dx + dy * dy);
+
+if (distance < circle1.radius + circle2.radius) {
+    // collision detected!
+}
+*/
+}
+
 function setupRace(){
   // ok, i need atleast: statuses: power, maxSpeed, turnRate, grip, weight, armour.. all else to default values
   
   // players car:
   createNewCar(gameObject.car, true);
   // ai cars:
-  
   createNewCar(aiCars[0], false);
   createNewCar(aiCars[1], false);
   createNewCar(aiCars[2], false); 
+  // get track... now only one track
+  gameObject.race.track.push(tracks[0]);
 }
 
 /**

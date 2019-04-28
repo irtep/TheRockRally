@@ -6,7 +6,7 @@ function clearCanvas(){
   ctx.clearRect(0,0,canvas.width,canvas.height);  // clear all 
 }
 
-// new draw function:
+// Draw function:
 function paintAll(race) {
   const canvas = document.getElementById('kanveesi');
   const ctx = canvas.getContext("2d");
@@ -42,11 +42,38 @@ function paintAll(race) {
     ctx.fillText (unit.driver, drawPoint.x, drawPoint.y);
     ctx.fill;
     
+    // to show collision points, should be commented out, if not testing something about them:
+    /*
+    const paintCps = partsToPaint.cPoints.map((part) => {
+      
+      ctx.beginPath();
+      ctx.strokeStyle = 'gold';
+      ctx.arc(part.x, part.y, part.a, 0, 2 * Math.PI);
+      ctx.stroke();    
+    });
+    */
     ctx.restore(); // restore coords.
   });
 
   // some other stuff to track:
-  
+  const paintTrack = race.track[0].obstacles.map( (obsta) => {
+    
+    if (obsta.name === 'arcO') {
+      ctx.beginPath();
+      ctx.strokeStyle = obsta.color;
+      ctx.arc(obsta.x, obsta.y, obsta.a, obsta.aS, obsta.aE);
+      ctx.stroke();   
+    }
+    
+    if (obsta.name === 'rectO'){
+      ctx.beginPath();
+      ctx.fillStyle = obsta.color;
+      ctx.rect(obsta.x, obsta.y, obsta.w, obsta.h);
+      ctx.fill();
+      ctx.closePath();
+    }
+  });
+  /*
   ctx.beginPath();
   ctx.fillStyle = 'black';
   ctx.rect(100, 150, 100, 100);
@@ -62,4 +89,5 @@ function paintAll(race) {
   ctx.beginPath();
   ctx.arc(550, 175, 50, 0, 2 * Math.PI);
   ctx.stroke();
+  */
 }

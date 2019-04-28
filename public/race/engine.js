@@ -20,9 +20,6 @@ function carMovement(car) {
     if (stats.speed > stats.grip) {
       if (stats.turnRight === true || stats.turnLeft === true || stats.outOfControl === true) {
         let slideDir = null;
-        //console.log('speed, weight, htip', stats.speed, stats.weight, stats.grip);
-        //console.log('car:  ', car);
-        //const slideValue = (stats.speed + car.weight - stats.grip);
         const slideValue = 3;
         stats.turnRight ? slideDir = 'right' : slideDir = 'left'; 
         
@@ -40,10 +37,8 @@ function carMovement(car) {
           stats.previousSlide = 'left';
         }
         
-        // slower speed to get slower slide:
-        //stats.speed = stats.speed - 0.2;
-        
         const speedsWithSlide = getSpeedsSliding(stats.heading, stats.speed, slideValue) 
+        const collisionTestResult = collisionTest(car);
         
         stats.outOfControl = true;
         // sliding

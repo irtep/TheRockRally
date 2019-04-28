@@ -1,7 +1,7 @@
 
 /* Globals: vehicles at public/pieces/piecesjs */
 
-const colors = ['white','green','darkGreen','black','navy','blue','cyan','orange','gold','yellow','red','burgundy','crimson','silver','gray'];
+const colors = ['white','green','darkGreen','black','navy','blue','cyan','orange','gold','yellow','red','burgundy','crimson','silver','gray', 'pink'];
 let gameObject = {
   playersName: null,                                                             
   car: {driver: null, name: null, color: null, chassis: null, motor: null, tires: null, armour: null, pieces: null, 
@@ -9,7 +9,7 @@ let gameObject = {
            speed: 0, brakingValue: 0.2, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
          }
        },
-  race: {cars: []}
+  race: {cars: [], track: []}
 }
 
 // when color is chosen, checks all fields if not empty
@@ -58,7 +58,22 @@ function checkFields() {
   }
 }
 
+function Start() {
+  // save gameObject
+  localStorage.setItem('Go', JSON.stringify(gameObject)); 
+  window.location = "https://therockrally.glitch.me/race";
+}
+
 function quickStart() {
+  
+    gameObject.playersName = nameF.value;
+    gameObject.car.driver = nameF.value;
+  
+    gameObject.car.name = carF.value;
+  
+    gameObject.car.color = colorF.value
+  
+    gameObject.car.color2 = colorF.value
   // save gameObject
   localStorage.setItem('Go', JSON.stringify(gameObject)); 
   window.location = "https://therockrally.glitch.me/race";
