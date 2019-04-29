@@ -11,7 +11,8 @@ const vehicles = [
   {name: 'Zermeces E', chassis: 'Zermeces standard', motor: 'Zermeces-Lenz 2.5', tires: 'Rockstone standard', armour: 'Defender Lite',
   description: 'Quick and reliable car from traditional "leading star" Zermeces-Lenz.',
     }
-]; 
+];
+// ideas: juggernaut, lion 205, ferrargini, high ace, MBW, Ozel Sorca
 
 // Chassises:
 const chassises = [

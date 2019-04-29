@@ -295,24 +295,60 @@ function createNewCar(newCar, playerCar){
   console.log('new car created: gameObject ', gameObject);
 }
 
-function collisionTest(car){
-/* circle to rect
+// checks collision between circle 1 and 2
+function checkCollision(circle1, circle2) {
+// {x: 37.9, y: 4.5, a: 1.2}
+const dx = circle1.x - circle2.x;
+const dy = circle1.y - circle2.y;
+const distance = Math.sqrt(dx * dx + dy * dy);
 
-
-*/  
-  
-/*
-var circle1 = {radius: 20, x: 5, y: 5};
-var circle2 = {radius: 12, x: 10, y: 5};
-
-var dx = circle1.x - circle2.x;
-var dy = circle1.y - circle2.y;
-var distance = Math.sqrt(dx * dx + dy * dy);
-
-if (distance < circle1.radius + circle2.radius) {
+  if (distance < circle1.a + circle2.a) {
     // collision detected!
+    return [circle1, circle2];
+  } else {
+  
+    return 'no collision';
+  }
 }
-*/
+
+// Collision test generator
+function collisionTest(car){
+  let collisionAt = 'no collision';
+  // all collision points need to test
+  for (let i = 0; i < car.pieces.collisionPoints.length; i++) {
+
+    // check other cars
+    for (let ii = 0; ii < gameObject.race.cars.length; ii++) {
+
+      // lets not compare with same car.
+      if (car.driver !== gameObject.race.cars[ii].driver) {
+
+        for (let iii = 0; iii < gameObject.race.cars[ii].collisionPoints.length; iii++) {
+
+          const result = checkCollision(car.pieces.collisionPoints[i], gameObject.race.cars[ii].collisionPoints[iii]);
+          
+          if (results !== 'no collision') {
+            // can return if collision
+            return results;
+          }
+        }
+      }
+    }
+    
+    // check with track obstacles:
+    for (let iv = 0; iv < gameObject.race.track[0].obstacles.length; iv++) {
+      // comparing only with arc0:s
+      if (gameObject.race.track[0].obstacles[iv].name === 'arcO') {
+          
+        const result = checkCollision(car.pieces.collisionPoints[i], gameObject.race.track[0].obstacles[iv]);
+        
+        if (results !== 'no collision') {
+          // can return if collision
+          return results;
+        }  
+      }
+    }
+  }
 }
 
 function setupRace(){
