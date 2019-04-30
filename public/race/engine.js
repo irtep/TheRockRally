@@ -44,16 +44,25 @@ function carMovement(car) {
         // sliding
         car.pieces.hull.x += -speedsWithSlide.x;
         car.pieces.hull.y += speedsWithSlide.y;
+        // collision test:
+        const colTest = collisionTest(car);
+        if (colTest !== 'no collision'){ console.log('collision: ', colTest);}
         // right was + to heading 
       } else {
         // not sliding
         car.pieces.hull.x += -speeds.x;
         car.pieces.hull.y += speeds.y;
+        // collision test:
+        const colTest = collisionTest(car);
+        if (colTest !== 'no collision'){ console.log('collision: ', colTest);}
       }
     } else {
       // not sliding
       car.pieces.hull.x += -speeds.x;
       car.pieces.hull.y += speeds.y;
+        // collision test:
+        const colTest = collisionTest(car);
+        if (colTest !== 'no collision'){ console.log('collision: ', colTest);}
     }
   
   }
@@ -71,6 +80,9 @@ function carMovement(car) {
       car.pieces.hull.x += -speeds.x;
       car.pieces.hull.y += speeds.y;
       stats.isMoving = true;
+        // collision test:
+        const colTest = collisionTest(car);
+        if (colTest !== 'no collision'){ console.log('collision: ', colTest);}
     }
   
     // if accelerating
@@ -120,8 +132,9 @@ function giveStats() {  // just informal stuff in development and bugfix purpose
 window.onload = (()=> { 
   // load gameObject from localStorage:
   gameObject = JSON.parse(localStorage.getItem('Go'));  
-  
+  //gameObject.race.track.obstacles[0]house1.setCorners(0);
   setupRace();
+  console.log('go t ', gameObject.race.track[0].obstacles[0].setCorners(0));
   //setInterval(()=> { // can use this too.. but i think this window.requestAnimationFrame works better...
   animate();
  // }, 500); 

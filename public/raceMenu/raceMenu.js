@@ -66,14 +66,14 @@ function Start() {
 
 function quickStart() {
   
-    gameObject.playersName = nameF.value;
-    gameObject.car.driver = nameF.value;
+    gameObject.playersName = 'TestMan';
+    gameObject.car.driver = 'TestMan';
   
-    gameObject.car.name = carF.value;
+    gameObject.car.name = 'Rond Comet R';
   
-    gameObject.car.color = colorF.value
+    gameObject.car.color = 'black';
   
-    gameObject.car.color2 = colorF.value
+    gameObject.car.color2 = 'gold';
   // save gameObject
   localStorage.setItem('Go', JSON.stringify(gameObject)); 
   window.location = "https://therockrally.glitch.me/race";
