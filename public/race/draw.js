@@ -44,7 +44,7 @@ function paintAll(race) {
     
     // to show collision points, should be commented out, if not testing something about them:
     /*
-    const paintCps = partsToPaint.cPoints.map((part) => {
+    const paintCps = partsToPaint.collisionPoints.map((part) => {
       
       ctx.beginPath();
       ctx.strokeStyle = 'gold';
@@ -65,7 +65,7 @@ function paintAll(race) {
       ctx.stroke();   
     }
     
-    if (obsta.name === 'rectO'){
+    if (obsta.type === 'building'){
       ctx.beginPath();
       ctx.fillStyle = obsta.color;
       ctx.rect(obsta.x, obsta.y, obsta.w, obsta.h);

@@ -1,18 +1,18 @@
 
 // with grip
 function getSpeeds (rotation, speed) {
-  const TO_RADIANS = Math.PI/180;
+  const to_angles = Math.PI/180;
   
   return {
-		y: Math.sin(rotation * TO_RADIANS) * speed,
-		x: Math.cos(rotation * TO_RADIANS) * speed * -1,
+		y: Math.sin(rotation * to_angles) * speed,
+		x: Math.cos(rotation * to_angles) * speed * -1,
 	};
 }
 // when lost grip:
 function getSpeedsSliding (rotation, speed, slide) {
-  const TO_RADIANS = Math.PI/180;
-  let speedX = Math.cos(rotation * TO_RADIANS) * speed * -1;
-  let speedY = Math.sin(rotation * TO_RADIANS) * speed;
+  const to_angles = Math.PI/180;
+  let speedX = Math.cos(rotation * to_angles) * speed * -1;
+  let speedY = Math.sin(rotation * to_angles) * speed;
   const absolutes = {x: Math.abs(speedX), y: Math.abs(speedY)};
   
   // add slide value to that who has smaller absolute number
@@ -162,8 +162,6 @@ function createNewCar(newCar, playerCar){
   
   // array for pieceList
   newCar.pieces.parts = [];
-  // array for collision points... only for testing purposes
-  newCar.pieces.cPoints = [];
   
   // add stats that will be needed to paint the car. For all different parts.
   newCar.pieces.drawPoint = newCar.chassis.drawPoint;
@@ -172,67 +170,55 @@ function createNewCar(newCar, playerCar){
   const cPoints = newCar.pieces.collisionPoints;
   const mediumBall = newCar.pieces.hull.h / 10;
   const bigBall = newCar.pieces.hull.h / 3;
+  //
+  cPoints[0].a = mediumBall;
+  cPoints[0].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints[0].a / 2));
+  cPoints[0].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2);
   
-  cPoints.frontCenter.a = mediumBall;
-  cPoints.frontCenter.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints.frontCenter.a / 2));
-  cPoints.frontCenter.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2);
-  newCar.pieces.cPoints.push(cPoints.frontCenter);
+  cPoints[1].a = mediumBall;
+  cPoints[1].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints[1].a / 2));
+  cPoints[1].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) - (mediumBall * 3); 
   
-  cPoints.frontLeft.a = mediumBall;
-  cPoints.frontLeft.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints.frontLeft.a / 2));
-  cPoints.frontLeft.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) - (mediumBall * 3); 
-  newCar.pieces.cPoints.push(cPoints.frontLeft);
+  cPoints[2].a = mediumBall;
+  cPoints[2].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints[2].a / 2));
+  cPoints[2].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) + (mediumBall * 3); 
   
-  cPoints.frontRight.a = mediumBall;
-  cPoints.frontRight.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints.frontRight.a / 2));
-  cPoints.frontRight.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) + (mediumBall * 3); 
-  newCar.pieces.cPoints.push(cPoints.frontRight); 
+  cPoints[3].a = mediumBall;
+  cPoints[3].x = newCar.pieces.drawPoint.x + cPoints[3].a / 2;
+  cPoints[3].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2);
   
-  cPoints.backCenter.a = mediumBall;
-  cPoints.backCenter.x = newCar.pieces.drawPoint.x + cPoints.backCenter.a / 2;
-  cPoints.backCenter.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2);
-  newCar.pieces.cPoints.push(cPoints.backCenter);
+  cPoints[4].a = mediumBall;
+  cPoints[4].x = newCar.pieces.drawPoint.x + cPoints[3].a / 2;
+  cPoints[4].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) - (mediumBall * 3); 
   
-  cPoints.backLeft.a = mediumBall;
-  cPoints.backLeft.x = newCar.pieces.drawPoint.x + cPoints.backCenter.a / 2;
-  cPoints.backLeft.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) - (mediumBall * 3); 
-  newCar.pieces.cPoints.push(cPoints.backLeft);
+  cPoints[5].a = mediumBall;
+  cPoints[5].x = newCar.pieces.drawPoint.x + cPoints[3].a / 2;
+  cPoints[5].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) + (mediumBall * 3); 
   
-  cPoints.backRight.a = mediumBall;
-  cPoints.backRight.x = newCar.pieces.drawPoint.x + cPoints.backCenter.a / 2;
-  cPoints.backRight.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) + (mediumBall * 3); 
-  newCar.pieces.cPoints.push(cPoints.backRight);
+  cPoints[6].a = bigBall;
+  cPoints[6].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2);
+  cPoints[6].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
   
-  cPoints.leftCenter.a = bigBall;
-  cPoints.leftCenter.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2);
-  cPoints.leftCenter.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
-  newCar.pieces.cPoints.push(cPoints.leftCenter);
+  cPoints[7].a = bigBall;
+  cPoints[7].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) - (cPoints[7].a * 2.5);
+  cPoints[7].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
   
-  cPoints.leftLeft.a = bigBall;
-  cPoints.leftLeft.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) - (cPoints.leftLeft.a * 2.5);
-  cPoints.leftLeft.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
-  newCar.pieces.cPoints.push(cPoints.leftLeft);
+  cPoints[8].a = bigBall;
+  cPoints[8].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) + (cPoints[8].a * 2.5);
+  cPoints[8].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
   
-  cPoints.leftRight.a = bigBall;
-  cPoints.leftRight.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) + (cPoints.leftRight.a * 2.5);
-  cPoints.leftRight.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
-  newCar.pieces.cPoints.push(cPoints.leftRight);
+  cPoints[9].a = bigBall;
+  cPoints[9].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2);
+  cPoints[9].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
   
-  cPoints.rightCenter.a = bigBall;
-  cPoints.rightCenter.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2);
-  cPoints.rightCenter.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
-  newCar.pieces.cPoints.push(cPoints.rightCenter);
+  cPoints[10].a = bigBall;
+  cPoints[10].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) - (cPoints[10].a * 2.5);
+  cPoints[10].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
   
-  cPoints.rightLeft.a = bigBall;
-  cPoints.rightLeft.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) - (cPoints.rightLeft.a * 2.5);
-  cPoints.rightLeft.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
-  newCar.pieces.cPoints.push(cPoints.rightLeft);
-  
-  cPoints.rightRight.a = bigBall;
-  cPoints.rightRight.x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) + (cPoints.rightRight.a * 2.5);
-  cPoints.rightRight.y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
-  newCar.pieces.cPoints.push(cPoints.rightRight);
-  
+  cPoints[11].a = bigBall;
+  cPoints[11].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) + (cPoints[11].a * 2.5);
+  cPoints[11].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
+  //
   if (newCar.pieces.speedStripe !== undefined) {
     
     newCar.pieces.speedStripe.x = newCar.pieces.drawPoint.x;
@@ -295,6 +281,96 @@ function createNewCar(newCar, playerCar){
   console.log('new car created: gameObject ', gameObject);
 }
 
+/*  NEW COLLISION DETECT FORMULA */
+
+function setCorners(angle) {
+  
+  function getAngleForNextCorner(anc,vectorLength) {
+    var alpha = Math.acos(anc/vectorLength)*(180 / Math.PI);
+    return 180 - alpha*2;
+  }
+  
+  function getVectorLength(x, y, width, height){
+   var center = {
+     x: x + width / 2,
+     y: y + height / 2
+   };
+  //console.log('center: ',center);
+   var vector = {
+     x: (x - center.x),
+    y: (y - center.y)
+   };
+     return Math.sqrt(vector.x*vector.x+vector.y*vector.y);
+  }  
+  
+  function getOffset(el) {
+    var _x = 0;
+    var _y = 0;
+    while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+      _x += el.offsetLeft - el.scrollLeft;
+      _y += el.offsetTop - el.scrollTop;
+      el = el.offsetParent;
+    }
+    return {
+      top: _y,
+      left: _x
+    };
+  }
+  
+  this.originalPos = getOffset(this.htmlElement);
+  this.leftTopCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
+
+  var vecLength = getVectorLength(this.originalPos.left, this.originalPos.top, this.width, this.height);
+  //console.log('vecLength: ',vecLength);
+
+  angle = angle+getAngleForNextCorner(this.width/2, vecLength);
+  //console.log('angle: ',angle);
+  this.rightTopCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
+
+  angle = angle+getAngleForNextCorner(this.height/2, vecLength);
+  //console.log('angle: ',angle);
+  this.rightBottomCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
+
+  angle = angle+getAngleForNextCorner(this.width/2, vecLength);
+  //console.log('angle: ',angle);
+  this.leftBottomCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
+
+  //console.log(this);
+};
+
+function getRotatedTopLeftCornerOfRect(x, y, width, height, angle) {
+  
+  function sin(x) {
+    return Math.sin(x / 180 * Math.PI);
+  }
+
+  function cos(x) {
+    return Math.cos(x / 180 * Math.PI);
+  }
+  
+  var center = {
+    x: x + width / 2,
+    y: y + height / 2
+  };
+  //console.log('center: ',center);
+  var vector = {
+    x: (x - center.x),
+    y: (y - center.y)
+  };
+   //console.log('vector: ',vector);
+  var rotationMatrix = [[cos(angle), -sin(angle)],[sin(angle), cos(angle)]];
+  //console.log('rotationMatrix: ',rotationMatrix);
+  var rotatedVector = {
+    x: vector.x * rotationMatrix[0][0] + vector.y * rotationMatrix[0][1],
+    y: vector.x * rotationMatrix[1][0] + vector.y * rotationMatrix[1][1]
+  };
+   //console.log('rotatedVector: ',rotatedVector);
+  return {
+    x: (center.x + rotatedVector.x),
+    y: (center.y + rotatedVector.y)
+  };
+}
+
 // checks collision between circle 1 and 2
 function checkCollision(circle1, circle2) {
 // {x: 37.9, y: 4.5, a: 1.2}
@@ -303,33 +379,32 @@ const dy = circle1.y - circle2.y;
 const distance = Math.sqrt(dx * dx + dy * dy);
 
   if (distance < circle1.a + circle2.a) {
+    //console.log('collision!!');
     // collision detected!
     return [circle1, circle2];
   } else {
-  
     return 'no collision';
   }
 }
 
 // Collision test generator
-function collisionTest(car){
+function collisionTest(car){ 
   let collisionAt = 'no collision';
   // all collision points need to test
   for (let i = 0; i < car.pieces.collisionPoints.length; i++) {
-
     // check other cars
     for (let ii = 0; ii < gameObject.race.cars.length; ii++) {
 
       // lets not compare with same car.
-      if (car.driver !== gameObject.race.cars[ii].driver) {
-
-        for (let iii = 0; iii < gameObject.race.cars[ii].collisionPoints.length; iii++) {
-
-          const result = checkCollision(car.pieces.collisionPoints[i], gameObject.race.cars[ii].collisionPoints[iii]);
+      if (car.driver !== gameObject.race.cars[ii].driver) { //console.log('drivers: ', gameObject.race.cars[0], gameObject.race.cars[ii]);
+        //console.log('lengt: ', gameObject.race.cars[ii].collisionPoints.length);
+        for (let iii = 0; iii < gameObject.race.cars[ii].pieces.collisionPoints.length; iii++) {
+          //console.log('comparing: ', car.pieces.collisionPoints[i], gameObject.race.cars[ii].collisionPoints[iii]);
+          const result = checkCollision(car.pieces.collisionPoints[i], gameObject.race.cars[ii].pieces.collisionPoints[iii]);
           
-          if (results !== 'no collision') {
+          if (result !== 'no collision') {
             // can return if collision
-            return results;
+            return result;
           }
         }
       }
@@ -349,6 +424,8 @@ function collisionTest(car){
       }
     }
   }
+  // if no collision:
+  return collisionAt;
 }
 
 function setupRace(){
