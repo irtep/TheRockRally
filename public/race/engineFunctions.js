@@ -166,59 +166,6 @@ function createNewCar(newCar, playerCar){
   // add stats that will be needed to paint the car. For all different parts.
   newCar.pieces.drawPoint = newCar.chassis.drawPoint;
   
-  // set collision points.
-  const cPoints = newCar.pieces.collisionPoints;
-  const mediumBall = newCar.pieces.hull.h / 10;
-  const bigBall = newCar.pieces.hull.h / 3;
-  //
-  cPoints[0].a = mediumBall;
-  cPoints[0].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints[0].a / 2));
-  cPoints[0].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2);
-  
-  cPoints[1].a = mediumBall;
-  cPoints[1].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints[1].a / 2));
-  cPoints[1].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) - (mediumBall * 3); 
-  
-  cPoints[2].a = mediumBall;
-  cPoints[2].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w - (cPoints[2].a / 2));
-  cPoints[2].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) + (mediumBall * 3); 
-  
-  cPoints[3].a = mediumBall;
-  cPoints[3].x = newCar.pieces.drawPoint.x + cPoints[3].a / 2;
-  cPoints[3].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2);
-  
-  cPoints[4].a = mediumBall;
-  cPoints[4].x = newCar.pieces.drawPoint.x + cPoints[3].a / 2;
-  cPoints[4].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) - (mediumBall * 3); 
-  
-  cPoints[5].a = mediumBall;
-  cPoints[5].x = newCar.pieces.drawPoint.x + cPoints[3].a / 2;
-  cPoints[5].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 2) + (mediumBall * 3); 
-  
-  cPoints[6].a = bigBall;
-  cPoints[6].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2);
-  cPoints[6].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
-  
-  cPoints[7].a = bigBall;
-  cPoints[7].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) - (cPoints[7].a * 2.5);
-  cPoints[7].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
-  
-  cPoints[8].a = bigBall;
-  cPoints[8].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) + (cPoints[8].a * 2.5);
-  cPoints[8].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 3);
-  
-  cPoints[9].a = bigBall;
-  cPoints[9].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2);
-  cPoints[9].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
-  
-  cPoints[10].a = bigBall;
-  cPoints[10].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) - (cPoints[10].a * 2.5);
-  cPoints[10].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
-  
-  cPoints[11].a = bigBall;
-  cPoints[11].x = newCar.pieces.drawPoint.x + (newCar.pieces.hull.w / 2) + (cPoints[11].a * 2.5);
-  cPoints[11].y = newCar.pieces.drawPoint.y + (newCar.pieces.hull.h / 1.5);
-  //
   if (newCar.pieces.speedStripe !== undefined) {
     
     newCar.pieces.speedStripe.x = newCar.pieces.drawPoint.x;
@@ -281,151 +228,81 @@ function createNewCar(newCar, playerCar){
   console.log('new car created: gameObject ', gameObject);
 }
 
-/*  NEW COLLISION DETECT FORMULA */
-
-function setCorners(angle) {
+/*  NEW RECTANGLE BASED COLLISION TEST: */
+function pointInPoly(verties, testx, testy) {
+  var i;
+  var j;
+  var c = 0;
+  var nvert = verties.length;
   
-  function getAngleForNextCorner(anc,vectorLength) {
-    var alpha = Math.acos(anc/vectorLength)*(180 / Math.PI);
-    return 180 - alpha*2;
+  for (i = 0, j = nvert - 1; i < nvert; j = i++) {
+  
+    if (((verties[i].y > testy) != (verties[j].y > testy)) && (testx < (verties[j].x - verties[i].x) * (testy - verties[i].y) / (verties[j].y - verties[i].y) + verties[i].x))
+                    c = !c;
   }
-  
-  function getVectorLength(x, y, width, height){
-   var center = {
-     x: x + width / 2,
-     y: y + height / 2
-   };
-  //console.log('center: ',center);
-   var vector = {
-     x: (x - center.x),
-    y: (y - center.y)
-   };
-     return Math.sqrt(vector.x*vector.x+vector.y*vector.y);
-  }  
-  
-  function getOffset(el) {
-    var _x = 0;
-    var _y = 0;
-    while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
-      _x += el.offsetLeft - el.scrollLeft;
-      _y += el.offsetTop - el.scrollTop;
-      el = el.offsetParent;
-    }
-    return {
-      top: _y,
-      left: _x
-    };
-  }
-  
-  this.originalPos = getOffset(this.htmlElement);
-  this.leftTopCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
-
-  var vecLength = getVectorLength(this.originalPos.left, this.originalPos.top, this.width, this.height);
-  //console.log('vecLength: ',vecLength);
-
-  angle = angle+getAngleForNextCorner(this.width/2, vecLength);
-  //console.log('angle: ',angle);
-  this.rightTopCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
-
-  angle = angle+getAngleForNextCorner(this.height/2, vecLength);
-  //console.log('angle: ',angle);
-  this.rightBottomCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
-
-  angle = angle+getAngleForNextCorner(this.width/2, vecLength);
-  //console.log('angle: ',angle);
-  this.leftBottomCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
-
-  //console.log(this);
-};
-
-function getRotatedTopLeftCornerOfRect(x, y, width, height, angle) {
-  
-  function sin(x) {
-    return Math.sin(x / 180 * Math.PI);
-  }
-
-  function cos(x) {
-    return Math.cos(x / 180 * Math.PI);
-  }
-  
-  var center = {
-    x: x + width / 2,
-    y: y + height / 2
-  };
-  //console.log('center: ',center);
-  var vector = {
-    x: (x - center.x),
-    y: (y - center.y)
-  };
-   //console.log('vector: ',vector);
-  var rotationMatrix = [[cos(angle), -sin(angle)],[sin(angle), cos(angle)]];
-  //console.log('rotationMatrix: ',rotationMatrix);
-  var rotatedVector = {
-    x: vector.x * rotationMatrix[0][0] + vector.y * rotationMatrix[0][1],
-    y: vector.x * rotationMatrix[1][0] + vector.y * rotationMatrix[1][1]
-  };
-   //console.log('rotatedVector: ',rotatedVector);
-  return {
-    x: (center.x + rotatedVector.x),
-    y: (center.y + rotatedVector.y)
-  };
+  return c;
 }
 
-// checks collision between circle 1 and 2
-function checkCollision(circle1, circle2) {
-// {x: 37.9, y: 4.5, a: 1.2}
-const dx = circle1.x - circle2.x;
-const dy = circle1.y - circle2.y;
-const distance = Math.sqrt(dx * dx + dy * dy);
-
-  if (distance < circle1.a + circle2.a) {
-    //console.log('collision!!');
-    // collision detected!
-    return [circle1, circle2];
-  } else {
-    return 'no collision';
-  }
+function testCollision(rectangle) {
+  var collision = false;
+            
+  this.getCorners().forEach(function (corner) {
+    var isCollided = pointInPoly(rectangle.getCorners(), corner.x, corner.y);
+                
+    if (isCollided) collision = true;
+  });
+  return collision;
 }
 
-// Collision test generator
-function collisionTest(car){ 
-  let collisionAt = 'no collision';
-  // all collision points need to test
-  for (let i = 0; i < car.pieces.collisionPoints.length; i++) {
-    // check other cars
-    for (let ii = 0; ii < gameObject.race.cars.length; ii++) {
+// bring "full objects" like car or gameObject.race.track[0].obstacles[0]
+// example: checkRectangleCollision(car, gameObject.race.track[0].obstacles[0]);
+function checkRectangleCollision(rect, rect2) {
+
+  if (testCollision.call(rect, rect2)) return true;
+  else if (testCollision.call(rect2, rect)) return true;
+  return false;
+}
+
+// collision test starts here
+function collisionTest(car) {
+  const noCollision = false;
+  
+  for (let i = 0; i < gameObject.race.cars.length; i++) {
 
       // lets not compare with same car.
-      if (car.driver !== gameObject.race.cars[ii].driver) { //console.log('drivers: ', gameObject.race.cars[0], gameObject.race.cars[ii]);
-        //console.log('lengt: ', gameObject.race.cars[ii].collisionPoints.length);
-        for (let iii = 0; iii < gameObject.race.cars[ii].pieces.collisionPoints.length; iii++) {
-          //console.log('comparing: ', car.pieces.collisionPoints[i], gameObject.race.cars[ii].collisionPoints[iii]);
-          const result = checkCollision(car.pieces.collisionPoints[i], gameObject.race.cars[ii].pieces.collisionPoints[iii]);
-          
-          if (result !== 'no collision') {
-            // can return if collision
-            return result;
-          }
-        }
-      }
-    }
-    
-    // check with track obstacles:
-    for (let iv = 0; iv < gameObject.race.track[0].obstacles.length; iv++) {
-      // comparing only with arc0:s
-      if (gameObject.race.track[0].obstacles[iv].name === 'arcO') {
-          
-        const result = checkCollision(car.pieces.collisionPoints[i], gameObject.race.track[0].obstacles[iv]);
-        
-        if (results !== 'no collision') {
-          // can return if collision
-          return results;
-        }  
-      }
-    }
+      if (car.driver !== gameObject.race.cars[i].driver) {
+        const testResult = checkRectangleCollision(car, gameObject.race.cars[i]);
+        //console.log('test: ', gameObject.race.cars[i]);
+        if (testResult) { return gameObject.race.cars[i]; } 
+      }  
   }
-  // if no collision:
-  return collisionAt;
+  
+  // check with track obstacles:
+  for (let iv = 0; iv < gameObject.race.track[0].obstacles.length; iv++) {
+    const testResult = checkRectangleCollision(car, gameObject.race.track[0].obstacles[iv]);  
+    //console.log('test: ', gameObject.race.track[0].obstacles[iv]);
+    if (testResult) { return gameObject.race.track[0].obstacles[iv]; } 
+  }
+  
+  // if no collisions:
+  return noCollision;
+}
+
+// sets x and y to all cars for collision purposes
+function updateXandY(cars) {
+  // cars:
+  cars.forEach((carInTurn) => {  
+    carInTurn.x = carInTurn.pieces.hull.x;
+    carInTurn.y = carInTurn.pieces.hull.y;
+    carInTurn.w = carInTurn.pieces.hull.w;
+    carInTurn.h = carInTurn.pieces.hull.h;
+    carInTurn.angle = carInTurn.statuses.heading;
+    carInTurn.setCorners(carInTurn.angle);
+  });
+  // rectangles in track:
+  gameObject.race.track[0].obstacles.forEach((obsInTurn) => {  
+    obsInTurn.setCorners(obsInTurn.angle);
+  });
 }
 
 function setupRace(){

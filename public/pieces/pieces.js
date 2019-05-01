@@ -24,22 +24,7 @@ const chassises = [
       frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 1.5},
       leftRearWindow: {name: 'leftRearWindow', color: 'lightBlue', h: 1},
       rightRearWindow: {name: 'rightRearWindow', color: 'lightBlue', h: 1},
-      rearWindow: {name: 'rearWindow', color: 'lightBlue', w: 1.5},
-      
-      collisionPoints: [ // these can be left as nulls:
-        {name: 'frontCenter', x: null, y: null, a: null},
-        {name: 'frontLeft', x: null, y: null, a: null},
-        {name: 'frontRight', x: null, y: null, a: null},
-        {name: 'backCenter', x: null, y: null, a: null},
-        {name: 'backLeft', x: null, y: null, a: null},
-        {name: 'backRight', x: null, y: null, a: null},
-        {name: 'leftCenter', x: null, y: null, a: null},
-        {name: 'leftLeft', x: null, y: null, a: null},
-        {name: 'leftRight', x: null, y: null, a: null},
-        {name: 'rightCenter', x: null, y: null, a: null},
-        {name: 'rightLeft', x: null, y: null, a: null},
-        {name: 'rightRight', x: null, y: null, a: null},    
-      ]
+      rearWindow: {name: 'rearWindow', color: 'lightBlue', w: 1.5}
     },
    drawPoint: {x: 1.5, y: -1.5} // {x: -(partsToPaint.hull.w/1.5), y: -(partsToPaint.hull.h/1.5)}
   },
@@ -52,22 +37,7 @@ const chassises = [
       leftRearWindow: {name: 'leftRearWindow', color: 'lightBlue', h: 1},
       rightRearWindow: {name: 'rightRearWindow', color: 'lightBlue', h: 1},
       rearWindow: {name: 'rearWindow', color: 'lightBlue', w: 1.5},
-      speedStripe: {name: 'speedStripe', color: 'black', h: 3},
-      
-      collisionPoints: [ // these can be left as nulls:
-        {name: 'frontCenter', x: null, y: null, a: null},
-        {name: 'frontLeft', x: null, y: null, a: null},
-        {name: 'frontRight', x: null, y: null, a: null},
-        {name: 'backCenter', x: null, y: null, a: null},
-        {name: 'backLeft', x: null, y: null, a: null},
-        {name: 'backRight', x: null, y: null, a: null},
-        {name: 'leftCenter', x: null, y: null, a: null},
-        {name: 'leftLeft', x: null, y: null, a: null},
-        {name: 'leftRight', x: null, y: null, a: null},
-        {name: 'rightCenter', x: null, y: null, a: null},
-        {name: 'rightLeft', x: null, y: null, a: null},
-        {name: 'rightRight', x: null, y: null, a: null},    
-      ]
+      speedStripe: {name: 'speedStripe', color: 'black', h: 3}
     },
    drawPoint: {x: 1.5, y: -1.5}
   },
@@ -79,22 +49,7 @@ const chassises = [
       frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 1.5},
       leftRearWindow: {name: 'leftRearWindow', color: 'lightBlue', h: 1},
       rightRearWindow: {name: 'rightRearWindow', color: 'lightBlue', h: 1},
-      rearWindow: {name: 'rearWindow', color: 'lightBlue', w: 1.5},
-      
-      collisionPoints: [ // these can be left as nulls:
-        {name: 'frontCenter', x: null, y: null, a: null},
-        {name: 'frontLeft', x: null, y: null, a: null},
-        {name: 'frontRight', x: null, y: null, a: null},
-        {name: 'backCenter', x: null, y: null, a: null},
-        {name: 'backLeft', x: null, y: null, a: null},
-        {name: 'backRight', x: null, y: null, a: null},
-        {name: 'leftCenter', x: null, y: null, a: null},
-        {name: 'leftLeft', x: null, y: null, a: null},
-        {name: 'leftRight', x: null, y: null, a: null},
-        {name: 'rightCenter', x: null, y: null, a: null},
-        {name: 'rightLeft', x: null, y: null, a: null},
-        {name: 'rightRight', x: null, y: null, a: null},    
-      ]
+      rearWindow: {name: 'rearWindow', color: 'lightBlue', w: 1.5}
     },
    drawPoint: {x: 1.7, y: -1.5} // {x: -(partsToPaint.hull.w/1.5), y: -(partsToPaint.hull.h/1.5)}
   }

@@ -1,39 +1,47 @@
 class AllRects {
+  
+  // this is needed to check "real position" to get collision detect.
+  // calculates and sets corners of rotated angles.
+  // this was used as reference: https://stackoverflow.com/questions/41489627/collision-between-two-elements-with-rotating/41513341#41513341
   setCorners(angle) {
     
-  function getRotatedTopLeftCornerOfRect(x, y, width, height, angle) {
-    console.log('gRtLCOR ', x, y, width, height, angle);
+    function getRotatedTopLeftCornerOfRect(x, y, width, height, angle) {
+      //console.log('gRtLCOR ', x, y, width, height, angle);
   
-    function sin(x) {
-    return Math.sin(x / 180 * Math.PI);
-  }
+      function sin(x) {
+        return Math.sin(x / 180 * Math.PI);
+      }
 
-  function cos(x) { console.log('cos x ', x);
-    return Math.cos(x / 180 * Math.PI);
-  }
-  
-  var center = {
-    x: x + width / 2,
-    y: y + height / 2
-  };
-  console.log('center: ',center);
-  var vector = {
-    x: (x - center.x),
-    y: (y - center.y)
-  };
-   console.log('vector: ',vector);
-  var rotationMatrix = [[cos(angle), -sin(angle)],[sin(angle), cos(angle)]];
-  console.log('rotationMatrix: ',rotationMatrix);
-  var rotatedVector = {
-    x: vector.x * rotationMatrix[0][0] + vector.y * rotationMatrix[0][1],
-    y: vector.x * rotationMatrix[1][0] + vector.y * rotationMatrix[1][1]
-  };
-   console.log('rotatedVector: ',rotatedVector);
-  return {
-    x: (center.x + rotatedVector.x),
-    y: (center.y + rotatedVector.y)
-  };
-}
+      function cos(x) { 
+        return Math.cos(x / 180 * Math.PI);
+      }
+
+      var center = {
+        x: x + width / 2,
+        y: y + height / 2
+      };
+
+      //console.log('center: ',center);
+      var vector = {
+        x: (x - center.x),
+        y: (y - center.y)
+      };
+
+      //console.log('vector: ',vector);
+      var rotationMatrix = [[cos(angle), -sin(angle)],[sin(angle), cos(angle)]];
+
+      //console.log('rotationMatrix: ',rotationMatrix);
+      var rotatedVector = {
+        x: vector.x * rotationMatrix[0][0] + vector.y * rotationMatrix[0][1],
+        y: vector.x * rotationMatrix[1][0] + vector.y * rotationMatrix[1][1]
+      };
+
+      //console.log('rotatedVector: ',rotatedVector);
+      return {
+        x: (center.x + rotatedVector.x),
+        y: (center.y + rotatedVector.y)
+      };
+    }
 
     function getAngleForNextCorner(anc,vectorLength) {
       var alpha = Math.acos(anc/vectorLength)*(180 / Math.PI);
@@ -45,14 +53,15 @@ class AllRects {
        x: x + width / 2,
        y: y + height / 2
      };
-    console.log('center: ',center);
+    
+    //console.log('center: ',center);
      var vector = {
        x: (x - center.x),
       y: (y - center.y)
      };
        return Math.sqrt(vector.x*vector.x+vector.y*vector.y);
     }  
-    /*
+    /*  this would be for non-canvas use...
     function getOffset(el) {
       var _x = 0;
       var _y = 0;
@@ -67,25 +76,34 @@ class AllRects {
       };
     }*/
 
-    // this.originalPos = getOffset(this.htmlElement);
+    // this.originalPos = getOffset(this.htmlElement); for non-canvas use
     this.leftTopCorner = getRotatedTopLeftCornerOfRect(this.x, this.y, this.w, this.h, angle);
 
     var vecLength = getVectorLength(this.x, this.y, this.w, this.h);
-    console.log('vecLength: ',vecLength);
+    //console.log('vecLength: ',vecLength);
 
     angle = angle+getAngleForNextCorner(this.w/2, vecLength);
-    console.log('angle: ',angle);
+    //console.log('angle: ',angle);
     this.rightTopCorner = getRotatedTopLeftCornerOfRect(this.x, this.y, this.w, this.h, angle);
 
     angle = angle+getAngleForNextCorner(this.h/2, vecLength);
-    console.log('angle: ',angle);
+    //console.log('angle: ',angle);
     this.rightBottomCorner = getRotatedTopLeftCornerOfRect(this.x, this.y, this.w, this.h, angle);
 
     angle = angle+getAngleForNextCorner(this.w/2, vecLength);
-    console.log('angle: ',angle);
+    //console.log('angle: ',angle);
     this.leftBottomCorner = getRotatedTopLeftCornerOfRect(this.x, this.y, this.w, this.h, angle);
 
-    console.log('created rect ', this);
+    //console.log('created rect ', this);
+  };
+  
+  // return calculated corners:
+  getCorners() {
+    
+    return [this.leftTopCorner,
+      this.rightTopCorner,
+      this.rightBottomCorner,
+      this.leftBottomCorner];
   };
 }
 
@@ -100,6 +118,7 @@ class RectObstacle extends AllRects {
     this.h = h;
     this.color = color;
     this.weight = weight;
+    this.angle = angle;
     this.name = name;
     this.type = 'building';
   }
