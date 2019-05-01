@@ -1,7 +1,6 @@
 /*
 
-Old collision detect can be deleted with collision point..
-i try to make this new one... next add x y and to car or make hull class too etc....or change x and y to car from hull...
+Continue: investigate small bug that bugs collision detect.
 
 references if needed: 
 https://davetayls.me/html5racer/

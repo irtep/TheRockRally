@@ -4,7 +4,7 @@
 const colors = ['white','green','darkGreen','black','navy','blue','cyan','orange','gold','yellow','red','burgundy','crimson','silver','gray', 'pink'];
 let gameObject = {
   playersName: null,                                                             
-  car: {driver: null, name: null, color: null, chassis: null, motor: null, tires: null, armour: null, pieces: null, 
+  car: {driver: null, name: null, color: null, chassis: null, motor: null, tires: null, armour: null, pieces: null, x: null, y: null, w: null, h: null, 
          statuses: {
            speed: 0, brakingValue: 0.2, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
          }
