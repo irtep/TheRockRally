@@ -4,7 +4,7 @@ const aiCars = [
   name: 'Zermeces E',
   color: 'silver', color2: 'white',
   statuses : {
-           speed: 0, brakingValue: 0.2, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
+           speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
          }
   },
   
@@ -12,7 +12,7 @@ const aiCars = [
   name: 'Rond Comet R',
   color: 'blue', color2: 'yellow',
   statuses : {
-           speed: 0, brakingValue: 0.2, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
+           speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 45, isMoving: false, reverse: false, outOfControl: false
          }
   },
   
@@ -20,7 +20,7 @@ const aiCars = [
   name: 'Rond Comet mk1',
   color: 'burgundy', color2: 'crimson',
   statuses : {
-           speed: 0, brakingValue: 0.2, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
+           speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: -444, isMoving: false, reverse: false, outOfControl: false
          }
   }
 ];
