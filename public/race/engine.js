@@ -165,7 +165,7 @@ window.onload = (()=> {
   gameObject = JSON.parse(localStorage.getItem('Go'));  
   //gameObject.race.track.obstacles[0]house1.setCorners(0);
   setupRace();
-  console.log('go t ', gameObject.race.track[0].obstacles[0].setCorners(0));
+  //console.log('go t ', gameObject.race.track[0].obstacles[0].setCorners(0));
   //setInterval(()=> { // can use this too.. but i think this window.requestAnimationFrame works better...
   animate();
  // }, 500); 

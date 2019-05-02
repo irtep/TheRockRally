@@ -61,7 +61,7 @@ class AllRects {
      };
        return Math.sqrt(vector.x*vector.x+vector.y*vector.y);
     }  
-    /*  this would be for non-canvas use...
+    
     function getOffset(el) {
       var _x = 0;
       var _y = 0;
@@ -74,9 +74,10 @@ class AllRects {
         top: _y,
         left: _x
       };
-    }*/
+    }
 
-    // this.originalPos = getOffset(this.htmlElement); for non-canvas use
+    //console.log('gOs', getOffset(this.htmlElement)); console.log('this ', this);
+    
     this.leftTopCorner = getRotatedTopLeftCornerOfRect(this.x, this.y, this.w, this.h, angle);
 
     var vecLength = getVectorLength(this.x, this.y, this.w, this.h);
@@ -94,6 +95,30 @@ class AllRects {
     //console.log('angle: ',angle);
     this.leftBottomCorner = getRotatedTopLeftCornerOfRect(this.x, this.y, this.w, this.h, angle);
 
+    /*
+            Rectangle.prototype.setCorners = function (angle) {
+            this.originalPos = getOffset(this.htmlElement);
+            this.leftTopCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
+
+            var vecLength = getVectorLength(this.originalPos.left, this.originalPos.top, this.width, this.height);
+            //console.log('vecLength: ',vecLength);
+
+            angle = angle+getAngleForNextCorner(this.width/2, vecLength);
+            //console.log('angle: ',angle);
+            this.rightTopCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
+
+            angle = angle+getAngleForNextCorner(this.height/2, vecLength);
+            //console.log('angle: ',angle);
+            this.rightBottomCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
+
+            angle = angle+getAngleForNextCorner(this.width/2, vecLength);
+            //console.log('angle: ',angle);
+            this.leftBottomCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
+
+            //console.log(this);
+        };
+    */
+    
     //console.log('created rect ', this);
   };
   
