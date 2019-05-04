@@ -1,5 +1,7 @@
 // this can be used when you need grid to canvas
 // from http://usefulangle.com/post/19/html5-canvas-tutorial-how-to-draw-graphical-coordinate-system-with-grids-and-axis
+// can be used in testing to check distances etc.
+// disabled when game is online.
 function drawGrid(){
     const grid_size = 10;
     const x_axis_distance_grid_lines = 5;
@@ -81,6 +83,10 @@ function paintAll(race) {
    
   clearCanvas();
   
+  //drawGrid used only if need to test something and grid helps
+  drawGrid();
+  
+  // paints each car
   race.cars.forEach((unit) => {
     const partsToPaint = unit.pieces;
     const drawPoint = partsToPaint.drawPoint;
@@ -90,9 +96,12 @@ function paintAll(race) {
     ctx.beginPath();
     ctx.fillStyle = partsToPaint.hull.color;
     ctx.save(); // save coords system
-    ctx.translate(partsToPaint.hull.x, partsToPaint.hull.y); // go here
+    if (unit.leftTopCorner !== undefined) {ctx.translate(unit.leftTopCorner.x, unit.leftTopCorner.y);}
+    else {ctx.translate(partsToPaint.hull.x, partsToPaint.hull.y);} // go here
+    //ctx.translate(unit.x, unit.y); // go here
     ctx.rotate(degrees * Math.PI / 180);
     ctx.rect(drawPoint.x, drawPoint.y, partsToPaint.hull.w, partsToPaint.hull.h);// time to paint it
+    //ctx.rect(unit.x, unit.y, partsToPaint.hull.w, partsToPaint.hull.h);// time to paint it
     ctx.fill();
     ctx.closePath();
     
@@ -130,7 +139,10 @@ function paintAll(race) {
     // lines from corners to corners of canvas:
     
     ctx.restore(); // restore coords.
-        // lines from corners to canvas corners:
+    
+    // lines from corners to canvas corners:
+    // this is used to see where corners of car are in collision test purpose
+    // disabled if game is online.
     if (unit.leftBottomCorner !== undefined) {
       const specialArray = [unit.leftBottomCorner, unit.leftTopCorner, unit.rightBottomCorner, unit.rightTopCorner];
       const specialArray2 = [{x: 0, y: canvas.height},{x: 0, y: 0},{x: canvas.width, y: canvas.height},{x: canvas.width, y: 0}];
@@ -147,11 +159,17 @@ function paintAll(race) {
         indicator++;
       }); 
     }
-    /*
-    // x red
+    
+    // x red spot for x and y of unit
       ctx.beginPath();
       ctx.strokeStyle = 'red';
       ctx.arc(unit.x, unit.y, 5, 0, 2 * Math.PI);
+      ctx.stroke();      
+    // x blue spot for drawpoints
+    /*
+      ctx.beginPath();
+      ctx.strokeStyle = 'blue';
+      ctx.arc(unit.x + drawPoint.x, unit.x + drawPoint.y, 5, 0, 2 * Math.PI);
       ctx.stroke();     */
   });
 
@@ -190,5 +208,4 @@ function paintAll(race) {
   ctx.arc(550, 175, 50, 0, 2 * Math.PI);
   ctx.stroke();
   */
-  drawGrid();
 }

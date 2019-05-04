@@ -246,7 +246,7 @@ function pointInPoly(verties, testx, testy) {
 function testCollision(rectangle) {
   var collision = false;
             
-  this.getCorners().forEach(function (corner) {
+  this.getCorners().forEach((corner) => {
     var isCollided = pointInPoly(rectangle.getCorners(), corner.x, corner.y);
                 
     if (isCollided) collision = true;
