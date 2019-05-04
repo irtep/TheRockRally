@@ -12,5 +12,8 @@ https://stackoverflow.com/questions/43558803/javascript-rotate-a-shape-by-a-fixe
 coll detect:
 
 https://stackoverflow.com/questions/41489627/collision-between-two-elements-with-rotating/41513341#41513341
+
+should check this next i think:
+https://github.com/Sinova/Collisions
 */
   

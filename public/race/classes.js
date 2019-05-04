@@ -15,12 +15,12 @@ class AllRects {
       function cos(x) { 
         return Math.cos(x / 180 * Math.PI);
       }
-
+      
       var center = {
-        x: x + width / 2,
-        y: y + height / 2
+        x: (x + width / 2),
+        y: (y + height / 2)
       };
-
+      
       //console.log('center: ',center);
       var vector = {
         x: (x - center.x),
@@ -30,13 +30,11 @@ class AllRects {
       //console.log('vector: ',vector);
       var rotationMatrix = [[cos(angle), -sin(angle)],[sin(angle), cos(angle)]];
 
-      //console.log('rotationMatrix: ',rotationMatrix);
       var rotatedVector = {
         x: vector.x * rotationMatrix[0][0] + vector.y * rotationMatrix[0][1],
         y: vector.x * rotationMatrix[1][0] + vector.y * rotationMatrix[1][1]
       };
 
-      //console.log('rotatedVector: ',rotatedVector);
       return {
         x: (center.x + rotatedVector.x),
         y: (center.y + rotatedVector.y)
@@ -61,8 +59,8 @@ class AllRects {
      };
        return Math.sqrt(vector.x*vector.x+vector.y*vector.y);
     }  
-    
-    function getOffset(el) {
+    /*
+    function getOffset(el) { console.log('el ', el);
       var _x = 0;
       var _y = 0;
       while (el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
@@ -74,7 +72,7 @@ class AllRects {
         top: _y,
         left: _x
       };
-    }
+    } */
 
     //console.log('gOs', getOffset(this.htmlElement)); console.log('this ', this);
     
