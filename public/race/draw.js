@@ -68,7 +68,6 @@ function drawGrid(){
     }  
 }
 
-
 function clearCanvas(){
   const canvas = document.getElementById('kanveesi');
   const ctx = canvas.getContext("2d");
@@ -84,7 +83,7 @@ function paintAll(race) {
   clearCanvas();
   
   //drawGrid used only if need to test something and grid helps
-  drawGrid();
+  //drawGrid();
   
   // paints each car
   race.cars.forEach((unit) => {
@@ -143,6 +142,7 @@ function paintAll(race) {
     // lines from corners to canvas corners:
     // this is used to see where corners of car are in collision test purpose
     // disabled if game is online.
+    /*
     if (unit.leftBottomCorner !== undefined) {
       const specialArray = [unit.leftBottomCorner, unit.leftTopCorner, unit.rightBottomCorner, unit.rightTopCorner];
       const specialArray2 = [{x: 0, y: canvas.height},{x: 0, y: 0},{x: canvas.width, y: canvas.height},{x: canvas.width, y: 0}];
@@ -158,13 +158,15 @@ function paintAll(race) {
 
         indicator++;
       }); 
-    }
+    } */
     
-    // x red spot for x and y of unit
+    // x red spot for x and y of unit. disabled if not testing something related
+    /*
       ctx.beginPath();
       ctx.strokeStyle = 'red';
       ctx.arc(unit.x, unit.y, 5, 0, 2 * Math.PI);
       ctx.stroke();      
+      */
     // x blue spot for drawpoints
     /*
       ctx.beginPath();

@@ -1,6 +1,9 @@
 /*
 
-Continue: investigate small bug that bugs collision detect.
+Continue: 
+  - continue collision detect to check border walls.
+  - painted lines/circles to track for direction and finish line.
+  - when starts from zero speed, it "jumps" a bit. propably need to updateXandY at somepoints, maybe after crash...
 
 references if needed: 
 https://davetayls.me/html5racer/

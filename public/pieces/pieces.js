@@ -10,6 +10,9 @@ const vehicles = [
     },
   {name: 'Zermeces E', chassis: 'Zermeces standard', motor: 'Zermeces-Lenz 2.5', tires: 'Rockstone standard', armour: 'Defender Lite',
   description: 'Quick and reliable car from traditional "leading star" Zermeces-Lenz.',
+    },
+  {name: 'Lion 205', chassis: 'Lion 205S', motor: 'Lion 1.6', tires: 'Mechelen Energy', armour: 'Defender Lite',
+  description: 'Basic car from traditional french manufacturer. Good for going to super market.',
     }
 ];
 // ideas: juggernaut, lion 205, ferrargini, high ace, MBW, Ozel Sorca
@@ -52,6 +55,18 @@ const chassises = [
       rearWindow: {name: 'rearWindow', color: 'lightBlue', w: 1.5}
     },
    drawPoint: {x: 1.7, y: -1.5} // {x: -(partsToPaint.hull.w/1.5), y: -(partsToPaint.hull.h/1.5)}
+  },
+  {name: 'Lion 205S', weight: 2, armour: 1, durability: 7, cost: 50,
+    pieces: {
+      hull: {name: 'hull', x: 30, y: 500, h: 10, w: 25, color: 'black'},
+      leftFrontWindow: {name: 'leftFrontWindow', color: 'lightBlue', h: 1},
+      rightFrontWindow: {name: 'rightFrontWindow', color: 'lightBlue', h: 1},
+      frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 1.5},
+      leftRearWindow: {name: 'leftRearWindow', color: 'lightBlue', h: 1},
+      rightRearWindow: {name: 'rightRearWindow', color: 'lightBlue', h: 1},
+      rearWindow: {name: 'rearWindow', color: 'lightBlue', w: 1.5}
+    },
+   drawPoint: {x: 1.7, y: -1.5} // {x: -(partsToPaint.hull.w/1.5), y: -(partsToPaint.hull.h/1.5)}
   }
 ];
 
@@ -60,13 +75,15 @@ const motors = [
   {name: 'Rond V8', power: 2.1, maxSpeed: 29, weight: 5, durability: 10, cost: 100, desc: 'Powerful and durable, but heavy motor'},
   {name: 'Rond V10', power: 2.2, maxSpeed: 34, weight: 6, durability: 8, cost: 250, desc: 'Racing version of Rond V8. Giving much more power, but not that durable as standard motor.'},
   {name: 'Beijing turbo', power: 2.2, maxSpeed: 34, weight: 7, durability: 5, cost: 100, desc: 'Racing motor with price of a normal civil motor! However, do not count on the durability.. too much'},
-  {name: 'Zermeces-Lenz 2.5', power: 2.1, maxSpeed: 20, weight: 3, durability: 10, cost: 200, desc: 'Very light and reliable motor, with enough power for lighter cars.'}
+  {name: 'Zermeces-Lenz 2.5', power: 2.1, maxSpeed: 20, weight: 3, durability: 10, cost: 200, desc: 'Very light and reliable motor, with enough power for lighter cars.'},
+  {name: 'Lion 1.6', power: 0.89, maxSpeed: 12, weight: 2, durability: 6, cost: 50, desc: 'Cheap, but not powerful or reliable.'}
 ];
 
 // Tires:
 const tires = [
   {name: 'Rockstone standard', grip: 26, cost: 100, desc: 'solid basic tires. you can not go wrong with these ones'},
-  {name: 'Rockstone racing', grip: 33, cost: 250, desc: 'racing versions of Rockstones. Pretty good set for racing indeed.'}
+  {name: 'Rockstone racing', grip: 33, cost: 250, desc: 'racing versions of Rockstones. Pretty good set for racing indeed.'},
+  {name: 'Mechelen Energy', grip: 27, cost: 120, desc: 'very good basic tires.'}
 ];
 
 // Armours:
