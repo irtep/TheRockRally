@@ -5,6 +5,9 @@ let gameObject = null;
 
 function carMovement(car) {
   const stats = car.statuses;
+  // need these old values if collisions
+  let oldX = JSON.parse(JSON.stringify(car.pieces.hull.x));
+  let oldY = JSON.parse(JSON.stringify(car.pieces.hull.y));
 
   // give lost control back if slow enough
   if (stats.grip > stats.speed) {stats.outOfControl = false;}
@@ -48,7 +51,14 @@ function carMovement(car) {
         updateXandY(gameObject.race.cars);
         const colTest = collisionTest(car);
         
-        if (colTest !== false){ document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;}
+        if (colTest !== false){ 
+          
+          car.pieces.hull.x = oldX;
+          car.pieces.hull.y = oldY;
+          updateXandY(gameObject.race.cars);
+          stats.speed = 0;
+          document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+        }
         else { document.getElementById('collisionPlace').innerHTML = 'no collision'}
         // right was + to heading 
       } else {
@@ -59,7 +69,14 @@ function carMovement(car) {
         updateXandY(gameObject.race.cars);
         const colTest = collisionTest(car);
         
-        if (colTest !== false){ document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;}
+        if (colTest !== false){ 
+          
+          car.pieces.hull.x = oldX;
+          car.pieces.hull.y = oldY;
+          updateXandY(gameObject.race.cars);
+          stats.speed = 0;
+          document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+        }
         else { document.getElementById('collisionPlace').innerHTML = 'no collision'}
       }
     } else {
@@ -70,7 +87,14 @@ function carMovement(car) {
         updateXandY(gameObject.race.cars);
         const colTest = collisionTest(car);
         
-        if (colTest !== false){ document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;}
+        if (colTest !== false){ 
+          
+          car.pieces.hull.x = oldX;
+          car.pieces.hull.y = oldY;
+          updateXandY(gameObject.race.cars);
+          stats.speed = 0;
+          document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+        }
         else { document.getElementById('collisionPlace').innerHTML = 'no collision'}
     }
   
@@ -82,19 +106,30 @@ function carMovement(car) {
     }
   
     // if reversing
-    if (stats.speed < 0 && stats.reverse === true) {
+    if (stats.speed <= 0 && stats.reverse === true) {
         
       const speeds = getSpeeds(stats.heading, -0.6);
-    
+      
       car.pieces.hull.x += -speeds.x;
       car.pieces.hull.y += speeds.y;
-      stats.isMoving = true;
-        // collision test:
-        updateXandY(gameObject.race.cars);
-        const colTest = collisionTest(car);
+      stats.isMoving = true;   
+      // collision test:
+      updateXandY(gameObject.race.cars);
+      const colTest = collisionTest(car);
         
-        if (colTest !== false){ document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;}
-        else { document.getElementById('collisionPlace').innerHTML = 'no collision'}
+        // no collision
+        if (colTest !== false) { 
+           
+          car.pieces.hull.x = oldX;
+          car.pieces.hull.y = oldY;
+          updateXandY(gameObject.race.cars);
+          stats.speed = 0;
+          document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+        }
+        else { 
+        
+          document.getElementById('collisionPlace').innerHTML = 'no collision'
+        }
     }
   
     // if accelerating
@@ -104,25 +139,7 @@ function carMovement(car) {
     // if braking
     if (stats.braking === true && stats.speed > -1) { 
       car.brake();    
-      //
-        //
-      /* 
-  updateXandY(gameObject.race.cars);
-  const testResult = collisionTest(car);
-  car.x = car.pieces.hull.x;
-  car.y = car.pieces.hull.y;
-  car.w = car.pieces.hull.w;
-  car.h = car.pieces.hull.h;
-  car.angle = car.statuses.heading;
-  car.setCorners(car.angle);
-  //console.log('corners: ', car.getCorners());
-      
-  const trueOrFalse = checkRectangleCollision(car, gameObject.race.track[0].obstacles[0]);
-  //console.log('collision? ', trueOrFalse);
-  document.getElementById('collisionPlace').innerHTML = 'collision: '+ trueOrFalse;
-  */
-  //
-      //
+ 
     } else {
       // release breaks
       stats.friction = stats.originalFriction;

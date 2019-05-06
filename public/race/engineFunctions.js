@@ -228,7 +228,7 @@ function createNewCar(newCar, playerCar){
   console.log('new car created: gameObject ', gameObject);
 }
 
-/*  NEW RECTANGLE BASED COLLISION TEST: */
+/*  RECTANGLE BASED COLLISION TEST: */
 function pointInPoly(verties, testx, testy) {
   var i;
   var j;
@@ -267,6 +267,16 @@ function checkRectangleCollision(rect, rect2) {
 function collisionTest(car) {
   const noCollision = false;
   
+  // first check if collision with borders
+  // up
+  
+  // bottom
+  
+  // left
+  
+  // right
+  
+  // check if collision with cars
   for (let i = 0; i < gameObject.race.cars.length; i++) {
 
       // lets not compare with same car.
