@@ -84,6 +84,17 @@ function paintAll(race) {
   
   //drawGrid used only if need to test something and grid helps
   //drawGrid();
+  const paintMarkings = race.track[0].trackMarkings.map( (mark) => {
+    ctx.beginPath();
+    ctx.fillStyle = mark.color;
+    ctx.save(); // save coords system
+    ctx.translate(mark.x, mark.y);
+    ctx.rotate(mark.angle * Math.PI / 180);
+    ctx.rect(0, 0, mark.w, mark.h);
+    ctx.fill();
+    ctx.closePath();
+    ctx.restore(); // restore coords.
+  });
   
   // paints each car
   race.cars.forEach((unit) => {
@@ -95,12 +106,13 @@ function paintAll(race) {
     ctx.beginPath();
     ctx.fillStyle = partsToPaint.hull.color;
     ctx.save(); // save coords system
-    if (unit.leftTopCorner !== undefined) {ctx.translate(unit.leftTopCorner.x, unit.leftTopCorner.y);}
-    else {ctx.translate(partsToPaint.hull.x, partsToPaint.hull.y);} // go here
-    //ctx.translate(unit.x, unit.y); // go here
+    if (unit.leftTopCorner !== undefined) {
+      ctx.translate(unit.leftTopCorner.x, unit.leftTopCorner.y);}
+    else {
+      //ctx.translate(partsToPaint.hull.x, partsToPaint.hull.y);} // go here
+      ctx.translate(unit.x, unit.y);} // go here
     ctx.rotate(degrees * Math.PI / 180);
     ctx.rect(drawPoint.x, drawPoint.y, partsToPaint.hull.w, partsToPaint.hull.h);// time to paint it
-    //ctx.rect(unit.x, unit.y, partsToPaint.hull.w, partsToPaint.hull.h);// time to paint it
     ctx.fill();
     ctx.closePath();
     
@@ -193,6 +205,7 @@ function paintAll(race) {
       ctx.closePath();
     }
   });
+  
   /*
   ctx.beginPath();
   ctx.fillStyle = 'black';

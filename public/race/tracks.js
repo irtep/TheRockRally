@@ -1,16 +1,30 @@
+// reference to canvas
+const canv = document.getElementById("kanveesi");
 
 const tracks = [
   {name: 'factory', checkPoints: null, obstacles: [
-    new RectObstacle(100, 150, 100, 100, 'black', 1000, 0, 'house1'), // rects need their circles for collision detect.
-    new RectObstacle(340, 250, 100, 100, 'black', 1000, 0, 'house2'),
-    new RectObstacle(130, 400, 550, 20, 'black', 1000, 0, 'house3'),
-    new RectObstacle(680, 100, 20, 300, 'black', 1000, 0, 'house4')
-  ]}
+    // borders:
+    new RectObstacle(0, -25, canv.width, 30, 'black', 0, 'borderUp'),
+    new RectObstacle(0, canv.height -5, canv.width, 30, 'black', 0, 'borderBottom'),
+    new RectObstacle(-25, 0, 30, canv.height, 'black', 0, 'borderLeft'),
+    new RectObstacle(canv.width-5, 0, 30, canv.height, 'black', 0, 'borderRight'),
+    // buildings:
+    new RectObstacle(100, 150, 100, 100, 'black', 0, 'house1'), 
+    new RectObstacle(340, 250, 100, 100, 'black', 0, 'house2'),
+    new RectObstacle(130, 400, 550, 20, 'black', 0, 'house3'),
+    new RectObstacle(680, 100, 20, 300, 'black', 0, 'house4')
+  ],
+  trackMarkings: [
+    // finish line:
+    new RectObstacle(630, 420, 10, 180, 'white', 0, 'finishLine'),
+    // indicator arrows: 
+    new RectObstacle(235, 505, 50, 5, 'white', 0, 'arrowShaft'),
+    new RectObstacle(275, 490, 22, 5, 'white', 45, 'arrowPoint1'),
+    new RectObstacle(275, 520, 22, 5, 'white', -45, 'arrowPoint2')
+  ]
+  }
 
 ];
 
-/*
-x: 130
-y: 500
-*/
+
 

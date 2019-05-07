@@ -1,3 +1,5 @@
+// this is for all rect shaped things in game.. so for about almost for everything.
+// they get from here some stuff that they can be located, regardless of their angle
 class AllRects {
   
   // this is needed to check "real position" to get collision detect.
@@ -59,7 +61,7 @@ class AllRects {
      };
        return Math.sqrt(vector.x*vector.x+vector.y*vector.y);
     }  
-    /*
+    /* this might be handy for non-canvas stuff in some other work so i dont delete it
     function getOffset(el) { console.log('el ', el);
       var _x = 0;
       var _y = 0;
@@ -92,30 +94,6 @@ class AllRects {
     angle = angle+getAngleForNextCorner(this.w/2, vecLength);
     //console.log('angle: ',angle);
     this.leftBottomCorner = getRotatedTopLeftCornerOfRect(this.x, this.y, this.w, this.h, angle);
-
-    /*
-            Rectangle.prototype.setCorners = function (angle) {
-            this.originalPos = getOffset(this.htmlElement);
-            this.leftTopCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
-
-            var vecLength = getVectorLength(this.originalPos.left, this.originalPos.top, this.width, this.height);
-            //console.log('vecLength: ',vecLength);
-
-            angle = angle+getAngleForNextCorner(this.width/2, vecLength);
-            //console.log('angle: ',angle);
-            this.rightTopCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
-
-            angle = angle+getAngleForNextCorner(this.height/2, vecLength);
-            //console.log('angle: ',angle);
-            this.rightBottomCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
-
-            angle = angle+getAngleForNextCorner(this.width/2, vecLength);
-            //console.log('angle: ',angle);
-            this.leftBottomCorner = getRotatedTopLeftCornerOfRect(this.originalPos.left, this.originalPos.top, this.width, this.height, angle);
-
-            //console.log(this);
-        };
-    */
     
     //console.log('created rect ', this);
   };
@@ -133,14 +111,14 @@ class AllRects {
 
 
 class RectObstacle extends AllRects {
-  constructor(x, y, w, h, color, weight, angle, name) {
+  constructor(x, y, w, h, color, angle, name) {
     super(); // to get setCorners from allRects
     this.x = x;
     this.y = y;
     this.w = w,
     this.h = h;
     this.color = color;
-    this.weight = weight;
+    this.weight = 1000; // default weight
     this.angle = angle;
     this.name = name;
     this.type = 'building';
@@ -154,8 +132,8 @@ class ArcObstacle {
     this.a = a,
     this.color = color;
     this.weight = weight;
-    this.aS = aS;
-    this.aE = aE;
+    this.aS = aS; //angleStarts
+    this.aE = aE; // angleEnds
     this.name = 'arcO';
   }
 }
@@ -205,19 +183,23 @@ class Car extends AllRects {
   }
   
   turnRight() {
-    
+    if (this.statuses.isMoving === true) {
+      
       if (this.statuses.speed < this.statuses.grip) {
         this.statuses.heading += this.statuses.turnRate - (this.statuses.speed/7);
       } else {
         this.statuses.heading += this.statuses.turnRate - (this.statuses.speed/7) + (this.statuses.grip/2);
       }
+    }
   }
 }
-
+/*
 class RectBuilding {
   constructor(x, y, w, h, weight){
   
     this.x = x; this.y = y; this.w = w; this.h = h; this.weight = weight;
+    // give default armour:
+    this.armour = 1000;
   };
 
 }
@@ -228,7 +210,7 @@ class CircleBuilding {
   };
 
 }
-
+*/
 class CheckPoint {
   constructor(x, y, w, h, number){
   
