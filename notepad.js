@@ -1,9 +1,42 @@
 /*
 
 Continue: 
-  - continue collision detect to check border walls.
+  - checkpoints, lap calculator etc.
   - painted lines/circles to track for direction and finish line.
-  - when starts from zero speed, it "jumps" a bit. propably need to updateXandY at somepoints, maybe after crash...
+  COULD TRY THIS ARROW:
+  
+  function canvas_arrow(context, fromx, fromy, tox, toy, r){
+    var x_center = tox;
+    var y_center = toy;
+
+    var angle;
+    var x;
+    var y;
+
+    context.beginPath();
+
+    angle = Math.atan2(toy-fromy,tox-fromx)
+    x = r*Math.cos(angle) + x_center;
+    y = r*Math.sin(angle) + y_center;
+
+    context.moveTo(x, y);
+
+    angle += (1/3)*(2*Math.PI)
+    x = r*Math.cos(angle) + x_center;
+    y = r*Math.sin(angle) + y_center;
+
+    context.lineTo(x, y);
+
+    angle += (1/3)*(2*Math.PI)
+    x = r*Math.cos(angle) + x_center;
+    y = r*Math.sin(angle) + y_center;
+
+    context.lineTo(x, y);
+
+    context.closePath();
+
+    context.fill();
+  }
 
 references if needed: 
 https://davetayls.me/html5racer/

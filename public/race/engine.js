@@ -6,8 +6,11 @@ let gameObject = null;
 function carMovement(car) {
   const stats = car.statuses;
   // need these old values if collisions
+  /*
   let oldX = JSON.parse(JSON.stringify(car.pieces.hull.x));
-  let oldY = JSON.parse(JSON.stringify(car.pieces.hull.y));
+  let oldY = JSON.parse(JSON.stringify(car.pieces.hull.y));*/
+  let oldX = JSON.parse(JSON.stringify(car.x));
+  let oldY = JSON.parse(JSON.stringify(car.y));
 
   // give lost control back if slow enough
   if (stats.grip > stats.speed) {stats.outOfControl = false;}
@@ -45,54 +48,57 @@ function carMovement(car) {
         
         stats.outOfControl = true;
         // sliding
-        car.pieces.hull.x += -speedsWithSlide.x;
-        car.pieces.hull.y += speedsWithSlide.y;
+        car.x += -speedsWithSlide.x;
+        car.y += speedsWithSlide.y;
         // collision test:
         updateXandY(gameObject.race.cars);
         const colTest = collisionTest(car);
         
         if (colTest !== false){ 
           
-          car.pieces.hull.x = oldX;
-          car.pieces.hull.y = oldY;
+          car.x = oldX;
+          car.y = oldY;
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
+          stats.isMoving = false;
           document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
         }
         else { document.getElementById('collisionPlace').innerHTML = 'no collision'}
         // right was + to heading 
       } else {
         // not sliding
-        car.pieces.hull.x += -speeds.x;
-        car.pieces.hull.y += speeds.y;
+        car.x += -speeds.x;
+        car.y += speeds.y;
         // collision test:
         updateXandY(gameObject.race.cars);
         const colTest = collisionTest(car);
         
         if (colTest !== false){ 
           
-          car.pieces.hull.x = oldX;
-          car.pieces.hull.y = oldY;
+          car.x = oldX;
+          car.y = oldY;
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
+          stats.isMoving = false;
           document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
         }
         else { document.getElementById('collisionPlace').innerHTML = 'no collision'}
       }
     } else {
       // not sliding
-      car.pieces.hull.x += -speeds.x;
-      car.pieces.hull.y += speeds.y;
+      car.x += -speeds.x;
+      car.y += speeds.y;
         // collision test:
         updateXandY(gameObject.race.cars);
         const colTest = collisionTest(car);
         
         if (colTest !== false){ 
           
-          car.pieces.hull.x = oldX;
-          car.pieces.hull.y = oldY;
+          car.x = oldX;
+          car.y = oldY;
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
+          stats.isMoving = false;
           document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
         }
         else { document.getElementById('collisionPlace').innerHTML = 'no collision'}
@@ -110,8 +116,8 @@ function carMovement(car) {
         
       const speeds = getSpeeds(stats.heading, -0.6);
       
-      car.pieces.hull.x += -speeds.x;
-      car.pieces.hull.y += speeds.y;
+      car.x += -speeds.x;
+      car.y += speeds.y;
       stats.isMoving = true;   
       // collision test:
       updateXandY(gameObject.race.cars);
@@ -120,10 +126,11 @@ function carMovement(car) {
         // no collision
         if (colTest !== false) { 
            
-          car.pieces.hull.x = oldX;
-          car.pieces.hull.y = oldY;
+          car.x = oldX;
+          car.y = oldY;
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
+          stats.isMoving = false;
           document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
         }
         else { 

@@ -121,7 +121,7 @@ function checkKeyReleased(released){
 // updating weight, color, cost and car handling stats.
 function updateCar(carOnCase) {
   
-  carOnCase.weight = carOnCase.chassis.weight + carOnCase.armour.weight + carOnCase.motor.weight;
+  carOnCase.weight = carOnCase.chassis.weight + carOnCase.armour.weight + carOnCase.motor.weight + carOnCase.tires.weight;
   carOnCase.cost = carOnCase.chassis.cost + carOnCase.armour.cost + carOnCase.tires.cost + carOnCase.motor.cost;
   carOnCase.statuses.power = carOnCase.motor.power - (carOnCase.weight/10);
   carOnCase.statuses.maxSpeed = carOnCase.motor.maxSpeed - carOnCase.weight;
@@ -225,6 +225,16 @@ function createNewCar(newCar, playerCar){
   const carsRootStats = {name: newCar.name, cost: newCar.cost, weight: newCar.weight};
   gameObject.race.cars.push(new Car(newCar.driver, carsRootStats, newCar.pieces, newCar.statuses));
   
+  // finish x and y setup and get angles.
+  gameObject.race.cars.forEach((carInTurn) => {  
+    carInTurn.x = carInTurn.pieces.hull.x;
+    carInTurn.y = carInTurn.pieces.hull.y;
+    carInTurn.w = carInTurn.pieces.hull.w;
+    carInTurn.h = carInTurn.pieces.hull.h;
+    carInTurn.angle = carInTurn.statuses.heading;
+    carInTurn.setCorners(carInTurn.angle);
+  });
+  
   console.log('new car created: gameObject ', gameObject);
 }
 
@@ -267,15 +277,6 @@ function checkRectangleCollision(rect, rect2) {
 function collisionTest(car) {
   const noCollision = false;
   
-  // first check if collision with borders
-  // up
-  
-  // bottom
-  
-  // left
-  
-  // right
-  
   // check if collision with cars
   for (let i = 0; i < gameObject.race.cars.length; i++) {
 
@@ -301,14 +302,15 @@ function collisionTest(car) {
 // sets x and y to all cars for collision purposes
 function updateXandY(cars) {
   // cars:
-  cars.forEach((carInTurn) => {  
+  
+  cars.forEach((carInTurn) => {  /*
     carInTurn.x = carInTurn.pieces.hull.x;
     carInTurn.y = carInTurn.pieces.hull.y;
     carInTurn.w = carInTurn.pieces.hull.w;
-    carInTurn.h = carInTurn.pieces.hull.h;
+    carInTurn.h = carInTurn.pieces.hull.h; */
     carInTurn.angle = carInTurn.statuses.heading;
     carInTurn.setCorners(carInTurn.angle);
-  });
+  }); 
   // rectangles in track:
   gameObject.race.track[0].obstacles.forEach((obsInTurn) => {  
     obsInTurn.setCorners(obsInTurn.angle);
