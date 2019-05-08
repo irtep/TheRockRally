@@ -46,7 +46,7 @@ function drawGrid(){
         ctx.stroke();
     }
     // Draw grid lines along Y-axis
-    for(let i = 0; i <= num_lines_y; i++) {
+    for (let i = 0; i <= num_lines_y; i++) {
         ctx.beginPath();
         ctx.lineWidth = 1;
 
@@ -84,6 +84,8 @@ function paintAll(race) {
   
   //drawGrid used only if need to test something and grid helps
   //drawGrid();
+  
+  // markings like finish line etc.
   const paintMarkings = race.track[0].trackMarkings.map( (mark) => {
     ctx.beginPath();
     ctx.fillStyle = mark.color;
@@ -94,6 +96,29 @@ function paintAll(race) {
     ctx.fill();
     ctx.closePath();
     ctx.restore(); // restore coords.
+  });
+  
+  // indicator arrows to track
+  const paintArrows = race.track[0].arrows.map( (arrow) => {
+    const x_center = arrow.toX;
+    const y_center = arrow.toY;
+    let angle = Math.atan2(arrow.toY-arrow.fromY,arrow.toX-arrow.fromX);
+    let x = arrow.r*Math.cos(angle) + x_center;
+    let y = arrow.r*Math.sin(angle) + y_center;
+    
+    ctx.beginPath();
+    ctx.fillStyle = 'white';
+    ctx.moveTo(x, y);
+    angle += (1/3)*(2*Math.PI);
+    x = arrow.r*Math.cos(angle) + x_center;
+    y = arrow.r*Math.sin(angle) + y_center;
+    ctx.lineTo(x, y);
+    angle += (1/3)*(2*Math.PI)
+    x = arrow.r*Math.cos(angle) + x_center;
+    y = arrow.r*Math.sin(angle) + y_center;
+    ctx.lineTo(x, y);
+    ctx.closePath();
+    ctx.fill();    
   });
   
   // paints each car
@@ -129,26 +154,7 @@ function paintAll(race) {
     ctx.fillStyle = 'black';
     ctx.fillText (unit.driver, drawPoint.x, drawPoint.y);
     ctx.fill;
-    
-    // drawpoint blue
-    /*
-      ctx.beginPath();
-      ctx.strokeStyle = 'blue';
-      ctx.arc(drawPoint.x, drawPoint.y, 5, 0, 2 * Math.PI);
-      ctx.stroke();      */
-    // to show collision points, should be commented out, if not testing something about them:
-    /*
-    const paintCps = partsToPaint.collisionPoints.map((part) => {
-      
-      ctx.beginPath();
-      ctx.strokeStyle = 'gold';
-      ctx.arc(part.x, part.y, part.a, 0, 2 * Math.PI);
-      ctx.stroke();    
-    });
-    */
-    
-    // lines from corners to corners of canvas:
-    
+  
     ctx.restore(); // restore coords.
     
     // lines from corners to canvas corners:
@@ -172,19 +178,6 @@ function paintAll(race) {
       }); 
     } */
     
-    // x red spot for x and y of unit. disabled if not testing something related
-    /*
-      ctx.beginPath();
-      ctx.strokeStyle = 'red';
-      ctx.arc(unit.x, unit.y, 5, 0, 2 * Math.PI);
-      ctx.stroke();      
-      */
-    // x blue spot for drawpoints
-    /*
-      ctx.beginPath();
-      ctx.strokeStyle = 'blue';
-      ctx.arc(unit.x + drawPoint.x, unit.x + drawPoint.y, 5, 0, 2 * Math.PI);
-      ctx.stroke();     */
   });
 
   // some other stuff to track:
