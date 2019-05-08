@@ -323,9 +323,9 @@ function setupRace(){
   // players car:
   createNewCar(gameObject.car, true);
   // ai cars:
-  createNewCar(aiCars[0], false);
-  createNewCar(aiCars[1], false);
-  createNewCar(aiCars[2], false); 
+  //createNewCar(aiCars[0], false);
+  //createNewCar(aiCars[1], false);
+  //createNewCar(aiCars[2], false); 
   // get track... now only one track
   gameObject.race.track.push(tracks[0]);
 }

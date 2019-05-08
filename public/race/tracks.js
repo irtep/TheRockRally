@@ -3,7 +3,7 @@ const canv = document.getElementById("kanveesi");
 
 const tracks = [
   {name: 'factory', checkPoints: null, obstacles: [
-    // borders:
+    // borders: RectObstacles: x, y, w, h, color, angle, name
     new RectObstacle(0, -25, canv.width, 30, 'black', 0, 'borderUp'),
     new RectObstacle(0, canv.height -5, canv.width, 30, 'black', 0, 'borderBottom'),
     new RectObstacle(-25, 0, 30, canv.height, 'black', 0, 'borderLeft'),
@@ -18,9 +18,16 @@ const tracks = [
     // finish line:
     new RectObstacle(630, 420, 10, 180, 'white', 0, 'finishLine'),
     // indicator arrows: 
+    /*
     new RectObstacle(235, 505, 50, 5, 'white', 0, 'arrowShaft'),
     new RectObstacle(275, 490, 22, 5, 'white', 45, 'arrowPoint1'),
-    new RectObstacle(275, 520, 22, 5, 'white', -45, 'arrowPoint2')
+    new RectObstacle(275, 520, 22, 5, 'white', -45, 'arrowPoint2') */
+  ],
+  arrows: [ // arrows: fromX, fromY, toX, toY, r
+    new Arrow(235, 515, 295, 515, 10),
+    new Arrow(300, 515, 395, 515, 10), 
+    new Arrow(223, 240, 300, 240, 10),
+    new Arrow(240, 200, 340, 210, 10)
   ]
   }
 

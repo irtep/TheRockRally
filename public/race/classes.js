@@ -217,3 +217,14 @@ class CheckPoint {
     this.x = x; this.y = y; this.w = w; this.h = h; this.number = number;
   };
 }
+
+class Arrow {
+  constructor(fromX, fromY, toX, toY, r) {
+  
+    this.fromX = fromX;
+    this.fromY = fromY;
+    this.toX = toX;
+    this.toY = toY;
+    this.r = r;
+  }
+}
