@@ -223,6 +223,7 @@ function createNewCar(newCar, playerCar){
   }
   
   const carsRootStats = {name: newCar.name, cost: newCar.cost, weight: newCar.weight};
+  
   gameObject.race.cars.push(new Car(newCar.driver, carsRootStats, newCar.pieces, newCar.statuses));
   
   // finish x and y setup and get angles.
@@ -233,13 +234,20 @@ function createNewCar(newCar, playerCar){
     carInTurn.h = carInTurn.pieces.hull.h;
     carInTurn.angle = carInTurn.statuses.heading;
     carInTurn.setCorners(carInTurn.angle);
+    
+    // checkPoint, currentLap, lapTime, bestTime
+    carInTurn.lastCheckPoint = 0;
+    carInTurn.nextCheckPoint = 1;
+    carInTurn.currentLap = 0;
+    carInTurn.lapTime = null;
+    carInTurn.bestTime = null;
   });
   
   console.log('new car created: gameObject ', gameObject);
 }
 
 /*  RECTANGLE BASED COLLISION TEST: */
-function pointInPoly(verties, testx, testy) {
+function pointInPoly(verties, testx, testy) { 
   var i;
   var j;
   var c = 0;
@@ -255,7 +263,7 @@ function pointInPoly(verties, testx, testy) {
 
 function testCollision(rectangle) {
   var collision = false;
-            
+  
   this.getCorners().forEach((corner) => {
     var isCollided = pointInPoly(rectangle.getCorners(), corner.x, corner.y);
                 
@@ -267,7 +275,7 @@ function testCollision(rectangle) {
 // bring "full objects" like car or gameObject.race.track[0].obstacles[0]
 // example: checkRectangleCollision(car, gameObject.race.track[0].obstacles[0]);
 function checkRectangleCollision(rect, rect2) {
-
+  
   if (testCollision.call(rect, rect2)) return true;
   else if (testCollision.call(rect2, rect)) return true;
   return false;
@@ -276,6 +284,38 @@ function checkRectangleCollision(rect, rect2) {
 // collision test starts here
 function collisionTest(car) {
   const noCollision = false;
+  
+  // first, check with checkPoints
+  for (let ind = 0; ind < gameObject.race.track[0].checkPoints.length; ind++) {
+    const testResult = checkRectangleCollision(car, gameObject.race.track[0].checkPoints[ind]);
+    
+    if (testResult) {
+      
+      if (car.nextCheckPoint === gameObject.race.track[0].checkPoints[ind].number) {
+        
+        car.lastCheckPoint = gameObject.race.track[0].checkPoints[ind].number;
+        car.nextCheckPoint++
+        
+        // if start of new lap
+        if (gameObject.race.track[0].checkPoints[ind].number === 1) {
+        // check if first lap
+          
+        // check if race terminated
+          
+        
+        } 
+      }
+    }
+    /*
+    
+    // checkPoint, currentLap, lapTime, bestTime
+    carInTurn.lastCheckPoint = 0;
+    carInTurn.nextCheckPoint = 0;
+    carInTurn.currentLap = 0;
+    carInTurn.lapTime = null;
+    carInTurn.bestTime = null;
+    */
+  }
   
   // check if collision with cars
   for (let i = 0; i < gameObject.race.cars.length; i++) {
@@ -302,12 +342,7 @@ function collisionTest(car) {
 // sets x and y to all cars for collision purposes
 function updateXandY(cars) {
   // cars:
-  
-  cars.forEach((carInTurn) => {  /*
-    carInTurn.x = carInTurn.pieces.hull.x;
-    carInTurn.y = carInTurn.pieces.hull.y;
-    carInTurn.w = carInTurn.pieces.hull.w;
-    carInTurn.h = carInTurn.pieces.hull.h; */
+  cars.forEach((carInTurn) => {  
     carInTurn.angle = carInTurn.statuses.heading;
     carInTurn.setCorners(carInTurn.angle);
   }); 
@@ -315,11 +350,13 @@ function updateXandY(cars) {
   gameObject.race.track[0].obstacles.forEach((obsInTurn) => {  
     obsInTurn.setCorners(obsInTurn.angle);
   });
+  // checkpoints:
+  gameObject.race.track[0].checkPoints.forEach((cpInTurn) => {  
+    cpInTurn.setCorners(cpInTurn.angle);
+  });  
 }
 
 function setupRace(){
-  // ok, i need atleast: statuses: power, maxSpeed, turnRate, grip, weight, armour.. all else to default values
-  
   // players car:
   createNewCar(gameObject.car, true);
   // ai cars:
@@ -328,6 +365,8 @@ function setupRace(){
   //createNewCar(aiCars[2], false); 
   // get track... now only one track
   gameObject.race.track.push(tracks[0]);
+  // laps:
+  gameObject.race.totalLaps = 3;
 }
 
 /**

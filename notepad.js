@@ -1,7 +1,7 @@
 /*
 
 Continue: 
-  - checkpoints, lap calculator etc.
+  - lap calculator etc. at collision detect place
   
   - car damage
   

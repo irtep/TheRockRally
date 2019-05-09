@@ -199,6 +199,16 @@ function paintAll(race) {
     }
   });
   
+  // paint checkpoints. only on design/test purpose will be visibles
+  const paintCps = race.track[0].checkPoints.map( (cP) => {
+       
+      ctx.beginPath();
+      ctx.strokeStyle = 'gold';
+      ctx.strokeRect(cP.x, cP.y, cP.w, cP.h);
+      ctx.stroke();
+      ctx.closePath();
+  });  
+  
   /*
   ctx.beginPath();
   ctx.fillStyle = 'black';

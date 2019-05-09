@@ -28,9 +28,13 @@ const tracks = [
     new Arrow(300, 515, 395, 515, 10), 
     new Arrow(223, 240, 300, 240, 10),
     new Arrow(240, 200, 340, 210, 10)
+  ],
+  checkPoints: [ // x, y, w, h, order number
+    new CheckPoint(640, 430, 180, 160, 1),
+    new CheckPoint(700, 35, 180, 60, 2),
+    new CheckPoint(10, 430, 180, 60, 3)
   ]
   }
-
 ];
 
 
