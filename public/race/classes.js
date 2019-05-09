@@ -211,10 +211,11 @@ class CircleBuilding {
 
 }
 */
-class CheckPoint {
+class CheckPoint extends AllRects {
   constructor(x, y, w, h, number){
-  
+    super();
     this.x = x; this.y = y; this.w = w; this.h = h; this.number = number;
+    this.angle = 0; this.name = 'cp';
   };
 }
 
