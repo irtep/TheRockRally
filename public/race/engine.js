@@ -6,9 +6,6 @@ let gameObject = null;
 function carMovement(car) {
   const stats = car.statuses;
   // need these old values if collisions
-  /*
-  let oldX = JSON.parse(JSON.stringify(car.pieces.hull.x));
-  let oldY = JSON.parse(JSON.stringify(car.pieces.hull.y));*/
   let oldX = JSON.parse(JSON.stringify(car.x));
   let oldY = JSON.parse(JSON.stringify(car.y));
 
@@ -176,11 +173,18 @@ function animate(){
 
 function giveStats() {  // just informal stuff in development and bugfix purposes...
   const infoPlace = document.getElementById('infoPlace');
+  const infoPlace2 = document.getElementById('infoPlace2');
   
+  infoPlace.innerHTML = 'currentLap: ' + gameObject.race.cars[0].currentLap + ' last/next checkPoint: ' + 
+  gameObject.race.cars[0].lastCheckPoint + '/' + gameObject.race.cars[0].nextCheckPoint + 'lap time: ' +
+  gameObject.race.currentLapTime.minutes + ':' + gameObject.race.currentLapTime.seconds + ':' + gameObject.race.currentLapTime.milliseconds
+  
+  /*
   infoPlace.innerHTML = 'speed: '+ gameObject.race.cars[0].statuses.speed+ ' HEadInG: '+ gameObject.race.cars[0].statuses.heading+
     ' isMoving, acce, bra, tL, tR '+ gameObject.race.cars[0].statuses.isMoving + ' '+ gameObject.race.cars[0].statuses.accelerate+
      gameObject.race.cars[0].statuses.accelerate + ' ' +gameObject.race.cars[0].statuses.braking + ' '+ gameObject.race.cars[0].statuses.turnLeft+
     ' '+ gameObject.race.cars[0].statuses.turnRight;
+  */
 }
 
 //  -------- ONLOAD:  ------------

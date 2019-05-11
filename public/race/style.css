@@ -17,6 +17,12 @@
   grid-row: 2;
 
 }
+
+#infoPlace2 {
+  grid-column: 1;
+  grid-row: 3;
+}
+
 #kanveesi {
   background-color: lightGrey;
   /*border-style: solid;*/

@@ -294,27 +294,75 @@ function collisionTest(car) {
       if (car.nextCheckPoint === gameObject.race.track[0].checkPoints[ind].number) {
         
         car.lastCheckPoint = gameObject.race.track[0].checkPoints[ind].number;
-        car.nextCheckPoint++
+        
+        // check if last check points of track reached.
+        if (car.lastCheckPoint + 1 > gameObject.race.track[0].checkPoints.length) {
+         
+          car.nextCheckPoint = 1;
+        } else { 
+          
+          car.nextCheckPoint++; 
+        }
         
         // if start of new lap
-        if (gameObject.race.track[0].checkPoints[ind].number === 1) {
-        // check if first lap
+        if (car.lastCheckPoint === 1) {
+         
+          // if not first lap
+          if (car.currentLap > 0) {
+              
+            // stop lap clock
+            car.lapFinished = true;
+            // push result of lap clock to 
+            gameObject.race.lastLaps.push(JSON.parse(JSON.stringify(gameObject.race.currentLapTime)));
+            // reset currentLapTime
+            gameObject.race.currentLapTime.minutes = 0;
+            gameObject.race.currentLapTime.seconds = 0;
+            gameObject.race.currentLapTime.milliseconds = 0;
+              
+            if (gameObject.race.lastLaps.length > 0) {
+              
+              gameObject.race.lastLaps.forEach( (times) => {
+                
+                infoPlace2.innerHTML = infoPlace2.innerHTML + times.minutes + ':' + times.seconds + ':' + times.milliseconds + '<br>';
+              });
+            }
+            console.log(gameObject.race.lastLaps);
+            // reset lapFinished
+            if (car.lapFinished) { car.lapFinished = false; }
+          }
           
-        // check if race terminated
+          car.currentLap++  
           
-        
-        } 
+          // check if this was last lap
+          if (gameObject.race.totalLaps === car.currentLap) {
+           
+            // terminate race for this car...
+            
+          } else {
+          
+            // start lap clock
+            const lapTimer = window.setInterval(() => {
+              
+              if (car.lapFinished) {window.clearInterval(lapTimer)};
+              
+              // update lap time
+              if (gameObject.race.currentLapTime.milliseconds < 99) {gameObject.race.currentLapTime.milliseconds++;} else {
+                
+                gameObject.race.currentLapTime.milliseconds = 0;
+                
+                if (gameObject.race.currentLapTime.seconds < 59) {gameObject.race.currentLapTime.seconds++;} else {
+                  
+                  gameObject.race.currentLapTime.seconds = 0;
+                  gameObject.race.currentLapTime.minutes++;
+                }
+              }
+            }, 10);
+           
+          }
+        }
+          
       }
     }
-    /*
-    
-    // checkPoint, currentLap, lapTime, bestTime
-    carInTurn.lastCheckPoint = 0;
-    carInTurn.nextCheckPoint = 0;
-    carInTurn.currentLap = 0;
-    carInTurn.lapTime = null;
-    carInTurn.bestTime = null;
-    */
   }
   
   // check if collision with cars
@@ -367,6 +415,8 @@ function setupRace(){
   gameObject.race.track.push(tracks[0]);
   // laps:
   gameObject.race.totalLaps = 3;
+  gameObject.race.currentLapTime = {minutes: 0, seconds: 0, milliseconds: 0};
+  gameObject.race.lastLaps = [];
 }
 
 /**
