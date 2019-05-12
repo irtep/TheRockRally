@@ -309,9 +309,7 @@ function collisionTest(car) {
          
           // if not first lap
           if (car.currentLap > 0) {
-              
-            // stop lap clock
-            car.lapFinished = true;
+            
             // push result of lap clock to 
             gameObject.race.lastLaps.push(JSON.parse(JSON.stringify(gameObject.race.currentLapTime)));
             // reset currentLapTime
@@ -319,16 +317,20 @@ function collisionTest(car) {
             gameObject.race.currentLapTime.seconds = 0;
             gameObject.race.currentLapTime.milliseconds = 0;
               
-            if (gameObject.race.lastLaps.length > 0) {
+            // write lap times:
+            if (gameObject.race.totalLaps + 1 > car.currentLap) {
+              let lapTimes = '';
               
               gameObject.race.lastLaps.forEach( (times) => {
                 
-                infoPlace2.innerHTML = infoPlace2.innerHTML + times.minutes + ':' + times.seconds + ':' + times.milliseconds + '<br>';
+                lapTimes = lapTimes + times.minutes + ':' + times.seconds + ':' + times.milliseconds + '<br>';
               });
+              
+              infoPlace2.innerHTML = lapTimes;
             }
             console.log(gameObject.race.lastLaps);
             // reset lapFinished
-            if (car.lapFinished) { car.lapFinished = false; }
+            //if (car.lapFinished) { car.lapFinished = false; }
           }
           
           car.currentLap++  
@@ -340,26 +342,9 @@ function collisionTest(car) {
             
           } else {
           
-            // start lap clock
-            const lapTimer = window.setInterval(() => {
-              
-              if (car.lapFinished) {window.clearInterval(lapTimer)};
-              
-              // update lap time
-              if (gameObject.race.currentLapTime.milliseconds < 99) {gameObject.race.currentLapTime.milliseconds++;} else {
-                
-                gameObject.race.currentLapTime.milliseconds = 0;
-                
-                if (gameObject.race.currentLapTime.seconds < 59) {gameObject.race.currentLapTime.seconds++;} else {
-                  
-                  gameObject.race.currentLapTime.seconds = 0;
-                  gameObject.race.currentLapTime.minutes++;
-                }
-              }
-            }, 10);
-           
+            // continues
           }
-        }
+        } // first checkpoint
           
       }
     }
@@ -414,9 +399,27 @@ function setupRace(){
   // get track... now only one track
   gameObject.race.track.push(tracks[0]);
   // laps:
-  gameObject.race.totalLaps = 3;
+  gameObject.race.totalLaps = 4;
   gameObject.race.currentLapTime = {minutes: 0, seconds: 0, milliseconds: 0};
   gameObject.race.lastLaps = [];
+  
+  // start lap clock
+  const lapTimer = window.setInterval(() => {
+              
+    if (gameObject.race.cars[0].currentLap > gameObject.race.totalLaps) {window.clearInterval(lapTimer)};
+              
+    // update lap time
+    if (gameObject.race.currentLapTime.milliseconds < 99) {gameObject.race.currentLapTime.milliseconds++;} else {
+                
+      gameObject.race.currentLapTime.milliseconds = 0;
+                
+      if (gameObject.race.currentLapTime.seconds < 59) {gameObject.race.currentLapTime.seconds++;} else {
+                  
+        gameObject.race.currentLapTime.seconds = 0;
+        gameObject.race.currentLapTime.minutes++;
+      }
+    }
+  }, 10);
 }
 
 /**
