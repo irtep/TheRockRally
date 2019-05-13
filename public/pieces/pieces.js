@@ -83,7 +83,7 @@ const chassises = [
 // Motors: 
 const motors = [
   {name: 'Rond V8', power: 2.1, maxSpeed: 29, weight: 5, durability: 10, cost: 100, desc: 'Powerful and durable, but heavy motor'},
-  {name: 'Rond V10', power: 2.2, maxSpeed: 34, weight: 6, durability: 8, cost: 250, desc: 'Racing version of Rond V8. Giving much more power, but not that durable as standard motor.'},
+  {name: 'Rond V10', power: 2.2, maxSpeed: 36, weight: 6, durability: 8, cost: 250, desc: 'Racing version of Rond V8. Giving much more power, but not that durable as standard motor.'},
   {name: 'Beijing turbo', power: 2.2, maxSpeed: 34, weight: 7, durability: 5, cost: 100, desc: 'Racing motor with price of a normal civil motor! However, do not count on the durability.. too much'},
   {name: 'Zermeces-Lenz 2.5', power: 1.8, maxSpeed: 20, weight: 3, durability: 10, cost: 200, desc: 'Very light and reliable motor, with enough power for lighter cars.'},
   {name: 'Lion 1.6', power: 0.89, maxSpeed: 12, weight: 2, durability: 6, cost: 50, desc: 'Cheap, but not powerful or reliable.'},

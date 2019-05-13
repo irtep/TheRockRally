@@ -122,6 +122,7 @@ class RectObstacle extends AllRects {
     this.angle = angle;
     this.name = name;
     this.type = 'building';
+    this.hitPoints = 1000;
   }
 }
 
@@ -135,6 +136,7 @@ class ArcObstacle {
     this.aS = aS; //angleStarts
     this.aE = aE; // angleEnds
     this.name = 'arcO';
+    this.hitPoints = 1000;
   }
 }
 
@@ -145,6 +147,8 @@ class Car extends AllRects {
     this.name = rootStats.name;
     this.cost = rootStats.cost;
     this.weight = rootStats.weight;
+    this.armourValue = rootStats.armourValue;
+    this.hitPoints = rootStats.hitPoints;
     this.pieces = pieces; // all pieces
     this.statuses = statuses;
   }

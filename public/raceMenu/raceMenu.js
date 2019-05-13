@@ -1,7 +1,7 @@
 
 /* Globals: vehicles at public/pieces/piecesjs */
 
-const colors = ['white','green','darkGreen','black','navy','blue','cyan','orange','gold','yellow','red','burgundy','crimson','silver','gray', 'pink'];
+const colors = ['white','green','darkGreen','black','navy','blue','cyan','orange','gold','yellow','red','crimson','silver','gray', 'pink'];
 let gameObject = {
   playersName: null,                                                             
   car: {driver: null, name: null, color: null, chassis: null, motor: null, tires: null, armour: null, pieces: null, x: null, y: null, w: null, h: null, 
@@ -12,12 +12,17 @@ let gameObject = {
   race: {cars: [], track: []}
 }
 
+function showCar() {
+  console.log('joujou');
+}
+
 // when color is chosen, checks all fields if not empty
 function checkFields() {
   const nameF = document.getElementById('yourName');
   const carF = document.getElementById('selectCar');
   const colorF = document.getElementById('selectColor');
   const colorF2 = document.getElementById('selectColor2');
+  const carInfo = document.getElementById('carInfo');
               //name,  car,   color   color2
   let fields = [false, false, false, false];
   
@@ -32,6 +37,7 @@ function checkFields() {
   if (carF.value !== 'Choose a car') {
     fields[1] = true;    
     gameObject.car.name = carF.value;
+    carInfo.innerHTML = carF.value;
   } else {
     fields[1] = false;  
   }  
@@ -58,7 +64,7 @@ function checkFields() {
   }
 }
 
-function Start() {
+function start() {
   // save gameObject
   localStorage.setItem('Go', JSON.stringify(gameObject)); 
   window.location = "https://therockrally.glitch.me/race";

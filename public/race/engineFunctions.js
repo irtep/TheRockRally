@@ -118,7 +118,7 @@ function checkKeyReleased(released){
   }
 }
 
-// updating weight, color, cost and car handling stats.
+// updating weight, color, cost, armour, hitPoints and car handling stats.
 function updateCar(carOnCase) {
   
   carOnCase.weight = carOnCase.chassis.weight + carOnCase.armour.weight + carOnCase.motor.weight + carOnCase.tires.weight;
@@ -127,6 +127,8 @@ function updateCar(carOnCase) {
   carOnCase.statuses.maxSpeed = carOnCase.motor.maxSpeed - carOnCase.weight;
   carOnCase.statuses.grip = carOnCase.tires.grip - carOnCase.weight;
   carOnCase.pieces.hull.color = carOnCase.color;
+  carOnCase.armourValue = carOnCase.chassis.armour + carOnCase.armour.value;
+  carOnCase.hitPoints = carOnCase.chassis.durability + carOnCase.motor.durability;
   
   return carOnCase;
 }
@@ -222,7 +224,7 @@ function createNewCar(newCar, playerCar){
     newCar.pieces.parts.push(newCar.pieces.rearWindow);
   }
   
-  const carsRootStats = {name: newCar.name, cost: newCar.cost, weight: newCar.weight};
+  const carsRootStats = {name: newCar.name, cost: newCar.cost, weight: newCar.weight, armourValue: newCar.armourValue, hitPoints: newCar.hitPoints};
   
   gameObject.race.cars.push(new Car(newCar.driver, carsRootStats, newCar.pieces, newCar.statuses));
   
@@ -244,6 +246,24 @@ function createNewCar(newCar, playerCar){
   });
   
   console.log('new car created: gameObject ', gameObject);
+}
+
+// damage dealer:
+function damageDealer(obj1, obj2) {
+  
+  // lighter takes damage
+  if (obj1.weight < obj2.weight) {
+      
+  }
+  
+  if (obj2.weight < obj1.weight) {
+  
+  }
+  
+  // if same, both take
+  if (obj1.weight === obj2.weight) {
+  
+  }
 }
 
 /*  RECTANGLE BASED COLLISION TEST: */
