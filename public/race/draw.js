@@ -149,11 +149,20 @@ function paintAll(race) {
       ctx.rect(part.x, part.y, part.w, part.h);
       ctx.fill();
     }); 
-      // write drivers name 
-    ctx.beginPath();
-    ctx.fillStyle = 'black';
-    ctx.fillText (unit.driver, drawPoint.x, drawPoint.y);
-    ctx.fill;
+      // write drivers name or disabled if no hps
+    if (unit.hitPoints > 0) {
+      
+      ctx.beginPath();
+      ctx.fillStyle = 'black';
+      ctx.fillText (unit.driver, drawPoint.x, drawPoint.y);
+      ctx.fill;
+    } else {
+    
+      ctx.beginPath();
+      ctx.fillStyle = 'red';
+      ctx.fillText ('DISABLED!', drawPoint.x, drawPoint.y);
+      ctx.fill;      
+    }
   
     ctx.restore(); // restore coords.
     
@@ -200,6 +209,7 @@ function paintAll(race) {
   });
   
   // paint checkpoints. only on design/test purpose will be visibles
+  /*
   const paintCps = race.track[0].checkPoints.map( (cP) => {
        
       ctx.beginPath();
@@ -208,22 +218,5 @@ function paintAll(race) {
       ctx.stroke();
       ctx.closePath();
   });  
-  
-  /*
-  ctx.beginPath();
-  ctx.fillStyle = 'black';
-  ctx.rect(100, 150, 100, 100);
-  ctx.fill();
-  ctx.closePath();
-  
-  ctx.beginPath();
-  ctx.fillStyle = 'black';
-  ctx.rect(340, 250, 100, 100);
-  ctx.fill();
-  ctx.closePath();
-  
-  ctx.beginPath();
-  ctx.arc(550, 175, 50, 0, 2 * Math.PI);
-  ctx.stroke();
   */
 }

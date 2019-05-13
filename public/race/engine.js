@@ -59,8 +59,12 @@ function carMovement(car) {
           stats.speed = 0;
           stats.isMoving = false;
           document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          // damage test:
+          
         }
-        else { document.getElementById('collisionPlace').innerHTML = 'no collision'}
+        else { 
+          // no collision
+        }
         // right was + to heading 
       } else {
         // not sliding
@@ -79,7 +83,8 @@ function carMovement(car) {
           stats.isMoving = false;
           document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
         }
-        else { document.getElementById('collisionPlace').innerHTML = 'no collision'}
+        else { // no collision
+        }
       }
     } else {
       // not sliding
@@ -96,9 +101,12 @@ function carMovement(car) {
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
           stats.isMoving = false;
-          document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          
+          //document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          
         }
-        else { document.getElementById('collisionPlace').innerHTML = 'no collision'}
+        else { // no collision
+        }
     }
   
   }
@@ -132,7 +140,8 @@ function carMovement(car) {
         }
         else { 
         
-          document.getElementById('collisionPlace').innerHTML = 'no collision'
+          // no collision
+          
         }
     }
   
