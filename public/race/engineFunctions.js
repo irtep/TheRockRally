@@ -226,30 +226,19 @@ function createNewCar(newCar, playerCar){
   
   const carsRootStats = {name: newCar.name, cost: newCar.cost, weight: newCar.weight, armourValue: newCar.armourValue, hitPoints: newCar.hitPoints};
   
-  gameObject.race.cars.push(new Car(newCar.driver, carsRootStats, newCar.pieces, newCar.statuses));
+  return new Car(newCar.driver, carsRootStats, newCar.pieces, newCar.statuses);
+  //gameObject.race.cars.push(new Car(newCar.driver, carsRootStats, newCar.pieces, newCar.statuses));
   
-  // finish x and y setup and get angles.
-  gameObject.race.cars.forEach((carInTurn) => {  
-    carInTurn.x = carInTurn.pieces.hull.x;
-    carInTurn.y = carInTurn.pieces.hull.y;
-    carInTurn.w = carInTurn.pieces.hull.w;
-    carInTurn.h = carInTurn.pieces.hull.h;
-    carInTurn.angle = carInTurn.statuses.heading;
-    carInTurn.setCorners(carInTurn.angle);
-    
-    // checkPoint, currentLap, lapTime, bestTime
-    carInTurn.lastCheckPoint = 0;
-    carInTurn.nextCheckPoint = 1;
-    carInTurn.currentLap = 0;
-    carInTurn.lapTime = null;
-    carInTurn.bestTime = null;
-  });
-  
-  console.log('new car created: gameObject ', gameObject);
 }
 
 // damage dealer:
 function damageDealer(obj1, obj2) {
+  /* 
+  could be:
+  weightdifference - armour = damage,
+  maxDamage maybe 1/3 of max hit points.. maybe less if it seems that they take this various times.
+  bigger takes 1 damage
+  */
   
   // lighter takes damage
   if (obj1.weight < obj2.weight) {
@@ -411,14 +400,31 @@ function updateXandY(cars) {
 
 function setupRace(){
   // players car:
-  createNewCar(gameObject.car, true);
+  gameObject.race.cars.push(createNewCar(gameObject.car, true));
   // ai cars:
   //createNewCar(aiCars[0], false);
   //createNewCar(aiCars[1], false);
   //createNewCar(aiCars[2], false); 
+  
+  // finish x and y setup and get angles.
+  gameObject.race.cars.forEach((carInTurn) => {  
+    carInTurn.x = carInTurn.pieces.hull.x;
+    carInTurn.y = carInTurn.pieces.hull.y;
+    carInTurn.w = carInTurn.pieces.hull.w;
+    carInTurn.h = carInTurn.pieces.hull.h;
+    carInTurn.angle = carInTurn.statuses.heading;
+    carInTurn.setCorners(carInTurn.angle);
+    
+    // checkPoint, currentLap, lapTime, bestTime
+    carInTurn.lastCheckPoint = 0;
+    carInTurn.nextCheckPoint = 1;
+    carInTurn.currentLap = 0;
+    carInTurn.lapTime = null;
+    carInTurn.bestTime = null;
+  });
   // get track... now only one track
   gameObject.race.track.push(tracks[0]);
-  // laps:
+  // laps and raceclock:
   gameObject.race.totalLaps = 4;
   gameObject.race.currentLapTime = {minutes: 0, seconds: 0, milliseconds: 0};
   gameObject.race.lastLaps = [];

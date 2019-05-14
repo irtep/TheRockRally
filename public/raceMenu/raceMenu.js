@@ -1,6 +1,8 @@
 
 /* Globals: vehicles at public/pieces/piecesjs */
 
+let carForShow = null;
+
 const colors = ['white','green','darkGreen','black','navy','blue','cyan','orange','gold','yellow','red','crimson','silver','gray', 'pink'];
 let gameObject = {
   playersName: null,                                                             
@@ -10,10 +12,6 @@ let gameObject = {
          }
        },
   race: {cars: [], track: []}
-}
-
-function showCar() {
-  console.log('joujou');
 }
 
 // when color is chosen, checks all fields if not empty
@@ -35,9 +33,23 @@ function checkFields() {
   }
   
   if (carF.value !== 'Choose a car') {
+    
     fields[1] = true;    
     gameObject.car.name = carF.value;
-    carInfo.innerHTML = carF.value;
+    
+    // create selected car for to show it
+    carForShow = createNewCar(gameObject.car, true);
+    const carDesc = vehicles.filter((machine) => machine.name === carF.value);
+    const powerValue = carForShow.statuses.power * 10;
+    carInfo.innerHTML = carForShow.name + '<br><br>'+
+      'accelaration: '+ powerValue.toFixed(2) + '<br>' +
+      'top speed: ' + carForShow.statuses.maxSpeed + '<br>' +
+      'armour: ' + carForShow.armourValue+ '<br>' +
+      'hit points: ' + carForShow.hitPoints + '<br>' +
+      'weight: ' + carForShow.weight + '<br>'+
+      'turning: ' + carForShow.statuses.grip + '<br>' +
+      'cost: ' + carForShow.cost + '<br><br>' +
+      carDesc[0].description;
   } else {
     fields[1] = false;  
   }  

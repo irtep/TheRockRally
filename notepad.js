@@ -1,7 +1,7 @@
 /*
 
 Continue: 
-  - lap calculator etc. at collision detect place, continue so that it works only for car[0]
+  - draw to raceMenu.js to show the car.
   
   - car damage
   

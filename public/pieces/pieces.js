@@ -49,7 +49,7 @@ const chassises = [
   },
   {name: 'Zermeces standard', weight: 5, armour: 2, durability: 9, cost: 270,
     pieces: {
-      hull: {name: 'hull', x: 30, y: 500, h: 10, w: 30, color: 'silver'},
+      hull: {name: 'hull', x: 30, y: 500, h: 10, w: 30, color: 'white'},
       leftFrontWindow: {name: 'leftFrontWindow', color: 'lightBlue', h: 1},
       rightFrontWindow: {name: 'rightFrontWindow', color: 'lightBlue', h: 1},
       frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 1.5},
@@ -71,7 +71,7 @@ const chassises = [
     },
    drawPoint: {x: 1.7, y: -1.5} // {x: -(partsToPaint.hull.w/1.5), y: -(partsToPaint.hull.h/1.5)}
   },
-  {name: 'Juggernaut XL', weight: 16, armour: 10, durability: 7, cost: 350,
+  {name: 'Juggernaut XL', weight: 16, armour: 10, durability: 14, cost: 350,
     pieces: {
       hull: {name: 'hull', x: 30, y: 500, h: 16, w: 45, color: 'darkGreen'},
       frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 1.5}
