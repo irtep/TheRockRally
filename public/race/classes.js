@@ -118,7 +118,7 @@ class RectObstacle extends AllRects {
     this.w = w,
     this.h = h;
     this.color = color;
-    this.weight = 1000; // default weight
+    this.weight = 50; // default weight
     this.angle = angle;
     this.name = name;
     this.type = 'building';
@@ -127,12 +127,12 @@ class RectObstacle extends AllRects {
 }
 
 class ArcObstacle {
-  constructor(x, y, a, aS, aE, color, weight) {
+  constructor(x, y, a, aS, aE, color) {
     this.x = x;
     this.y = y;
     this.a = a,
     this.color = color;
-    this.weight = weight;
+    this.weight = 50;
     this.aS = aS; //angleStarts
     this.aE = aE; // angleEnds
     this.name = 'arcO';
