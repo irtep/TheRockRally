@@ -5,6 +5,8 @@ let gameObject = null;
 
 function carMovement(car) {
   const stats = car.statuses;
+  // maximum damage with one collision
+  const maxDam = car.maxHitPoints / 2;
   // need these old values if collisions
   let oldX = JSON.parse(JSON.stringify(car.x));
   let oldY = JSON.parse(JSON.stringify(car.y));
@@ -58,8 +60,19 @@ function carMovement(car) {
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
           stats.isMoving = false;
-          document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          //document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
           // damage test:
+          const damageResults = damageDealer(car, colTest);
+          if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
+          if (damageResults.car2 > maxDam) { damageResults.car2 = maxDam; }
+          
+          console.log('d, hp, d to car1, and 2: ', JSON.parse(JSON.stringify(car.hitPoints)), JSON.parse(JSON.stringify(damageResults.car1)),
+           JSON.parse(JSON.stringify(colTest.hitPoints)), JSON.parse(JSON.stringify(damageResults.car2)));
+          car.hitPoints =- damageResults.car1;
+          car.hitPoints =- damageResults.car1;
+          colTest.hitPoints =- damageResults.car2;
+          console.log('race after damage: ', gameObject.race);
+          
           
         }
         else { 
@@ -81,7 +94,19 @@ function carMovement(car) {
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
           stats.isMoving = false;
-          document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          //document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          // damage test:
+          const damageResults = damageDealer(car, colTest);
+          if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
+          if (damageResults.car2 > maxDam) { damageResults.car2 = maxDam; }
+          
+          console.log('d, hp, d to car1, and 2: ', JSON.parse(JSON.stringify(car.hitPoints)), JSON.parse(JSON.stringify(damageResults.car1)),
+           JSON.parse(JSON.stringify(colTest.hitPoints)), JSON.parse(JSON.stringify(damageResults.car2)));
+          car.hitPoints =- damageResults.car1;
+          car.hitPoints =- damageResults.car1;
+          colTest.hitPoints =- damageResults.car2;
+          console.log('race after damage: ', gameObject.race);
+          
         }
         else { // no collision
         }
@@ -101,8 +126,19 @@ function carMovement(car) {
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
           stats.isMoving = false;
-          
           //document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          // damage test:
+          const damageResults = damageDealer(car, colTest);
+          if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
+          if (damageResults.car2 > maxDam) { damageResults.car2 = maxDam; }
+          
+          console.log('d, hp, d to car1, and 2: ', JSON.parse(JSON.stringify(car.hitPoints)), JSON.parse(JSON.stringify(damageResults.car1)),
+           JSON.parse(JSON.stringify(colTest.hitPoints)), JSON.parse(JSON.stringify(damageResults.car2)));
+          car.hitPoints =- damageResults.car1;
+          car.hitPoints =- damageResults.car1;
+          colTest.hitPoints =- damageResults.car2;
+          console.log('race after damage: ', gameObject.race);
+          
           
         }
         else { // no collision
@@ -117,7 +153,7 @@ function carMovement(car) {
     }
   
     // if reversing
-    if (stats.speed <= 0 && stats.reverse === true) {
+    if (stats.speed <= 0 && stats.reverse === true && car.hitPoints > 0) {
         
       const speeds = getSpeeds(stats.heading, -0.6);
       
@@ -127,8 +163,7 @@ function carMovement(car) {
       // collision test:
       updateXandY(gameObject.race.cars);
       const colTest = collisionTest(car);
-        
-        // no collision
+      
         if (colTest !== false) { 
            
           car.x = oldX;
@@ -137,6 +172,18 @@ function carMovement(car) {
           stats.speed = 0;
           stats.isMoving = false;
           document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          // damage test:
+          const damageResults = damageDealer(car, colTest);
+          if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
+          if (damageResults.car2 > maxDam) { damageResults.car2 = maxDam; }
+          
+          console.log('d, hp, d to car1, and 2: ', JSON.parse(JSON.stringify(car.hitPoints)), JSON.parse(JSON.stringify(damageResults.car1)),
+           JSON.parse(JSON.stringify(colTest.hitPoints)), JSON.parse(JSON.stringify(damageResults.car2)));
+          car.hitPoints =- damageResults.car1;
+          car.hitPoints =- damageResults.car1;
+          colTest.hitPoints =- damageResults.car2;
+          console.log('race after damage: ', gameObject.race);
+          
         }
         else { 
         
@@ -167,7 +214,6 @@ function carMovement(car) {
     if (stats.turnLeft === true && stats.outOfControl === false) { 
       car.turnLeft();    
     }
-    // collision detect
 }
 
 function animate(){

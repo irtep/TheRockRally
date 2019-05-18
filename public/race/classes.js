@@ -123,6 +123,7 @@ class RectObstacle extends AllRects {
     this.name = name;
     this.type = 'building';
     this.hitPoints = 1000;
+    this.maxHitPoints = 1000;
   }
 }
 
@@ -137,6 +138,7 @@ class ArcObstacle {
     this.aE = aE; // angleEnds
     this.name = 'arcO';
     this.hitPoints = 1000;
+    this.maxHitPoints = 1000;
   }
 }
 
@@ -149,6 +151,7 @@ class Car extends AllRects {
     this.weight = rootStats.weight;
     this.armourValue = rootStats.armourValue;
     this.hitPoints = rootStats.hitPoints;
+    this.maxHitPoints = rootStats.maxHitPoints;
     this.pieces = pieces; // all pieces
     this.statuses = statuses;
   }
@@ -160,7 +163,7 @@ class Car extends AllRects {
   */
   accelerate() {
     //console.log(`${this.name} accelerates.`);
-    if (this.statuses.maxSpeed > this.statuses.speed){
+    if (this.statuses.maxSpeed > this.statuses.speed && this.hitPoints > 0){
       
       this.statuses.speed += this.statuses.power;
     }

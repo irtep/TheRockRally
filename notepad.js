@@ -1,9 +1,8 @@
 /*
 
 Continue: 
-  - draw to raceMenu.js to show the car.
   
-  - car damage
+  - car damage bugging.. kills a car even if not enough damage
   
   - Ai movements
   

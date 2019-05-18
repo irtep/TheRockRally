@@ -129,6 +129,7 @@ function updateCar(carOnCase) {
   carOnCase.pieces.hull.color = carOnCase.color;
   carOnCase.armourValue = carOnCase.chassis.armour + carOnCase.armour.value;
   carOnCase.hitPoints = carOnCase.chassis.durability + carOnCase.motor.durability;
+  carOnCase.maxHitPoints = carOnCase.chassis.durability + carOnCase.motor.durability;
   
   return carOnCase;
 }
@@ -224,15 +225,19 @@ function createNewCar(newCar, playerCar){
     newCar.pieces.parts.push(newCar.pieces.rearWindow);
   }
   
-  const carsRootStats = {name: newCar.name, cost: newCar.cost, weight: newCar.weight, armourValue: newCar.armourValue, hitPoints: newCar.hitPoints};
+  const carsRootStats = {name: newCar.name, cost: newCar.cost, weight: newCar.weight, armourValue: newCar.armourValue, hitPoints: newCar.hitPoints,
+                        maxHitPoints: newCar.maxHitPoints};
   
+  console.log('new car created, gO: ', gameObject);
   return new Car(newCar.driver, carsRootStats, newCar.pieces, newCar.statuses);
-  //gameObject.race.cars.push(new Car(newCar.driver, carsRootStats, newCar.pieces, newCar.statuses));
   
 }
 
 // damage dealer:
 function damageDealer(obj1, obj2) {
+  let weightDifference = Math.abs(obj1.weight) - Math.abs(obj2.weight);
+  const absDifference = Math.abs(weightDifference);
+  const damages = {car1: 0, car2: 0};
   /* 
   could be:
   weightdifference - armour = damage,
@@ -242,17 +247,33 @@ function damageDealer(obj1, obj2) {
   
   // lighter takes damage
   if (obj1.weight < obj2.weight) {
-      
+    let dealToObj1 = 0;
+    let dealToObj2 = 1;
+    
+    dealToObj1 = absDifference - obj1.armourValue;
+    if (dealToObj1 < 1) { dealToObj1 = 1} // 1 is minimum damage
+    damages.car1 = dealToObj1; damages.car2 = dealToObj2
   }
   
   if (obj2.weight < obj1.weight) {
+    let dealToObj1 = 1;
+    let dealToObj2 = 0;
+    
+    dealToObj2 = absDifference - obj2.armourValue;
+    if (dealToObj2 < 1) { dealToObj2 = 1} // 1 is minimum damage
+    console.log('dealing: ', dealToObj1, dealToObj2);
+    damages.car1 = dealToObj1; damages.car2 = dealToObj2
   
   }
   
   // if same, both take
   if (obj1.weight === obj2.weight) {
-  
+    
+    damages.car1 = 3; damages.car2 = 3;
   }
+  
+  console.log('dealing: ', damages.car1, damages.car2);
+  return damages;
 }
 
 /*  RECTANGLE BASED COLLISION TEST: */
@@ -337,9 +358,6 @@ function collisionTest(car) {
               
               infoPlace2.innerHTML = lapTimes;
             }
-            console.log(gameObject.race.lastLaps);
-            // reset lapFinished
-            //if (car.lapFinished) { car.lapFinished = false; }
           }
           
           car.currentLap++  

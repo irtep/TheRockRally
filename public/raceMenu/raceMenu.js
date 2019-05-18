@@ -14,6 +14,41 @@ let gameObject = {
   race: {cars: [], track: []}
 }
 
+// show selected car:
+function showCar() {
+  const canvas = document.getElementById('kanveesi');
+  const ctx = canvas.getContext("2d");
+  const partsToPaint = carForShow.pieces;
+  const colorF = document.getElementById('selectColor');
+  const colorF2 = document.getElementById('selectColor2');
+  let color1 = 'green'; // default
+  let color2 = 'gold'; // default
+  
+  if (colorF.value !== 'Choose a color 1') { color1 = colorF.value; }
+  if (colorF2.value !== 'Choose a color 2') { color2 = colorF.value; }
+  // y adjust:
+  carForShow.pieces.drawPoint.y =+ 10;
+  
+  ctx.clearRect(0,0,canvas.width,canvas.height);  // clear all 
+  
+  // paint hull of car
+  ctx.beginPath();
+  ctx.fillStyle = color1; console.log('fill style: ', color1);
+  ctx.rect(partsToPaint.drawPoint.x, partsToPaint.drawPoint.y, partsToPaint.hull.w, partsToPaint.hull.h);
+  ctx.fill();
+  ctx.closePath();
+    
+  // other parts: 
+  const paintIt = partsToPaint.parts.map((part) => {
+    const yAdjust = 11
+      
+    ctx.beginPath();
+    ctx.fillStyle = part.color;
+    ctx.rect(part.x, part.y + yAdjust, part.w, part.h);
+    ctx.fill();
+  }); 
+}
+
 // when color is chosen, checks all fields if not empty
 function checkFields() {
   const nameF = document.getElementById('yourName');
@@ -39,6 +74,7 @@ function checkFields() {
     
     // create selected car for to show it
     carForShow = createNewCar(gameObject.car, true);
+    //carForShow.x = 20; carForShow.y = 70;
     const carDesc = vehicles.filter((machine) => machine.name === carF.value);
     const powerValue = carForShow.statuses.power * 10;
     carInfo.innerHTML = carForShow.name + '<br><br>'+
@@ -50,6 +86,7 @@ function checkFields() {
       'turning: ' + carForShow.statuses.grip + '<br>' +
       'cost: ' + carForShow.cost + '<br><br>' +
       carDesc[0].description;
+    showCar();
   } else {
     fields[1] = false;  
   }  
