@@ -47,7 +47,7 @@ const chassises = [
     },
    drawPoint: {x: 1.5, y: -1.5}
   },
-  {name: 'Zermeces standard', weight: 5, armour: 2, durability: 9, cost: 270,
+  {name: 'Zermeces standard', weight: 5, armour: 1, durability: 9, cost: 270,
     pieces: {
       hull: {name: 'hull', x: 30, y: 500, h: 10, w: 30, color: 'white'},
       leftFrontWindow: {name: 'leftFrontWindow', color: 'lightBlue', h: 1},

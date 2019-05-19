@@ -11,7 +11,16 @@ let gameObject = {
            speed: 0, brakingValue: 0.2, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
          }
        },
-  race: {cars: [], track: []}
+  race: {cars: [], track: [], typeOfRace: 'default'}
+}
+console.log('d ', document.getElementById('typeOfRace').elements['raceType']);
+console.log('l ', document.getElementById('typeOfRace').elements.length);
+
+// get value of radioButtons
+function getRadioVal(form, name) {
+  const selectedValue = form.elements[name].value;
+  
+  return selectedValue;
 }
 
 // show selected car:
@@ -40,7 +49,7 @@ function showCar() {
     
   // other parts: 
   const paintIt = partsToPaint.parts.map((part) => {
-    const yAdjust = 11
+    const yAdjust = 11 // to get car little bit more down.
       
     ctx.beginPath();
     ctx.fillStyle = part.color;
@@ -114,6 +123,8 @@ function checkFields() {
 }
 
 function start() {
+  // add type of race
+  gameObject.race.typeOfRace = getRadioVal(document.getElementById('typeOfRace'), 'raceType');
   // save gameObject
   localStorage.setItem('Go', JSON.stringify(gameObject)); 
   window.location = "https://therockrally.glitch.me/race";
@@ -121,14 +132,17 @@ function start() {
 
 function quickStart() {
   
-    gameObject.playersName = 'TestMan';
-    gameObject.car.driver = 'TestMan';
+  gameObject.playersName = 'TestMan';
+  gameObject.car.driver = 'TestMan';
   
-    gameObject.car.name = 'Rond Comet R';
+  gameObject.car.name = 'Rond Comet R';
   
-    gameObject.car.color = 'black';
+  gameObject.car.color = 'black';
   
-    gameObject.car.color2 = 'gold';
+  gameObject.car.color2 = 'gold';
+  
+  // add type of race
+  gameObject.race.typeOfRace = getRadioVal(document.getElementById('typeOfRace'), 'raceType');
   // save gameObject
   localStorage.setItem('Go', JSON.stringify(gameObject)); 
   window.location = "https://therockrally.glitch.me/race";
