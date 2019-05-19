@@ -65,14 +65,11 @@ function carMovement(car) {
           const damageResults = damageDealer(car, colTest);
           if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
           if (damageResults.car2 > maxDam) { damageResults.car2 = maxDam; }
+          damageResults.car1 = damageResults.car1 / 3;
+          damageResults.car2 = damageResults.car2 /3;
           
-          console.log('d, hp, d to car1, and 2: ', JSON.parse(JSON.stringify(car.hitPoints)), JSON.parse(JSON.stringify(damageResults.car1)),
-           JSON.parse(JSON.stringify(colTest.hitPoints)), JSON.parse(JSON.stringify(damageResults.car2)));
-          car.hitPoints =- damageResults.car1;
-          car.hitPoints =- damageResults.car1;
-          colTest.hitPoints =- damageResults.car2;
-          console.log('race after damage: ', gameObject.race);
-          
+          car.hitPoints = car.hitPoints - damageResults.car1;
+          colTest.hitPoints = colTest.hitPoints - damageResults.car2;
           
         }
         else { 
@@ -99,14 +96,10 @@ function carMovement(car) {
           const damageResults = damageDealer(car, colTest);
           if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
           if (damageResults.car2 > maxDam) { damageResults.car2 = maxDam; }
-          
-          console.log('d, hp, d to car1, and 2: ', JSON.parse(JSON.stringify(car.hitPoints)), JSON.parse(JSON.stringify(damageResults.car1)),
-           JSON.parse(JSON.stringify(colTest.hitPoints)), JSON.parse(JSON.stringify(damageResults.car2)));
-          car.hitPoints =- damageResults.car1;
-          car.hitPoints =- damageResults.car1;
-          colTest.hitPoints =- damageResults.car2;
-          console.log('race after damage: ', gameObject.race);
-          
+          damageResults.car1 = damageResults.car1 / 3;
+          damageResults.car2 = damageResults.car2 /3;
+          car.hitPoints = car.hitPoints - damageResults.car1;
+          colTest.hitPoints = colTest.hitPoints - damageResults.car2;
         }
         else { // no collision
         }
@@ -131,15 +124,10 @@ function carMovement(car) {
           const damageResults = damageDealer(car, colTest);
           if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
           if (damageResults.car2 > maxDam) { damageResults.car2 = maxDam; }
-          
-          console.log('d, hp, d to car1, and 2: ', JSON.parse(JSON.stringify(car.hitPoints)), JSON.parse(JSON.stringify(damageResults.car1)),
-           JSON.parse(JSON.stringify(colTest.hitPoints)), JSON.parse(JSON.stringify(damageResults.car2)));
-          car.hitPoints =- damageResults.car1;
-          car.hitPoints =- damageResults.car1;
-          colTest.hitPoints =- damageResults.car2;
-          console.log('race after damage: ', gameObject.race);
-          
-          
+          damageResults.car1 = damageResults.car1 / 3;
+          damageResults.car2 = damageResults.car2 /3;
+          car.hitPoints = car.hitPoints - damageResults.car1;
+          colTest.hitPoints = colTest.hitPoints - damageResults.car2;
         }
         else { // no collision
         }
@@ -176,14 +164,10 @@ function carMovement(car) {
           const damageResults = damageDealer(car, colTest);
           if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
           if (damageResults.car2 > maxDam) { damageResults.car2 = maxDam; }
-          
-          console.log('d, hp, d to car1, and 2: ', JSON.parse(JSON.stringify(car.hitPoints)), JSON.parse(JSON.stringify(damageResults.car1)),
-           JSON.parse(JSON.stringify(colTest.hitPoints)), JSON.parse(JSON.stringify(damageResults.car2)));
-          car.hitPoints =- damageResults.car1;
-          car.hitPoints =- damageResults.car1;
-          colTest.hitPoints =- damageResults.car2;
-          console.log('race after damage: ', gameObject.race);
-          
+          damageResults.car1 = damageResults.car1 / 3;
+          damageResults.car2 = damageResults.car2 /3;
+          car.hitPoints = car.hitPoints - damageResults.car1;
+          colTest.hitPoints = colTest.hitPoints - damageResults.car2;
         }
         else { 
         
@@ -218,7 +202,12 @@ function carMovement(car) {
 
 function animate(){
   
-  carMovement(gameObject.race.cars[0]); // moves car1... need to move all cars here or causes double movement etc.
+  // decide ai actions
+  // make them for everyone else except car[0] as that is players car.
+  
+  gameObject.race.cars.forEach( (vehicle) => {
+    carMovement(vehicle)
+  }); // moves car1... need to move all cars here or causes double movement etc.
   //gameObject.race.cars[0].draw();  // draws car1.. need to draw all cars in same place i think...
   paintAll(gameObject.race);
  // car2.draw();  // draws car2

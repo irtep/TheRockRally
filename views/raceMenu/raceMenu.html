@@ -33,7 +33,24 @@
         <select id="selectColor2" onchange= "checkFields()">
           <option>Choose a color 2</option>
         </select>
-      </form>       
+      </form>
+      <p>Select a type of race:</p>
+
+      <form name= "typeOfRace" id= "typeOfRace">
+        <div>
+          <input type="radio" id="LapRecordHunt" name="raceType" value="LapRecordHunt"
+                 checked>
+          <label for="LapRecordHunt">Lap record hunt.</label>
+        </div>
+        <div>
+          <input type="radio" id="singleRace" name="raceType" value="singleRace">
+          <label for="singleRace">Single race</label>
+        </div>
+        <div>
+          <input type="radio" id="FullRacingSeason" name="raceType" value="FullRacingSeason">
+          <label for="FullRacingSeason">Full racing season</label>
+        </div>
+      </form>  
       <br>
       <input id= "startButton" type= "button" value= "Start" onclick= "start()">
     <input id= "quickButton" type= "button" value= "Quick Start" onclick= "quickStart()">
