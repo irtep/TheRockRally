@@ -13,8 +13,6 @@ let gameObject = {
        },
   race: {cars: [], track: [], typeOfRace: 'default'}
 }
-console.log('d ', document.getElementById('typeOfRace').elements['raceType']);
-console.log('l ', document.getElementById('typeOfRace').elements.length);
 
 // get value of radioButtons
 function getRadioVal(form, name) {

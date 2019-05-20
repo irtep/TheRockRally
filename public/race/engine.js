@@ -204,6 +204,10 @@ function animate(){
   
   // decide ai actions
   // make them for everyone else except car[0] as that is players car.
+  for (let i = 1; i < gameObject.race.cars.length; i++) {
+    
+    aiDriverBrain(gameObject.race.cars[i]);
+  }
   
   gameObject.race.cars.forEach( (vehicle) => {
     carMovement(vehicle)
