@@ -203,7 +203,7 @@ function carMovement(car) {
 function animate(){
   
   // decide ai actions
-  // make them for everyone else except car[0] as that is players car.
+  // make them for everyone else except car[0] as that is players car. So i = 1, because of that.
   for (let i = 1; i < gameObject.race.cars.length; i++) {
     
     aiDriverBrain(gameObject.race.cars[i]);
@@ -211,11 +211,11 @@ function animate(){
   
   gameObject.race.cars.forEach( (vehicle) => {
     carMovement(vehicle)
-  }); // moves car1... need to move all cars here or causes double movement etc.
-  //gameObject.race.cars[0].draw();  // draws car1.. need to draw all cars in same place i think...
+  }); 
+  
   paintAll(gameObject.race);
- // car2.draw();  // draws car2
   giveStats();  // writes info to infoPlace.innerHTML
+  
   window.requestAnimationFrame(animate);
 }
 

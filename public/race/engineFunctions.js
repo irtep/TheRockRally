@@ -227,7 +227,7 @@ function createNewCar(newCar, playerCar){
   const carsRootStats = {name: newCar.name, cost: newCar.cost, weight: newCar.weight, armourValue: newCar.armourValue, hitPoints: newCar.hitPoints,
                         maxHitPoints: newCar.maxHitPoints};
   
-  console.log('new car created, gO: ', gameObject);
+  //console.log('new car created, gO: ', gameObject);
   return new Car(newCar.driver, carsRootStats, newCar.pieces, newCar.statuses);
   
 }
@@ -248,7 +248,6 @@ function damageDealer(obj1, obj2) {
   if (obj1.weight < obj2.weight) {
     let dealToObj1 = 0;
     let dealToObj2 = 1;
-    console.log('2 is heavier');
     dealToObj1 = absDifference - obj1.armourValue;
     if (dealToObj1 < 1) { dealToObj1 = 1} // 1 is minimum damage
     damages.car1 = dealToObj1; damages.car2 = dealToObj2
@@ -257,21 +256,18 @@ function damageDealer(obj1, obj2) {
   if (obj2.weight < obj1.weight) {
     let dealToObj1 = 1;
     let dealToObj2 = 0;
-    console.log('1 is heavier');
     dealToObj2 = absDifference - obj2.armourValue;
     if (dealToObj2 < 1) { dealToObj2 = 1} // 1 is minimum damage
-    console.log('dealing: ', dealToObj1, dealToObj2);
+    //console.log('dealing: ', dealToObj1, dealToObj2);
     damages.car1 = dealToObj1; damages.car2 = dealToObj2
   
   }
   
   // if same, both take
   if (obj1.weight === obj2.weight) {
-    console.log('both equal');
     damages.car1 = 3; damages.car2 = 3;
   }
   
-  console.log('dealing: ', damages.car1, damages.car2);
   return damages;
 }
 
@@ -429,8 +425,8 @@ function setupRace(){
       gameObject.race.cars.push(createNewCar(gameObject.car, true));
       // ai cars:
       gameObject.race.cars.push(createNewCar(aiCars[0], false));
-      gameObject.race.cars.push(createNewCar(aiCars[1], false));
-      gameObject.race.cars.push(createNewCar(aiCars[2], false));
+      //gameObject.race.cars.push(createNewCar(aiCars[1], false));
+      //gameObject.race.cars.push(createNewCar(aiCars[2], false));
     break;
       
     case 'FullRacingSeason':
