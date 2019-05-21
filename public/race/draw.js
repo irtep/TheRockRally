@@ -155,6 +155,7 @@ function paintAll(race) {
       ctx.beginPath();
       ctx.fillStyle = 'black';
       ctx.fillText (unit.driver, drawPoint.x, drawPoint.y);
+      //ctx.fillText (unit.nextCheckPoint, drawPoint.x, drawPoint.y);
       ctx.fill;
     } else {
     
@@ -209,14 +210,21 @@ function paintAll(race) {
   });
   
   // paint checkpoints. only on design/test purpose will be visibles
-  /*
+  
   const paintCps = race.track[0].checkPoints.map( (cP) => {
        
-      ctx.beginPath();
-      ctx.strokeStyle = 'gold';
-      ctx.strokeRect(cP.x, cP.y, cP.w, cP.h);
-      ctx.stroke();
-      ctx.closePath();
+    ctx.beginPath();
+    ctx.strokeStyle = 'gold';
+    ctx.strokeRect(cP.x, cP.y, cP.w, cP.h);
+    ctx.stroke();
+    ctx.closePath();
+    
+    ctx.beginPath();
+    ctx.fillStyle = 'black';
+    ctx.fillText (cP.number, cP.x + cP.w/2, cP.y + cP.h/2);
+    ctx.fill; 
+    ctx.closePath();
+     
   });  
-  */
+  
 }

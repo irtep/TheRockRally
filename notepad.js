@@ -2,8 +2,7 @@
 
 Continue: 
   
-  - Ai movements: 
-    (this.getCorners is not a function)... so ai movements somehow messes this up... need to investigate.
+  - Ai movements: i think my x and y modificator is bugging somehow causing the present problem..
   
   - time attack
   
