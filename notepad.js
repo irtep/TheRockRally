@@ -2,7 +2,7 @@
 
 Continue: 
   
-  - Ai movements: i think my x and y modificator is bugging somehow causing the present problem..
+  - Ai movements: ai radar not working... 
   
   - time attack
   
