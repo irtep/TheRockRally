@@ -1,8 +1,8 @@
 
 const aiCars = [
   {driver: 'Axel',
-  name: 'Zermeces E',
-  color: 'silver', color2: 'white',
+  name: 'Lion 205',
+  color: 'red', color2: 'white',
   statuses : {
            speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
          }

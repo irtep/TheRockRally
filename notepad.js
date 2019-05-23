@@ -2,7 +2,7 @@
 
 Continue: 
   
-  - Ai movements: ai radar not working... 
+  - Ai movements:
   
   - time attack
   

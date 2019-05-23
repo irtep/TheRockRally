@@ -1,6 +1,8 @@
 
 
 function aiDriverBrain(aiCar) {
+  const ip2 = document.getElementById('infoPlace2');
+  ip2.innerHTML = '';
   const checkPoints = gameObject.race.track[0].checkPoints;
   const centerOfCar = {x: aiCar.leftTopCorner.x + (aiCar.w / 2), y: aiCar.leftTopCorner.y + (aiCar.h / 2)};
   let nextCp = checkPoints.filter(cp => cp.number === aiCar.nextCheckPoint);
@@ -11,12 +13,11 @@ function aiDriverBrain(aiCar) {
   // release all pedals and wheelings
   aiCar.statuses.turnLeft = false;
   aiCar.statuses.turnRight = false;
-  aiCar.statuses.accelarate = false;
+  aiCar.statuses.accelerate = false;
   aiCar.statuses.reverse = false;
   aiCar.statuses.brake = false;
   
   const distanceNow = distanceCheck(centerOfCar, centerOfNextCheckPoint);
-  //if (aiCar.statuses.speed > 0) { console.log('dcheck now ', centerOfCar, centerOfNextCheckPoint);}
   
   // find the best way to go
   let bestResult = 'forward';
@@ -41,13 +42,82 @@ function aiDriverBrain(aiCar) {
     bestResult = 'turn left';
   }
   
-  //document.getElementById('infoPlace2').innerHTML = bestResult + ' ' + distanceIfForward+ ' '+ distanceIfLeft+ ' '+ distanceIfRight+ ' ' +distanceNow;
   // check collisions to adjust turning, braking etc.
-  if (aiCar.statuses.speed < 5) {
+  const colResults = radarCollisions(aiCar);
+  /* colResults look like this. true is collision, false is free way
+  results = {
+    near: [null, null, null], // forward, left, right
+    mid: [null, null, null], // forward, left, right 
+    far: [null, null, null] // forward, left, right
+  };
+  */
+  // far away radar
+  if (colResults.far[0] === false) {
+    
+    aiCar.statuses.accelerate = true;
+  } else {
+    // speed adjust
+    if (aiCar.statuses.speed > 1) {
+      aiCar.statuses.brake = true;
+    } else {
+      aiCar.statuses.accelerate = true;
+    }
+    // turning adjust
+    if (colResults.far[1] === false && distanceIfLeft < distanceIfRight) {
+        
+      bestResult = 'turn left';   
+    } else {
+      
+      // check also if right is ok and get help from midradar...
+      bestResult = 'turn right';
+    }
+  } 
+  // mid radar
+  /*
+  if (colResults.mid[0] === true) {
+     
+      aiCar.statuses.brake = true;
+    
+    if (colResults.mid[1] === true) {bestResult = 'turn right'}
+    if (colResults.mid[2] === true) {bestResult = 'turn left'}
+  } 
+  // near radar
+  if (colResults.near[0] === true) {
+    const diceResult = callDice(6);
+    let turningWay = null;
+    let alternativeWay = null;
+    //aiCar.statuses.brake = true;
+    
+    if (diceResult < 4) {turningWay = 'turn left'; alternativeWay = 'turn right';} else {turningWay = 'turn right'; alternativeWay = 'turn left'} 
+    bestResult = turningWay;
+    if (colResults.near[1] === true || colResults.mid[1] === true) { bestResult = alternativeWay}
+  }
+  */
+  // stuck!
+  if (colResults.near[0] === true /*&& colResults.near[1] === true && colResults.near[2] === true*/) {
+    
+    aiCar.statuses.turnLeft = false;
+    aiCar.statuses.turnRight = false;
+    aiCar.statuses.accelerate = false;
+    aiCar.statuses.reverse = true;    
+  } /*else {
+    
+    if (aiCar.statuses.speed < 1.5) {
+        
+      aiCar.statuses.accelerate = true;
+    }
+  }*/
+  /*
+  if (colResults.mid[0] === true && colResults.mid[1] === true && colResults.mid[2] === true) {
+    
+    aiCar.statuses.accelerate = false;
+    aiCar.statuses.reverse = true;    
+  } */
+  /*
+  if (aiCar.statuses.speed < 0.5) {
     aiCar.statuses.accelerate = true;
   }
-  
-  const colResults = radarCollisions(aiCar);
+  */
   // wheel turning.
   switch (bestResult) {
   
@@ -55,7 +125,12 @@ function aiDriverBrain(aiCar) {
     case 'turn right': aiCar.statuses.turnRight = true; break; 
   }
 
+  ip2.innerHTML = colResults.near[0] + ' '+ colResults.near[1]+ ' '+ colResults.near[2] + '<br>'+
+    colResults.mid[0] + ' '+ colResults.mid[1]+ ' '+ colResults.mid[2] + '<br>'+
+    colResults.far[0] + ' '+ colResults.far[1]+ ' '+ colResults.far[2];
 }
+
+// Help Functions:
 
 // Distance check
 function distanceCheck(fromWhere, toWhere){
@@ -97,8 +172,6 @@ function radarCheckRight(centerOfCar, heading, turnRate, speed) {
 
 function radarCollisions(aiCar) {
   const centerOfCar = {x: aiCar.leftTopCorner.x + (aiCar.w / 2), y: aiCar.leftTopCorner.y + (aiCar.h / 2)};
-  const ip2 = document.getElementById('infoPlace2');
-  ip2.innerHTML = '';
   // results of collision tests
   const results = {
     near: [null, null, null], // forward, left, right
@@ -109,21 +182,21 @@ function radarCollisions(aiCar) {
   const radars = {
     near: 
       [
-        radarCheckForward(centerOfCar, aiCar.statuses.heading, 30), 
+        radarCheckForward(centerOfCar, aiCar.statuses.heading, 50), 
         radarCheckLeft(centerOfCar, aiCar.statuses.heading, aiCar.statuses.turnRate, 30), 
         radarCheckRight(centerOfCar, aiCar.statuses.heading, aiCar.statuses.turnRate, 30)
       ], 
     mid: 
       [
-        radarCheckForward(centerOfCar, aiCar.statuses.heading, 60), 
-        radarCheckLeft(centerOfCar, aiCar.statuses.heading, aiCar.statuses.turnRate, 60), 
-        radarCheckRight(centerOfCar, aiCar.statuses.heading, aiCar.statuses.turnRate, 60)
+        radarCheckForward(centerOfCar, aiCar.statuses.heading, 140), 
+        radarCheckLeft(centerOfCar, aiCar.statuses.heading, aiCar.statuses.turnRate, 70), 
+        radarCheckRight(centerOfCar, aiCar.statuses.heading, aiCar.statuses.turnRate, 70)
       ], 
     far: 
       [
-        radarCheckForward(centerOfCar, aiCar.statuses.heading, 500), 
-        radarCheckLeft(centerOfCar, aiCar.statuses.heading, aiCar.statuses.turnRate, 500), 
-        radarCheckRight(centerOfCar, aiCar.statuses.heading, aiCar.statuses.turnRate, 500)
+        radarCheckForward(centerOfCar, aiCar.statuses.heading, 400), // added a bit more...
+        radarCheckLeft(centerOfCar, aiCar.statuses.heading, aiCar.statuses.turnRate, 200), 
+        radarCheckRight(centerOfCar, aiCar.statuses.heading, aiCar.statuses.turnRate, 200)
       ]
   };
   const allPositions = [radars.near, radars.mid, radars.far];
@@ -132,6 +205,14 @@ function radarCollisions(aiCar) {
   // we need a test car as it has vital functions by its class, that just a mere copy wouldnt have
   // should not matter what aiCar is used as it is kind of ok that radar is not that accurate
   let testCar = createNewCar(aiCars[2], false); 
+  
+  // setup the testCar:
+  testCar.x = testCar.pieces.hull.x;
+  testCar.y = testCar.pieces.hull.y;
+  testCar.w = testCar.pieces.hull.w;
+  testCar.h = testCar.pieces.hull.h;
+  testCar.angle = testCar.statuses.heading;
+  testCar.setCorners(testCar.angle);
   
   // perform tests and update if collisions
   for (let i = 0; i < allPositions.length; i++) {
@@ -143,64 +224,21 @@ function radarCollisions(aiCar) {
       updateXandY(gameObject.race.cars);
       testCarsYandY(testCar);
       const colTest = collisionTest(testCar);
-      //if (aiCar.statuses.speed > 0) {console.log('coltest: ', colTest, testCar.x);}
       colTest ? allResults[i][i2] = true : allResults[i][i2] = false; 
     } 
   }
+  // fix longer scanners:
+  for (let ii = 0; ii < allResults[0].length; ii++) { 
+    if (allResults[0][ii] === true) {allResults[1][ii] = true}
+  }
+  for (let ii = 0; ii < allResults[1].length; ii++) { 
+    if (allResults[1][ii] === true) {allResults[2][ii] = true}
+  }
   //if (ip2.innerHTML === '' && aiCar.statuses.speed > 0) { console.log('ap ar ', allPositions, allResults);}
-  ip2.innerHTML = results.near[0] + ' '+ results.near[1]+ ' '+ results.near[2] + '<br>'+
-    results.mid[0] + ' '+ results.mid[1]+ ' '+ results.mid[2] + '<br>'+
-    results.far[0] + ' '+ results.far[1]+ ' '+ results.far[2];
   return results;
-  /*
-  // check if near anything
-  let ghostCar = JSON.parse(JSON.stringify(aiCar)); // to get place to copy x and y
-    // check if collision if goes forwards
-    testCar.x = ghostCar.x + (forwardTestSpeeds.x * 3) ; testCar.y = ghostCar.y + (forwardTestSpeeds.y * 3) ;
-    updateXandY(gameObject.race.cars);
-    testCarsYandY(testCar);
-    const colTest = collisionTest(testCar);
-    
-    if (colTest !== false) {
-      // reverse
-      if (aiCar.statuses.speed < 0.4){
-        aiCar.statuses.reverse = true;
-      }
-    } else { 
-      aiCar.statuses.accelerate = true; }
-  
-  
-  // check if anything quite close
-    ghostCar = JSON.parse(JSON.stringify(aiCar));
-    ghostCar.x = ghostCar.x += (forwardTestSpeeds.x * 20); 
-    ghostCar.y = ghostCar.y += (forwardTestSpeeds.y * 20);
-    testCar.x = ghostCar.x; testCar.y = ghostCar.y;
-    updateXandY(gameObject.race.cars);
-    testCarsYandY(testCar);
-    const colTest2 = collisionTest(testCar);
-  
-  if (colTest2 !== false) { 
-    aiCar.statuses.accelerate = false; 
-    aiCar.statuses.turnRight = true;
-  } else { 
-    aiCar.statuses.accelerate = true; 
-  }
-  
-  // if anything quite close
-    ghostCar = JSON.parse(JSON.stringify(aiCar));
-    ghostCar.x = ghostCar.x += (forwardTestSpeeds.x * 7); 
-    ghostCar.y = ghostCar.y += (forwardTestSpeeds.y * 7);
-    testCar.x = ghostCar.x; testCar.y = ghostCar.y;
-    updateXandY(gameObject.race.cars);
-    testCarsYandY(testCar);
-    const colTest3 = collisionTest(testCar);
-  
-  if (colTest3 !== false) { 
-    aiCar.statuses.accelerate = false; 
-    aiCar.statuses.brake = true; 
-    aiCar.statuses.turnRight = true;
-  } else { 
-    aiCar.statuses.accelerate = true; 
-  }
-  */
 }
+
+function callDice(max){
+    const result =  1 + Math.floor(Math.random() * max);
+    return result;
+}  
