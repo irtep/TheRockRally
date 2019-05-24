@@ -2,7 +2,7 @@
 
 Continue: 
   
-  - Ai movements:
+  - Ai movements: problems with radar...
   
   - time attack
   

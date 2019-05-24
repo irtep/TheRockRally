@@ -162,6 +162,12 @@ function createNewCar(newCar, playerCar){
   
   // if not first car, lets change x and y:
   playerCar ? newCar.pieces.hull.x = 10 : newCar.pieces.hull.x += gameObject.race.cars.length * 100; 
+  
+  // add statuses.dodgeLeft and statuses.dodgeRight for ai purposes
+  if (playerCar !== true) {
+    newCar.statuses.dodgeLeft = false; newCar.statuses.dodgeRight = false; newCar.statuses.dodgeReverse = false;
+  }
+  
   // array for pieceList
   newCar.pieces.parts = [];
   
@@ -487,6 +493,7 @@ function setupRace(){
       }
     }
   }, 10);
+  console.log('go: ', gameObject);
 }
 
 /**
