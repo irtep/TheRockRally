@@ -7,7 +7,7 @@ class AllRects {
   // this was used as reference: https://stackoverflow.com/questions/41489627/collision-between-two-elements-with-rotating/41513341#41513341
   setCorners(angle) {
     
-    function getRotatedTopLeftCornerOfRect(x, y, width, height, angle) {
+    function getRotatedTopLeftCornerOfRect(x, y, width, height, angle, rType) {
       //console.log('gRtLCOR ', x, y, width, height, angle);
   
       function sin(x) {
@@ -23,7 +23,11 @@ class AllRects {
         y: (y + height / 2)
       };
       
-      //console.log('center: ',center);
+      // testBars for radar of ai's need to rotate from x and y
+      if (rType === 'testBar') {
+       center.x = x; center.y = y;     
+      }
+      
       var vector = {
         x: (x - center.x),
         y: (y - center.y)
@@ -78,7 +82,7 @@ class AllRects {
 
     //console.log('gOs', getOffset(this.htmlElement)); console.log('this ', this);
     
-    this.leftTopCorner = getRotatedTopLeftCornerOfRect(this.x, this.y, this.w, this.h, angle);
+    this.leftTopCorner = getRotatedTopLeftCornerOfRect(this.x, this.y, this.w, this.h, angle, this.rType);
 
     var vecLength = getVectorLength(this.x, this.y, this.w, this.h);
     //console.log('vecLength: ',vecLength);
@@ -108,7 +112,23 @@ class AllRects {
   };
 }
 
-
+class TestBar extends AllRects {
+  constructor(x, y, w, h, color, heading, name, direction) {
+    super(); // to get setCorners from allRects
+    this.x = x;
+    this.y = y;
+    this.w = w,
+    this.h = h;
+    this.color = color;
+    this.weight = 50; // default weight
+    this.heading = heading;
+    this.name = name;
+    this.rType = 'testBar';
+    this.hitPoints = 1000;
+    this.maxHitPoints = 1000;
+    this.direction = direction;
+  } 
+}
 
 class RectObstacle extends AllRects {
   constructor(x, y, w, h, color, angle, name) {
@@ -121,7 +141,7 @@ class RectObstacle extends AllRects {
     this.weight = 50; // default weight
     this.angle = angle;
     this.name = name;
-    this.type = 'building';
+    this.rType = 'building';
     this.hitPoints = 1000;
     this.maxHitPoints = 1000;
   }
@@ -154,6 +174,7 @@ class Car extends AllRects {
     this.maxHitPoints = rootStats.maxHitPoints;
     this.pieces = pieces; // all pieces
     this.statuses = statuses;
+    this.rType = 'car';
   }
   
   /*  not used as all cars will be drawn same time with new draw function
