@@ -294,7 +294,7 @@ function pointInPoly(verties, testx, testy) {
 
 function testCollision(rectangle) {
   var collision = false;
-  
+  //console.log('testC ', rectangle);
   this.getCorners().forEach((corner) => {
     var isCollided = pointInPoly(rectangle.getCorners(), corner.x, corner.y);
                 
@@ -306,7 +306,7 @@ function testCollision(rectangle) {
 // bring "full objects" like car or gameObject.race.track[0].obstacles[0]
 // example: checkRectangleCollision(car, gameObject.race.track[0].obstacles[0]);
 function checkRectangleCollision(rect, rect2) {
-  
+  //console.log('cRC ', rect, rect2);
   if (testCollision.call(rect, rect2)) return true;
   else if (testCollision.call(rect2, rect)) return true;
   return false;
@@ -493,6 +493,7 @@ function setupRace(){
       }
     }
   }, 10);
+  
   console.log('go: ', gameObject);
 }
 

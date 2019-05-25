@@ -164,9 +164,29 @@ function paintAll(race) {
       ctx.fillText ('DISABLED!', drawPoint.x, drawPoint.y);
       ctx.fill;      
     }
-  
-    ctx.restore(); // restore coords.
     
+    ctx.restore(); // restore coords.
+        
+    // test radarbars:
+    if (gameObject.race.tests.radarBars !== null) {
+      gameObject.race.tests.radarBars.forEach( (bar) => {
+        ctx.beginPath();
+        ctx.strokeStyle = bar.color;
+        ctx.save(); // save coords system
+        if (bar.leftTopCorner !== undefined) {
+          ctx.translate(bar.leftTopCorner.x, bar.leftTopCorner.y);}
+          else {
+          //ctx.translate(partsToPaint.hull.x, partsToPaint.hull.y);} // go here
+          ctx.translate(bar.x, bar.y);
+          } // go here
+        ctx.rotate(bar.heading * Math.PI / 180);
+        ctx.rect(0, 0, bar.w, bar.h);// time to paint it
+        ctx.stroke();
+        ctx.closePath(); 
+        
+        ctx.restore(); // restore coords.
+      });
+    }
     // lines from corners to canvas corners:
     // this is used to see where corners of car are in collision test purpose
     // disabled if game is online.
@@ -208,7 +228,6 @@ function paintAll(race) {
       ctx.closePath();
     }
   });
-  
   // paint checkpoints. only on design/test purpose will be visibles
   
   const paintCps = race.track[0].checkPoints.map( (cP) => {

@@ -108,7 +108,23 @@ class AllRects {
   };
 }
 
-
+class TestBar extends AllRects {
+  constructor(x, y, w, h, color, heading, name, direction) {
+    super(); // to get setCorners from allRects
+    this.x = x;
+    this.y = y;
+    this.w = w,
+    this.h = h;
+    this.color = color;
+    this.weight = 50; // default weight
+    this.heading = heading;
+    this.name = name;
+    this.type = 'testBar';
+    this.hitPoints = 1000;
+    this.maxHitPoints = 1000;
+    this.direction = direction;
+  } 
+}
 
 class RectObstacle extends AllRects {
   constructor(x, y, w, h, color, angle, name) {
