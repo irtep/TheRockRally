@@ -1,15 +1,14 @@
 
-  // radars: (how many "steps" car can go with current speed before obstacle)
-  let nForward = 'clear';
-  let nLeft = 'clear';
-  let nRight = 'clear';
-  let mForward = 'clear';
-  let mLeft = 'clear';
-  let mRight = 'clear';  
-  let fForward = 'clear';
-  let fLeft = 'clear';
-  let fRight = 'clear';  
-
+// radars: (how many "steps" car can go with current speed before obstacle)
+let nForward = 'clear';
+let nLeft = 'clear';
+let nRight = 'clear';
+let mForward = 'clear';
+let mLeft = 'clear';
+let mRight = 'clear';  
+let fForward = 'clear';
+let fLeft = 'clear';
+let fRight = 'clear';  
 
 function aiDriverBrain(aiCar) {
   const ip2 = document.getElementById('infoPlace2');
@@ -39,6 +38,7 @@ function aiDriverBrain(aiCar) {
   
   // find the best way to go
   let bestResult = 'forward';
+  let shortestDistance = null;
   // go tests: 
   radarCollisions(aiCar);
   
@@ -52,37 +52,85 @@ function aiDriverBrain(aiCar) {
   const distanceIfRight = distanceCheck(turnRightTestSpeeds, centerOfNextCheckPoint);
   
   // choose direction by checking where is next checkpoint
-  if (distanceIfForward > distanceIfLeft || aiCar.statuses.dodgeLeft === true) { 
-    bestResult = 'turn left';
+  if (distanceIfForward > distanceIfLeft) { 
+    
+    shortestDistance = 'turn left';
+    
+    if (mLeft === 'clear' && fLeft === 'clear') {
+      bestResult = 'turn left';   
+    }   
   }
-  if (distanceIfForward > distanceIfRight || aiCar.statuses.dodgeRight === true) { 
-    bestResult = 'turn right';
+  if (distanceIfForward > distanceIfRight) { 
+    
+    shortestDistance = 'turn right';
+    
+    if (mRight === 'clear' && fRight === 'clear') {
+        
+      bestResult = 'turn right';   
+    }
   }
   
-  if (bestResult === 'forward') {
+  // gas!
+  if (fForward === 'clear') {
     
    aiCar.statuses.accelerate = true;
-  } //else {
-    
-  //  bestResult = 'turn right';
-   // aiCar.statuses.break = true;
-  //}
-  
-  if (mLeft !== 'clear') {
-    
+  } else {
+    // hmm.. maybe temporary, but good to have some turn here
     bestResult = 'turn right';
+    
+    if (nForward !== 'clear') {
+      aiCar.statuses.break = true;  
+    }
   }
   
-  // wheel turning.
+  // cant go forward soon, need to turn
+  if (mForward !== 'clear' || fForward !== 'clear') {
+    
+    if (mRight === 'clear') {
+      bestResult = 'turn right';    
+    } else {
+      bestResult = 'turn left';
+    } 
+  } 
+  
+  // here if all "fars" are other than clear, need to take shortestDistance
+  if (fForward !== 'clear' && fLeft !== 'clear' && fRight !== 'clear') {
+      
+    aiCar.statuses.accelerate = false;
+    
+    if (aiCar.statuses.speed > 1) {
+      
+      aiCar.statuses.brake = true;
+    }
+  }
+  
+  // stuck!
+  
+  if (nForward !== 'clear' && nLeft !== 'clear' && nRight !== 'clear' && 
+     mForward !== 'clear' && mLeft !== 'clear' && mRight !== 'clear' && 
+     fForward !== 'clear' && fLeft !== 'clear' && fRight !== 'clear') {
+      
+    aiCar.statuses.break = false;
+    aiCar.statuses.reverse = true;
+  }  
+  
+  // 
+  /*
+  if (aiCar.statuses.speed < 1 && aiCar.statuses.break === false) {
+    
+    aiCar.statuses.accelerate = true;
+  }
+  */
+  // execute wheel turning.
   switch (bestResult) {
   
     case 'turn left': aiCar.statuses.turnLeft = true; break;
     case 'turn right': aiCar.statuses.turnRight = true; break; 
   }
 
-  ip2.innerHTML = 'f: '+nForward+' '+nForward+' '+nForward+'<br> l: '+
-    nLeft+' '+nLeft+' '+nLeft+'<br> r: '+
-    nRight+' '+nRight+' '+nRight;
+  ip2.innerHTML = 'f: '+nForward+' '+mForward+' '+fForward+' l: '+
+    nLeft+' '+mLeft+' '+fLeft+' r: '+
+    nRight+' '+mRight+' '+fRight+ ' best dir: '+ bestResult;
 }
 
 // Help Functions:
@@ -125,22 +173,19 @@ function radarCheckRight(centerOfCar, heading, turnRate, speed) {
 // radar for checking of collisions
 function radarCollisions(aiCar) {
   updateXandY(gameObject.race.cars);
-  let coords = {x: JSON.parse(JSON.stringify(aiCar.x)), y: JSON.parse(JSON.stringify(aiCar.y))};
+  let coords = {x: JSON.parse(JSON.stringify(aiCar.x)), y: JSON.parse(JSON.stringify(aiCar.y - aiCar.h/2))};
   gameObject.race.tests.radarBars = [ // (x, y, w, h, color, angle, name){x: aiCar.x, y: aiCar.y, w: 250, h: 10, heading: 
     // {x: aiCar.x, y: aiCar.y, w: 40, h: 10, heading: aiCar.statuses.heading
-    new TestBar(coords.x, coords.y, 250, 10, 'yellow', aiCar.statuses.heading, 'forwardLong', 'forward'),
-    new TestBar(coords.x, coords.y, 110, 10, 'yellow', aiCar.statuses.heading, 'forwardMid', 'forward'),
-    new TestBar(coords.x, coords.y, 40, 10, 'yellow', aiCar.statuses.heading, 'forwardShort', 'forward'),
-    new TestBar(coords.x, coords.y, 250, 10, 'red', aiCar.statuses.heading - 30, 'leftLong', 'left'),
-    new TestBar(coords.x, coords.y, 110, 10, 'red', aiCar.statuses.heading - 30, 'leftMid', 'left'),
+    new TestBar(coords.x, coords.y - 10, 250, 20, 'yellow', aiCar.statuses.heading, 'forwardLong', 'forward'),
+    new TestBar(coords.x, coords.y - 10, 110, 20, 'yellow', aiCar.statuses.heading, 'forwardMid', 'forward'),
+    new TestBar(coords.x, coords.y - 10, 40, 20, 'yellow', aiCar.statuses.heading, 'forwardShort', 'forward'),
+    new TestBar(coords.x, coords.y, 200, 10, 'red', aiCar.statuses.heading - 30, 'leftLong', 'left'),
+    new TestBar(coords.x, coords.y, 100, 10, 'red', aiCar.statuses.heading - 30, 'leftMid', 'left'),
     new TestBar(coords.x, coords.y, 40, 10, 'red', aiCar.statuses.heading - 30, 'leftShort', 'left'),
-    new TestBar(coords.x, coords.y, 250, 10, 'green', aiCar.statuses.heading + 30, 'rightLong', 'right'),
-    new TestBar(coords.x, coords.y, 110, 10, 'green', aiCar.statuses.heading + 30, 'rightMid', 'right'),
+    new TestBar(coords.x, coords.y, 200, 10, 'green', aiCar.statuses.heading + 30, 'rightLong', 'right'),
+    new TestBar(coords.x, coords.y, 100, 10, 'green', aiCar.statuses.heading + 30, 'rightMid', 'right'),
     new TestBar(coords.x, coords.y, 40, 10, 'green', aiCar.statuses.heading + 30, 'rightShort', 'right'),
   ];
-  
-  //radarForward = 'clear'; radarLeft = 'clear'; radarRight = 'clear';
-  //let hits = [false, false, false];
 
   gameObject.race.tests.radarBars.forEach( (bar) => {
     bar.driver = aiCar.driver; // so that will not check against own car.
@@ -149,42 +194,28 @@ function radarCollisions(aiCar) {
     const colResults = collisionTest(bar);
     
     if (colResults !== false) {
-      
-      //console.log('not false ', JSON.parse(JSON.stringify(colResults)), JSON.parse(JSON.stringify(bar.name)));
-      
-          if (bar.name === 'forwardLong') {fForward = 'hit!'}
-          if (bar.name === 'forwardMid') {mForward = 'hit!'}
-          if (bar.name === 'forwardShort') {nForward = 'hit!'}
-          if (bar.name === 'leftLong') {fLeft = 'hit!'}
-          if (bar.name === 'leftLong') {mLeft = 'hit!'}
-          if (bar.name === 'leftLong') {nLeft = 'hit!'}
-          if (bar.name === 'rightLong') {fRight = 'hit!'}
-          if (bar.name === 'rightLong') {mRight = 'hit!'}
-          if (bar.name === 'rightLong') {nRight = 'hit!'}
-      
+     // console.log('not false ', JSON.parse(JSON.stringify(colResults)), JSON.parse(JSON.stringify(bar.name)));
+      if (bar.name === 'forwardLong') {fForward = 'hit!'}
+      if (bar.name === 'forwardMid') {mForward = 'hit!'}
+      if (bar.name === 'forwardShort') {nForward = 'hit!'}
+      if (bar.name === 'leftLong') {fLeft = 'hit!'}
+      if (bar.name === 'leftMid') {mLeft = 'hit!'}
+      if (bar.name === 'leftShort') {nLeft = 'hit!'}
+      if (bar.name === 'rightLong') {fRight = 'hit!'}
+      if (bar.name === 'rightMid') {mRight = 'hit!'}
+      if (bar.name === 'rightShort') {nRight = 'hit!'}
     } else {
       
-          if (bar.name === 'forwardLong') {fForward = 'clear'}
-          if (bar.name === 'forwardMid') {mForward = 'clear'}
-          if (bar.name === 'forwardShort') {nForward = 'clear'}
-          if (bar.name === 'leftLong') {fLeft = 'clear'}
-          if (bar.name === 'leftLong') {mLeft = 'clear'}
-          if (bar.name === 'leftLong') {nLeft = 'clear'}
-          if (bar.name === 'rightLong') {fRight = 'clear'}
-          if (bar.name === 'rightLong') {mRight = 'clear'}
-          if (bar.name === 'rightLong') {nRight = 'clear'}
-      
-      
-    }
-    /*
-    for (let i = 0; i < hits.length; i++) {
-    
-      if (hits[i] === true) {
-        
-        radars[i] = bar.name;
-      }
-    }
-  */
+      if (bar.name === 'forwardLong') {fForward = 'clear'}
+      if (bar.name === 'forwardMid') {mForward = 'clear'}
+      if (bar.name === 'forwardShort') {nForward = 'clear'}
+      if (bar.name === 'leftLong') {fLeft = 'clear'}
+      if (bar.name === 'leftMid') {mLeft = 'clear'}
+      if (bar.name === 'leftShort') {nLeft = 'clear'}
+      if (bar.name === 'rightLong') {fRight = 'clear'}
+      if (bar.name === 'rightMid') {mRight = 'clear'}
+      if (bar.name === 'rightShort') {nRight = 'clear'}
+    } 
   });
 }
 

@@ -12,7 +12,8 @@ const tracks = [
     new RectObstacle(100, 150, 100, 100, 'black', 0, 'house1'), 
     new RectObstacle(340, 250, 100, 100, 'black', 0, 'house2'),
     new RectObstacle(130, 400, 550, 20, 'black', 0, 'house3'),
-    new RectObstacle(680, 100, 20, 300, 'black', 0, 'house4')
+    new RectObstacle(680, 100, 20, 300, 'black', 0, 'house4')/*,
+    new RectObstacle(880, 0, 20, 600, 'black', 0, 'house5')*/
   ],
   trackMarkings: [
     // finish line:
