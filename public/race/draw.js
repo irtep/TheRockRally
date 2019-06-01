@@ -249,7 +249,6 @@ function paintAll(race) {
     }
   });
   // paint checkpoints. only on design/test purpose will be visibles
-  
   const paintCps = race.track[0].checkPoints.map( (cP) => {
        
     ctx.beginPath();
@@ -264,6 +263,22 @@ function paintAll(race) {
     ctx.fill; 
     ctx.closePath();
      
-  });  
+  });    
+  
+  const paintAiCps = race.track[0].aiCheckPoints.map( (cP) => {
+       
+    ctx.beginPath();
+    ctx.strokeStyle = 'red';
+    ctx.strokeRect(cP.x, cP.y, cP.w, cP.h);
+    ctx.stroke();
+    ctx.closePath();
+    
+    ctx.beginPath();
+    ctx.fillStyle = 'red';
+    ctx.fillText (cP.number, cP.x + cP.w/2, cP.y + cP.h/2);
+    ctx.fill; 
+    ctx.closePath();
+     
+  });
   
 }
