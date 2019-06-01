@@ -114,6 +114,12 @@ function aiDriverBrain(aiCar) {
     aiCar.statuses.reverse = true;
   }  
   
+  /*
+  if (fLeft === 'clear' && shortestDistance === 'turn left' && aiCar.statuses.speed > 1) {
+    console.log('t l t l');
+    bestResult = 'turn left';
+  }
+  */
   // 
   /*
   if (aiCar.statuses.speed < 1 && aiCar.statuses.break === false) {

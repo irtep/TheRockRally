@@ -34,6 +34,16 @@ const tracks = [
     new CheckPoint(640, 430, 180, 160, 1),
     new CheckPoint(700, 35, 180, 60, 2),
     new CheckPoint(10, 430, 180, 60, 3)
+  ], 
+  aiCheckPoints: [ // x, y, w, h, order number
+    new CheckPoint(660, 430, 150, 160, 1),
+    new CheckPoint(720, 320, 100, 100, 2),
+    new CheckPoint(700, 30, 100, 60, 3),
+    new CheckPoint(440, 35, 80, 60, 4),
+    new CheckPoint(240, 220, 100, 60, 5),
+    new CheckPoint(50, 350, 60, 60, 6),
+    new CheckPoint(50, 445, 60, 60, 7),
+    new CheckPoint(320, 470, 100, 60, 8),
   ]
   }
 ];
