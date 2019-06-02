@@ -163,9 +163,11 @@ function createNewCar(newCar, playerCar){
   // if not first car, lets change x and y:
   playerCar ? newCar.pieces.hull.x = 10 : newCar.pieces.hull.x += gameObject.race.cars.length * 100; 
   
-  // add statuses.dodgeLeft and statuses.dodgeRight for ai purposes
+  // add statuses.dodgeLeft and statuses.dodgeRight for ai purposes also aiCheckPoints
   if (playerCar !== true) {
     newCar.statuses.dodgeLeft = false; newCar.statuses.dodgeRight = false; newCar.statuses.dodgeReverse = false;
+    newCar.lastAiCp = 0;
+    newCar.nextAiCp = 1;
   }
   
   // array for pieceList
@@ -316,6 +318,33 @@ function checkRectangleCollision(rect, rect2) {
 function collisionTest(car) {
   const noCollision = false;
   
+  // AI cars own guide checkpoints:
+ // if (car.playerCar === false){
+ //   console.log('not player');
+    // ai guide checkPoints check
+    for (let ix1 = 0; ix1 < gameObject.race.track[0].aiCheckPoints.length; ix1++) {
+      const testResult = checkRectangleCollision(car, gameObject.race.track[0].aiCheckPoints[ix1]);
+
+      if (testResult) {
+//console.log('ai cp: ', ix1);
+        if (car.nextAiCp === gameObject.race.track[0].aiCheckPoints[ix1].number) {
+//console.log('same as next', ix1);
+          car.lastAiCp = gameObject.race.track[0].aiCheckPoints[ix1].number;
+
+          // check if last check points of track reached.
+          if (car.lastAiCp + 1 > gameObject.race.track[0].aiCheckPoints.length) {
+//console.log('max reached');
+            car.nextAiCp = 1;
+          } else { 
+            car.nextAiCp++;
+//console.log('next: ', car.nextAiCp) 
+          }
+        }
+      }
+    }    
+    
+//  }
+  
   // first, check with checkPoints
   for (let ind = 0; ind < gameObject.race.track[0].checkPoints.length; ind++) {
     const testResult = checkRectangleCollision(car, gameObject.race.track[0].checkPoints[ind]);
@@ -340,27 +369,28 @@ function collisionTest(car) {
          
           // if not first lap
           if (car.currentLap > 0) {
-            
-            // push result of lap clock to 
-            gameObject.race.lastLaps.push(JSON.parse(JSON.stringify(gameObject.race.currentLapTime)));
-            // reset currentLapTime
-            gameObject.race.currentLapTime.minutes = 0;
-            gameObject.race.currentLapTime.seconds = 0;
-            gameObject.race.currentLapTime.milliseconds = 0;
-              
-            // write lap times:
-            if (gameObject.race.totalLaps + 1 > car.currentLap) {
-              let lapTimes = '';
-              
-              gameObject.race.lastLaps.forEach( (times) => {
-                
-                lapTimes = lapTimes + times.minutes + ':' + times.seconds + ':' + times.milliseconds + '<br>';
-              });
-              
-              infoPlace2.innerHTML = lapTimes;
+            // if players car
+            if (car.playerCar) { 
+              // push result of lap clock to 
+              gameObject.race.lastLaps.push(JSON.parse(JSON.stringify(gameObject.race.currentLapTime)));
+              // reset currentLapTime
+              gameObject.race.currentLapTime.minutes = 0;
+              gameObject.race.currentLapTime.seconds = 0;
+              gameObject.race.currentLapTime.milliseconds = 0;
+
+              // write lap times:
+              if (gameObject.race.totalLaps + 1 > car.currentLap) {
+                let lapTimes = '';
+
+                gameObject.race.lastLaps.forEach( (times) => {
+
+                  lapTimes = lapTimes + times.minutes + ':' + times.seconds + ':' + times.milliseconds + '<br>';
+                });
+
+                infoPlace2.innerHTML = lapTimes;
+              }
             }
           }
-          
           car.currentLap++  
           
           // check if this was last lap
@@ -415,6 +445,10 @@ function updateXandY(cars) {
   gameObject.race.track[0].checkPoints.forEach((cpInTurn) => {  
     cpInTurn.setCorners(cpInTurn.angle);
   });  
+  // ai guide checkpoints:
+  gameObject.race.track[0].aiCheckPoints.forEach((cpInTurn) => {  
+    cpInTurn.setCorners(cpInTurn.angle);
+  }); 
 }
 
 function setupRace(){
@@ -461,10 +495,15 @@ function setupRace(){
     carInTurn.h = carInTurn.pieces.hull.h;
     carInTurn.angle = carInTurn.statuses.heading;
     carInTurn.setCorners(carInTurn.angle);
+    /*
     
+ //    newCar.lastAiCp = 0;
+ //   newCar.nextAiCp = 1;*/
     // checkPoint, currentLap, lapTime, bestTime
     carInTurn.lastCheckPoint = 0;
     carInTurn.nextCheckPoint = 1;
+    carInTurn.lastAiCp = 0;
+    carInTurn.nextAiCp = 1;
     carInTurn.currentLap = 0;
     carInTurn.lapTime = null;
     carInTurn.bestTime = null;
