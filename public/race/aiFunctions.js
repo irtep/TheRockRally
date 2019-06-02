@@ -1,5 +1,5 @@
 
-// radars: (how many "steps" car can go with current speed before obstacle)
+// radar results nForward = near forward, middistance = m, far = f
 let nForward = 'clear';
 let nLeft = 'clear';
 let nRight = 'clear';
@@ -8,12 +8,8 @@ let mLeft = 'clear';
 let mRight = 'clear';  
 let fForward = 'clear';
 let fLeft = 'clear';
-let fRight = 'clear';  
-/*
+let fRight = 'clear';
 
- //    newCar.lastAiCp = 0;
- //   newCar.nextAiCp = 1;
-*/
 function aiDriverBrain(aiCar) {
   const ip2 = document.getElementById('infoPlace2');
   ip2.innerHTML = '';
@@ -59,66 +55,51 @@ function aiDriverBrain(aiCar) {
   if (distanceIfForward > distanceIfLeft) { 
     
     bestResult = 'turn left';
-    /*
-    shortestDistance = 'turn left';
-    
-    if (mLeft === 'clear' && fLeft === 'clear') {
-      bestResult = 'turn left';   
-    } 
-    */
   }
   if (distanceIfForward > distanceIfRight) { 
     
     bestResult = 'turn right';
-    /*
-    shortestDistance = 'turn right';
-    
-    if (mRight === 'clear' && fRight === 'clear') {
-        
-      bestResult = 'turn right';   
-    }
-    */
   }
   
   // gas!
-  if (nForward === 'clear') {
+  let safeSpeed = aiCar.statuses.grip;
+  
+  if (safeSpeed > 8) {safeSpeed = 8}
+  
+  if (distanceIfForward > 100 && aiCar.statuses.speed < safeSpeed && aiCar.statuses.dodgeLeft === false && aiCar.statuses.dodgeRight === false) {
     
    aiCar.statuses.accelerate = true;
   } else {
-    /*
-    bestResult = 'turn right';
     
-    if (nForward !== 'clear') {
-      aiCar.statuses.break = true;  
-    }
-    */
+    aiCar.statuses.brake = true;
   }
   
-  // cant go forward soon, need to turn
-  /*
-  if (mForward !== 'clear' || fForward !== 'clear') {
-    
-    if (mRight === 'clear') {
-      bestResult = 'turn right';    
-    } else {
-      bestResult = 'turn left';
-    } 
-  } 
-  */
-  // here if all "fars" are other than clear, need to take shortestDistance
-  /*
-  if (fForward !== 'clear' && fLeft !== 'clear' && fRight !== 'clear') {
-      
+  // something right there, need to turn.
+  if (mForward !== 'clear' && bestResult === 'forward' && aiCar.statuses.speed > 0.1) {
     aiCar.statuses.accelerate = false;
-    
-    if (aiCar.statuses.speed > 1) {
-      
-      aiCar.statuses.brake = true;
+    console.log('nForward ', nForward);
+    if (nLeft === 'clear') { 
+      aiCar.statuses.dodgeLeft = true;
+    } else {
+      aiCar.statuses.dodgeRight = true;
     }
   }
-  */
-  // stuck!
   
+  // something far away, if some speed maybe better not to accelerate more
+  if (fForward !== 'clear' && aiCar.statuses.speed > 3) {
+    aiCar.statuses.accelerate = false;
+  }
+  
+  if (nForward === 'clear'){
+    // clear dodges
+    aiCar.statuses.dodgeRight = false;
+    aiCar.statuses.dodgeLeft = false;
+  }
+
+  if (aiCar.statuses.dodgeRight) {bestResult = 'turn right';}
+  if (aiCar.statuses.dodgeLeft) {bestResult = 'turn left';}
+  
+  // stuck! this need to get better
   if (nForward !== 'clear' && nLeft !== 'clear' && nRight !== 'clear' && 
      mForward !== 'clear' && mLeft !== 'clear' && mRight !== 'clear' && 
      fForward !== 'clear' && fLeft !== 'clear' && fRight !== 'clear') {
@@ -127,19 +108,6 @@ function aiDriverBrain(aiCar) {
     aiCar.statuses.reverse = true;
   }  
   
-  /*
-  if (fLeft === 'clear' && shortestDistance === 'turn left' && aiCar.statuses.speed > 1) {
-    console.log('t l t l');
-    bestResult = 'turn left';
-  }
-  */
-  // 
-  /*
-  if (aiCar.statuses.speed < 1 && aiCar.statuses.break === false) {
-    
-    aiCar.statuses.accelerate = true;
-  }
-  */
   // execute wheel turning.
   switch (bestResult) {
   
@@ -173,14 +141,8 @@ function testBarsXandY(aiCar, testBar) {
 // radar functions to help to check distances
 /*gameObject.race.tests.radarBars*/
 function radarCheckForward(centerOfCar, heading, speed) {
-  /*
-  const rBarF = gameObject.race.tests.radarBars[0];
-  return {x: rBarF.x + rBarF.w, y: rBarF.y}
-  */
-  
   const newSpeeds = getSpeeds(heading, speed);
   return {x: centerOfCar.x + -newSpeeds.x, y: centerOfCar.y + newSpeeds.y};
-  
 }
 
 function radarCheckLeft(centerOfCar, heading, turnRate, speed) {
@@ -199,20 +161,20 @@ function radarCheckRight(centerOfCar, heading, turnRate, speed) {
 function radarCollisions(aiCar) {
   updateXandY(gameObject.race.cars);
   let coords = {x: JSON.parse(JSON.stringify(aiCar.x)), y: JSON.parse(JSON.stringify(aiCar.y - aiCar.h/2))};
-  gameObject.race.tests.radarBars = [ // (x, y, w, h, color, angle, name){x: aiCar.x, y: aiCar.y, w: 250, h: 10, heading: 
+  aiCar.radarBars = [ // (x, y, w, h, color, angle, name){x: aiCar.x, y: aiCar.y, w: 250, h: 10, heading: 
     // {x: aiCar.x, y: aiCar.y, w: 40, h: 10, heading: aiCar.statuses.heading
-    //new TestBar(coords.x, coords.y - 10, 250, 20, 'yellow', aiCar.statuses.heading, 'forwardLong', 'forward'),
-    //new TestBar(coords.x, coords.y - 10, 110, 20, 'yellow', aiCar.statuses.heading, 'forwardMid', 'forward'),
-    new TestBar(coords.x, coords.y - 10, 40, 20, 'yellow', aiCar.statuses.heading, 'forwardShort', 'forward'),
+    new TestBar(coords.x + aiCar.w/2, 250, 20, 'yellow', aiCar.statuses.heading, 'forwardLong', 'forward'),
+    new TestBar(coords.x + aiCar.w/2, coords.y, 80, 20, 'yellow', aiCar.statuses.heading, 'forwardMid', 'forward'),
+    new TestBar(coords.x + aiCar.w/2, coords.y, 60, 20, 'yellow', aiCar.statuses.heading, 'forwardShort', 'forward'),
     //new TestBar(coords.x, coords.y, 200, 10, 'red', aiCar.statuses.heading - 30, 'leftLong', 'left'),
-    //new TestBar(coords.x, coords.y, 100, 10, 'red', aiCar.statuses.heading - 30, 'leftMid', 'left'),
-    new TestBar(coords.x, coords.y, 40, 10, 'red', aiCar.statuses.heading - 30, 'leftShort', 'left'),
+    new TestBar(coords.x + aiCar.w/2, coords.y, 100, 10, 'red', aiCar.statuses.heading - 30, 'leftMid', 'left'),
+    new TestBar(coords.x + aiCar.w/2, coords.y, 40, 10, 'red', aiCar.statuses.heading - 30, 'leftShort', 'left'),
     //new TestBar(coords.x, coords.y, 200, 10, 'green', aiCar.statuses.heading + 30, 'rightLong', 'right'),
-    //new TestBar(coords.x, coords.y, 100, 10, 'green', aiCar.statuses.heading + 30, 'rightMid', 'right'),
-    new TestBar(coords.x, coords.y, 40, 10, 'green', aiCar.statuses.heading + 30, 'rightShort', 'right'),
+    new TestBar(coords.x + aiCar.w/2, coords.y, 100, 10, 'green', aiCar.statuses.heading + 30, 'rightMid', 'right'),
+    new TestBar(coords.x + aiCar.w/2, coords.y, 40, 10, 'green', aiCar.statuses.heading + 30, 'rightShort', 'right'),
   ];
 
-  gameObject.race.tests.radarBars.forEach( (bar) => {
+  aiCar.radarBars.forEach( (bar) => {
     bar.driver = aiCar.driver; // so that will not check against own car.
     testBarsXandY(aiCar, bar);
     updateXandY(gameObject.race.cars);

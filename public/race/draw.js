@@ -168,6 +168,7 @@ function paintAll(race) {
     ctx.restore(); // restore coords.
         
     // test radarbars:
+    /*
     if (gameObject.race.tests.radarBars !== null) {
       const testCar = gameObject.race.cars[1];
       
@@ -187,7 +188,7 @@ function paintAll(race) {
           bar.y = testCar.y;
           } // go here
           */
-        
+        /*
         if (bar.leftTopCorner !== undefined) {
           //bar.leftTopCorner.x = testCar.leftTopCorner.x;
           //bar.leftTopCorner.y = testCar.leftTopCorner.y;
@@ -207,6 +208,7 @@ function paintAll(race) {
         ctx.restore(); // restore coords.
       });
     }
+    */
     // lines from corners to canvas corners:
     // this is used to see where corners of car are in collision test purpose
     // disabled if game is online.
@@ -265,7 +267,7 @@ function paintAll(race) {
     ctx.closePath();
      
   });    
-  
+  */
   const paintAiCps = race.track[0].aiCheckPoints.map( (cP) => {
        
     ctx.beginPath();
@@ -281,5 +283,5 @@ function paintAll(race) {
     ctx.closePath();
      
   });
-  */
+  
 }

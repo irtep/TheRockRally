@@ -2,8 +2,7 @@
 
 Continue: 
   
-  - Ai movements: radar need to be added
-  - time calculator doesnt work anymore
+  - Ai movements: cars sometimes get stuck... maybe they shouldnt take that much damage, that easily...maybe
   
   - time attack
   
@@ -16,9 +15,3 @@ minors:
 - if player takes name that is an ai driver name, then change ai driver name.
 */
   
-/*
- //aiCheckPoints: [
- //    newCar.lastAiCp = 0;
- //   newCar.nextAiCp = 1;
- 
-*/
