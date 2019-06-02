@@ -370,7 +370,7 @@ function collisionTest(car) {
           // if not first lap
           if (car.currentLap > 0) {
             // if players car
-            if (car.playerCar) { 
+            if (car.driver  === gameObject.car.driver) { 
               // push result of lap clock to 
               gameObject.race.lastLaps.push(JSON.parse(JSON.stringify(gameObject.race.currentLapTime)));
               // reset currentLapTime
@@ -464,7 +464,7 @@ function setupRace(){
       // players car:
       gameObject.race.cars.push(createNewCar(gameObject.car, true));
       // ai cars:
-      gameObject.race.cars.push(createNewCar(aiCars[0], false));
+      gameObject.race.cars.push(createNewCar(aiCars[1], false));
       //gameObject.race.cars.push(createNewCar(aiCars[1], false));
       //gameObject.race.cars.push(createNewCar(aiCars[2], false));
     break;

@@ -1,7 +1,7 @@
 
 const aiCars = [
   {driver: 'Axel',
-  name: 'Lion 205',
+  name: 'Zermeces E',
   color: 'red', color2: 'white',
   statuses : {
            speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
@@ -18,7 +18,23 @@ const aiCars = [
   
   {driver: 'Yaco',
   name: 'Rond Comet mk1',
-  color: 'burgundy', color2: 'crimson',
+  color: 'crimson', color2: 'crimson',
+  statuses : {
+           speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
+         }
+  },
+  
+  {driver: 'Adriana',
+  name: 'Juggernaut',
+  color: 'black', color2: 'white',
+  statuses : {
+           speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
+         }
+  },
+  
+  {driver: 'Lucas',
+  name: 'Lion 205',
+  color: 'black', color2: 'white',
   statuses : {
            speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
          }
