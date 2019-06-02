@@ -9,13 +9,17 @@ let mRight = 'clear';
 let fForward = 'clear';
 let fLeft = 'clear';
 let fRight = 'clear';  
+/*
 
+ //    newCar.lastAiCp = 0;
+ //   newCar.nextAiCp = 1;
+*/
 function aiDriverBrain(aiCar) {
   const ip2 = document.getElementById('infoPlace2');
   ip2.innerHTML = '';
-  const checkPoints = gameObject.race.track[0].checkPoints;
+  const aiCheckPoints = gameObject.race.track[0].aiCheckPoints;
   const centerOfCar = {x: aiCar.leftTopCorner.x + (aiCar.w / 2), y: aiCar.leftTopCorner.y + (aiCar.h / 2)};
-  let nextCp = checkPoints.filter(cp => cp.number === aiCar.nextCheckPoint);
+  let nextCp = aiCheckPoints.filter(cp => cp.number === aiCar.nextAiCp);
   const centerOfNextCheckPoint = {
     x: nextCp[0].x + (nextCp[0].w / 2), 
     y: nextCp[0].y + (nextCp[0].h / 2)
@@ -54,36 +58,44 @@ function aiDriverBrain(aiCar) {
   // choose direction by checking where is next checkpoint
   if (distanceIfForward > distanceIfLeft) { 
     
+    bestResult = 'turn left';
+    /*
     shortestDistance = 'turn left';
     
     if (mLeft === 'clear' && fLeft === 'clear') {
       bestResult = 'turn left';   
-    }   
+    } 
+    */
   }
   if (distanceIfForward > distanceIfRight) { 
     
+    bestResult = 'turn right';
+    /*
     shortestDistance = 'turn right';
     
     if (mRight === 'clear' && fRight === 'clear') {
         
       bestResult = 'turn right';   
     }
+    */
   }
   
   // gas!
-  if (fForward === 'clear') {
+  if (nForward === 'clear') {
     
    aiCar.statuses.accelerate = true;
   } else {
-    // hmm.. maybe temporary, but good to have some turn here
+    /*
     bestResult = 'turn right';
     
     if (nForward !== 'clear') {
       aiCar.statuses.break = true;  
     }
+    */
   }
   
   // cant go forward soon, need to turn
+  /*
   if (mForward !== 'clear' || fForward !== 'clear') {
     
     if (mRight === 'clear') {
@@ -92,8 +104,9 @@ function aiDriverBrain(aiCar) {
       bestResult = 'turn left';
     } 
   } 
-  
+  */
   // here if all "fars" are other than clear, need to take shortestDistance
+  /*
   if (fForward !== 'clear' && fLeft !== 'clear' && fRight !== 'clear') {
       
     aiCar.statuses.accelerate = false;
@@ -103,7 +116,7 @@ function aiDriverBrain(aiCar) {
       aiCar.statuses.brake = true;
     }
   }
-  
+  */
   // stuck!
   
   if (nForward !== 'clear' && nLeft !== 'clear' && nRight !== 'clear' && 
@@ -134,9 +147,9 @@ function aiDriverBrain(aiCar) {
     case 'turn right': aiCar.statuses.turnRight = true; break; 
   }
 
-  ip2.innerHTML = 'f: '+nForward+' '+mForward+' '+fForward+' l: '+
-    nLeft+' '+mLeft+' '+fLeft+' r: '+
-    nRight+' '+mRight+' '+fRight+ ' best dir: '+ bestResult;
+//  ip2.innerHTML = 'f: '/*+nForward+' '+mForward+' '+fForward+*/ +distanceIfForward+' l: '+
+ //   /*nLeft+' '+mLeft+' '+fLeft+*/distanceIfLeft+' r: '+
+  //  /*nRight+' '+mRight+' '+fRight+ */distanceIfRight+' best dir: '+ bestResult;
 }
 
 // Help Functions:
@@ -158,10 +171,16 @@ function testBarsXandY(aiCar, testBar) {
 }
 
 // radar functions to help to check distances
-
+/*gameObject.race.tests.radarBars*/
 function radarCheckForward(centerOfCar, heading, speed) {
+  /*
+  const rBarF = gameObject.race.tests.radarBars[0];
+  return {x: rBarF.x + rBarF.w, y: rBarF.y}
+  */
+  
   const newSpeeds = getSpeeds(heading, speed);
   return {x: centerOfCar.x + -newSpeeds.x, y: centerOfCar.y + newSpeeds.y};
+  
 }
 
 function radarCheckLeft(centerOfCar, heading, turnRate, speed) {
@@ -182,14 +201,14 @@ function radarCollisions(aiCar) {
   let coords = {x: JSON.parse(JSON.stringify(aiCar.x)), y: JSON.parse(JSON.stringify(aiCar.y - aiCar.h/2))};
   gameObject.race.tests.radarBars = [ // (x, y, w, h, color, angle, name){x: aiCar.x, y: aiCar.y, w: 250, h: 10, heading: 
     // {x: aiCar.x, y: aiCar.y, w: 40, h: 10, heading: aiCar.statuses.heading
-    new TestBar(coords.x, coords.y - 10, 250, 20, 'yellow', aiCar.statuses.heading, 'forwardLong', 'forward'),
-    new TestBar(coords.x, coords.y - 10, 110, 20, 'yellow', aiCar.statuses.heading, 'forwardMid', 'forward'),
+    //new TestBar(coords.x, coords.y - 10, 250, 20, 'yellow', aiCar.statuses.heading, 'forwardLong', 'forward'),
+    //new TestBar(coords.x, coords.y - 10, 110, 20, 'yellow', aiCar.statuses.heading, 'forwardMid', 'forward'),
     new TestBar(coords.x, coords.y - 10, 40, 20, 'yellow', aiCar.statuses.heading, 'forwardShort', 'forward'),
-    new TestBar(coords.x, coords.y, 200, 10, 'red', aiCar.statuses.heading - 30, 'leftLong', 'left'),
-    new TestBar(coords.x, coords.y, 100, 10, 'red', aiCar.statuses.heading - 30, 'leftMid', 'left'),
+    //new TestBar(coords.x, coords.y, 200, 10, 'red', aiCar.statuses.heading - 30, 'leftLong', 'left'),
+    //new TestBar(coords.x, coords.y, 100, 10, 'red', aiCar.statuses.heading - 30, 'leftMid', 'left'),
     new TestBar(coords.x, coords.y, 40, 10, 'red', aiCar.statuses.heading - 30, 'leftShort', 'left'),
-    new TestBar(coords.x, coords.y, 200, 10, 'green', aiCar.statuses.heading + 30, 'rightLong', 'right'),
-    new TestBar(coords.x, coords.y, 100, 10, 'green', aiCar.statuses.heading + 30, 'rightMid', 'right'),
+    //new TestBar(coords.x, coords.y, 200, 10, 'green', aiCar.statuses.heading + 30, 'rightLong', 'right'),
+    //new TestBar(coords.x, coords.y, 100, 10, 'green', aiCar.statuses.heading + 30, 'rightMid', 'right'),
     new TestBar(coords.x, coords.y, 40, 10, 'green', aiCar.statuses.heading + 30, 'rightShort', 'right'),
   ];
 
