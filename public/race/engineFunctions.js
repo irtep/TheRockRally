@@ -465,8 +465,8 @@ function setupRace(){
       gameObject.race.cars.push(createNewCar(gameObject.car, true));
       // ai cars:
       gameObject.race.cars.push(createNewCar(aiCars[1], false));
-      //gameObject.race.cars.push(createNewCar(aiCars[1], false));
-      //gameObject.race.cars.push(createNewCar(aiCars[2], false));
+      gameObject.race.cars.push(createNewCar(aiCars[1], false));
+      gameObject.race.cars.push(createNewCar(aiCars[2], false));
     break;
       
     case 'FullRacingSeason':
@@ -508,7 +508,7 @@ function setupRace(){
     carInTurn.lapTime = null;
     carInTurn.bestTime = null;
   });
-  // get track... now only one track
+  // get track... now only one track is ready, so it is this:
   gameObject.race.track.push(tracks[0]);
   // laps and raceclock:
   gameObject.race.totalLaps = 4;
