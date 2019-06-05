@@ -214,7 +214,7 @@ function animate(){
   }); 
   
   paintAll(gameObject.race);
-  giveStats();  // writes info to infoPlace.innerHTML
+  //giveStats();  // writes info to infoPlace.innerHTML
   
   window.requestAnimationFrame(animate);
 }

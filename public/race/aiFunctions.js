@@ -77,7 +77,7 @@ function aiDriverBrain(aiCar) {
   // something right there, need to turn.
   if (mForward !== 'clear' && bestResult === 'forward' && aiCar.statuses.speed > 0.1) {
     aiCar.statuses.accelerate = false;
-    console.log('nForward ', nForward);
+    
     if (nLeft === 'clear') { 
       aiCar.statuses.dodgeLeft = true;
     } else {
@@ -114,13 +114,27 @@ function aiDriverBrain(aiCar) {
     case 'turn left': aiCar.statuses.turnLeft = true; break;
     case 'turn right': aiCar.statuses.turnRight = true; break; 
   }
+  
+  // temporary "fix" for stuck cars problem:
+  if (aiCar.statuses.speed < 0.1) {
+    
+    aiCar.statuses.accelerate = true;
+  }
+  
+  // race is finished:
+  if (aiCar.currentLap === gameObject.race.totalLaps) {
+      
+    aiCar.statuses.accelerate = false;  
+  }
 
 //  ip2.innerHTML = 'f: '/*+nForward+' '+mForward+' '+fForward+*/ +distanceIfForward+' l: '+
  //   /*nLeft+' '+mLeft+' '+fLeft+*/distanceIfLeft+' r: '+
   //  /*nRight+' '+mRight+' '+fRight+ */distanceIfRight+' best dir: '+ bestResult;
 }
 
+/* ---------------- */
 // Help Functions:
+/* ---------------- */
 
 // Distance check
 function distanceCheck(fromWhere, toWhere){

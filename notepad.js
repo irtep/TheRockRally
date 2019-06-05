@@ -1,14 +1,12 @@
 /*
 
 Continue: 
-   - need to make starting count down, maybe from 5 before race/timeAttack starts
-   - check at setup() idea about start and stop of race
   
   - Ai movements: 
-    cars sometimes get stuck... 
-    maybe cars also shouldnt take that much damage, that easily...maybe, need to test more
+    cars sometimes get stuck... atm. no solution if need to reverse
   
   - time attack
+    maybe could make the database connection soon.
   
   - grand prix
   
@@ -18,5 +16,6 @@ Continue:
 
 minors:
 - if player takes name that is an ai driver name, then change ai driver name.
+- if all cars disabled, abort the race
 */
   
