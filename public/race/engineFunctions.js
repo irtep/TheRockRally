@@ -128,7 +128,9 @@ function updateCar(carOnCase) {
   carOnCase.statuses.grip = carOnCase.tires.grip - carOnCase.weight;
   carOnCase.pieces.hull.color = carOnCase.color;
   carOnCase.armourValue = carOnCase.chassis.armour + carOnCase.armour.value;
-  carOnCase.hitPoints = carOnCase.chassis.durability + carOnCase.motor.durability;
+  // giving 0 hit points as a starting stats:
+  carOnCase.hitPoints = 0;
+  //carOnCase.hitPoints = carOnCase.chassis.durability + carOnCase.motor.durability;
   carOnCase.maxHitPoints = carOnCase.chassis.durability + carOnCase.motor.durability;
   
   return carOnCase;
@@ -394,8 +396,31 @@ function collisionTest(car) {
           // check if this was last lap
           if (gameObject.race.totalLaps === car.currentLap) {
            
-            // terminate race for this car...
+            gameObject.race.results.push(car);
             
+            // check if all are finished:
+            const finishedCars = gameObject.race.cars.filter(carrito => gameObject.race.totalLaps == carrito.currentLap);
+            const disabledCars = gameObject.race.cars.filter(carrito => 0.1 > carrito.hitPoints);
+            
+            if (finishedCars.length + disabledCars.length === gameObject.race.cars.length) {
+              const infoPlace = document.getElementById('infoPlace');
+              
+              infoPlace.innerHTML = 'RACE FINISHED! Results: ';
+              for (let i = 0; i < gameObject.race.results.length; i++) {
+                const place = i + 1;
+                
+                infoPlace.innerHTML = infoPlace.innerHTML + place + '. ' + gameObject.race.results[i].driver + '. ';
+                //console.log('ee ', gameObject.race.results[i].driver);
+              }
+            }
+            /*
+            for (let i = 0; i < gameObject.race.cars.length; i++) {
+              let finished = 0;
+              let disabled = 0;
+              
+              if () {}
+            }
+            */
           } else {
           
             // continues
@@ -461,7 +486,7 @@ function setupRace(){
       // players car:
       gameObject.race.cars.push(createNewCar(gameObject.car, true));
       // ai cars:
-      gameObject.race.cars.push(createNewCar(aiCars[1], false));
+      gameObject.race.cars.push(createNewCar(aiCars[0], false));
       gameObject.race.cars.push(createNewCar(aiCars[1], false));
       gameObject.race.cars.push(createNewCar(aiCars[2], false));
     break;
@@ -512,8 +537,25 @@ function setupRace(){
   gameObject.race.lastLaps = [];
   
   // there could be first 6 seconds countdown to start the race/time attack.
-  // maybe so that first save hitPoints, then make all cars hit points to 0 (as cars wont move if 0 hp,
-  // also then draw should be modded a bit for disable msg, so that it doesnt show b/a start/stop of race)
+  let seconds = 6; // to start race
+  const infoPlace = document.getElementById('infoPlace');
+  const countDown = window.setInterval(() => {
+    
+    seconds--;
+    infoPlace.innerHTML = 'Get ready! Race starts in: ' + seconds;
+    if (seconds === 0) {
+    
+      infoPlace.innerHTML = 'Race is On!'
+      // give cars hit points to allow it move
+      gameObject.race.cars.forEach((carInTurn) => {  
+      
+        carInTurn.hitPoints = JSON.parse(JSON.stringify(carInTurn.maxHitPoints));
+      });
+      
+      // terminate this calculator:
+      window.clearInterval(countDown);
+    }
+  }, 1000);
   
   // start lap clock
   const lapTimer = window.setInterval(() => {

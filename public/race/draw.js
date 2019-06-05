@@ -150,19 +150,19 @@ function paintAll(race) {
       ctx.fill();
     }); 
       // write drivers name or disabled if no hps
-    if (unit.hitPoints > 0) {
+    if (unit.hitPoints < 0.1 && unit.currentLap > 0) {
       
+      ctx.beginPath();
+      ctx.fillStyle = 'red';
+      ctx.fillText ('DISABLED!', drawPoint.x, drawPoint.y);
+      ctx.fill; 
+    } else {
+    
       ctx.beginPath();
       ctx.fillStyle = 'black';
       ctx.fillText (unit.driver, drawPoint.x, drawPoint.y);
       //ctx.fillText (unit.nextCheckPoint, drawPoint.x, drawPoint.y);
-      ctx.fill;
-    } else {
-    
-      ctx.beginPath();
-      ctx.fillStyle = 'red';
-      ctx.fillText ('DISABLED!', drawPoint.x, drawPoint.y);
-      ctx.fill;      
+      ctx.fill;     
     }
     
     ctx.restore(); // restore coords.
