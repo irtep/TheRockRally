@@ -2,7 +2,7 @@
 
 Continue: 
    - need to make starting count down, maybe from 5 before race/timeAttack starts
-   - 
+   - check at setup() idea about start and stop of race
   
   - Ai movements: 
     cars sometimes get stuck... 
