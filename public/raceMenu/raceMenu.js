@@ -11,7 +11,7 @@ let gameObject = {
            speed: 0, brakingValue: 0.2, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
          }
        },
-  race: {cars: [], track: [], typeOfRace: 'default', tests: {radarBars: null}, results: []}
+  race: {cars: [], track: [], typeOfRace: 'default', tests: {radarBars: null}, results: [], terminated: false, started: false}
 }
 
 // get value of radioButtons
@@ -125,6 +125,7 @@ function start() {
   gameObject.race.typeOfRace = getRadioVal(document.getElementById('typeOfRace'), 'raceType');
   // save gameObject
   localStorage.setItem('Go', JSON.stringify(gameObject)); 
+  // lets go to race
   window.location = "https://therockrally.glitch.me/race";
 }
 

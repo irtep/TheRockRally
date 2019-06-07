@@ -19,6 +19,11 @@ app.get("/race", (request, response) => {
   response.sendFile(__dirname + '/views/race/race.html');
 });
 
+app.get("/afterRace", (request, response) => {
+  console.log("get received for afterRace");
+  response.sendFile(__dirname + '/views/afterRace/afterRace.html');
+});
+
 // --------------------- LISTEN PORT ---------------------
 
 const listener = app.listen(process.env.PORT, () => {

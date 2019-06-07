@@ -247,12 +247,6 @@ function damageDealer(obj1, obj2) {
   let weightDifference = Math.abs(obj1.weight) - Math.abs(obj2.weight);
   const absDifference = Math.abs(weightDifference);
   const damages = {car1: 0, car2: 0};
-  /* 
-  could be:
-  weightdifference - armour = damage,
-  maxDamage maybe 1/3 of max hit points.. maybe less if it seems that they take this various times.
-  bigger takes 1 damage
-  */
   
   // lighter takes damage
   if (obj1.weight < obj2.weight) {
@@ -341,8 +335,6 @@ function collisionTest(car) {
         }
       }
     }    
-    
-//  }
   
   // first, check with checkPoints
   for (let ind = 0; ind < gameObject.race.track[0].checkPoints.length; ind++) {
@@ -402,6 +394,7 @@ function collisionTest(car) {
             const finishedCars = gameObject.race.cars.filter(carrito => gameObject.race.totalLaps == carrito.currentLap);
             const disabledCars = gameObject.race.cars.filter(carrito => 0.1 > carrito.hitPoints);
             
+            // race is finished
             if (finishedCars.length + disabledCars.length === gameObject.race.cars.length) {
               const infoPlace = document.getElementById('infoPlace');
               
@@ -410,17 +403,10 @@ function collisionTest(car) {
                 const place = i + 1;
                 
                 infoPlace.innerHTML = infoPlace.innerHTML + place + '. ' + gameObject.race.results[i].driver + '. ';
-                //console.log('ee ', gameObject.race.results[i].driver);
+                
+                gameObject.race.terminated = true;
               }
             }
-            /*
-            for (let i = 0; i < gameObject.race.cars.length; i++) {
-              let finished = 0;
-              let disabled = 0;
-              
-              if () {}
-            }
-            */
           } else {
           
             // continues
@@ -473,6 +459,21 @@ function updateXandY(cars) {
   }); 
 }
 
+function nameChecker(name1, name2) {
+  
+  if (name1 === name2) {
+    
+    return true;
+  } else {
+    
+    return false;
+  }
+}
+
+/*  ------------------
+    Setup the race.
+    ------------------
+*/  
 function setupRace(){
   // players car:
   switch (gameObject.race.typeOfRace) {
@@ -504,6 +505,14 @@ function setupRace(){
     
   }
   
+  // check that no overlapping names
+  // not only for clarity reasons in standings, but for collision test too.
+  for (let i = 1; i < gameObject.race.cars.length; i++) {
+    
+    const nameMatch = nameChecker(gameObject.race.cars[0].driver, gameObject.race.cars[i].driver);
+    
+    nameMatch ? gameObject.race.cars[i].driver = 'Josue' : console.log('name ok');
+  }
   // ai cars:
   //createNewCar(aiCars[0], false);
   //createNewCar(aiCars[1], false);
@@ -551,6 +560,8 @@ function setupRace(){
       
         carInTurn.hitPoints = JSON.parse(JSON.stringify(carInTurn.maxHitPoints));
       });
+
+      gameObject.race.started = true;
       
       // terminate this calculator:
       window.clearInterval(countDown);

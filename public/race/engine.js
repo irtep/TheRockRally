@@ -60,7 +60,7 @@ function carMovement(car) {
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
           stats.isMoving = false;
-          //document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          
           // damage test:
           const damageResults = damageDealer(car, colTest);
           if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
@@ -91,7 +91,7 @@ function carMovement(car) {
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
           stats.isMoving = false;
-          //document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          
           // damage test:
           const damageResults = damageDealer(car, colTest);
           if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
@@ -119,7 +119,7 @@ function carMovement(car) {
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
           stats.isMoving = false;
-          //document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          
           // damage test:
           const damageResults = damageDealer(car, colTest);
           if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
@@ -159,7 +159,7 @@ function carMovement(car) {
           updateXandY(gameObject.race.cars);
           stats.speed = 0;
           stats.isMoving = false;
-          document.getElementById('collisionPlace').innerHTML = 'collision: '+ colTest.name;
+          
           // damage test:
           const damageResults = damageDealer(car, colTest);
           if (damageResults.car1 > maxDam) { damageResults.car1 = maxDam; }
@@ -200,6 +200,18 @@ function carMovement(car) {
     }
 }
 
+function terminateRace(gameObj) {
+  
+  // save gameObject
+  localStorage.setItem('Go', JSON.stringify(gameObj)); 
+  
+  window.setInterval( () => {
+    // to next screen
+    window.location = "https://therockrally.glitch.me/afterRace";
+  }, 5000);
+  
+}
+
 function animate(){
   
   // decide ai actions
@@ -213,10 +225,28 @@ function animate(){
     carMovement(vehicle)
   }); 
   
+  // check if all cars are disabled
+  if (gameObject.race.started) {
+        
+    const carsInGoal = gameObject.race.cars.filter(car => gameObject.race.totalLaps == car.currentLap);
+    const brokenCars = gameObject.race.cars.filter(car => 0.1 > car.hitPoints);
+            
+    // race is finished
+    if (carsInGoal.length + brokenCars.length === gameObject.race.cars.length)  {
+      
+      gameObject.race.terminated = true;
+    }
+  }
+  
   paintAll(gameObject.race);
   //giveStats();  // writes info to infoPlace.innerHTML
   
   window.requestAnimationFrame(animate);
+  
+  if (gameObject.race.terminated) {
+    
+    terminateRace(gameObject);
+  }
 }
 
 function giveStats() {  // just informal stuff in development and bugfix purposes...
