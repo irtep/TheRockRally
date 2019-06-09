@@ -214,38 +214,41 @@ function terminateRace(gameObj) {
 
 function animate(){
   
-  // decide ai actions
-  // make them for everyone else except car[0] as that is players car. So i = 1, because of that.
-  for (let i = 1; i < gameObject.race.cars.length; i++) {
-    
-    aiDriverBrain(gameObject.race.cars[i]);
-  }
-  
-  gameObject.race.cars.forEach( (vehicle) => {
-    carMovement(vehicle)
-  }); 
-  
-  // check if all cars are disabled
-  if (gameObject.race.started) {
-        
-    const carsInGoal = gameObject.race.cars.filter(car => gameObject.race.totalLaps == car.currentLap);
-    const brokenCars = gameObject.race.cars.filter(car => 0.1 > car.hitPoints);
-            
-    // race is finished
-    if (carsInGoal.length + brokenCars.length === gameObject.race.cars.length)  {
-      
-      gameObject.race.terminated = true;
+  if (gameObject.race.terminated !== true) {
+    // decide ai actions
+    // make them for everyone else except car[0] as that is players car. So i = 1, because of that.
+    for (let i = 1; i < gameObject.race.cars.length; i++) {
+
+      aiDriverBrain(gameObject.race.cars[i]);
     }
-  }
-  
-  paintAll(gameObject.race);
-  //giveStats();  // writes info to infoPlace.innerHTML
-  
-  window.requestAnimationFrame(animate);
-  
-  if (gameObject.race.terminated) {
-    
-    terminateRace(gameObject);
+
+    gameObject.race.cars.forEach( (vehicle) => {
+      carMovement(vehicle)
+    }); 
+
+    // check if all cars are disabled
+    if (gameObject.race.started) {
+
+      const carsInGoal = gameObject.race.cars.filter(car => gameObject.race.totalLaps == car.currentLap);
+      const brokenCars = gameObject.race.cars.filter(car => 0.1 > car.hitPoints);
+
+      // race is finished
+      if (carsInGoal.length + brokenCars.length === gameObject.race.cars.length)  {
+
+        gameObject.race.terminated = true;
+      }
+    }
+
+    paintAll(gameObject.race);
+    //giveStats();  // writes info to infoPlace.innerHTML
+
+    window.requestAnimationFrame(animate);
+
+
+    if (gameObject.race.terminated) {
+
+      terminateRace(gameObject);
+    }
   }
 }
 
