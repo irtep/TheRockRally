@@ -1,5 +1,9 @@
 
-
+function goToStart() {
+  
+  
+  window.location = "https://therockrally.glitch.me/";
+}
 
 //  -------- ONLOAD:  ------------
 window.onload = (()=> { 
@@ -33,9 +37,11 @@ window.onload = (()=> {
       if (car.points === undefined) {
           
         car.points = 0;    
-      } else {
+      } 
+      
+      if (gameObject.race.results.length > 0) {
         
-        for (let i = 0; i < gameObject.race.results; i++) {
+        for (let i = 0; i < gameObject.race.results.length; i++) {
           let pointsGranted = null;
           
           switch (i) {
@@ -48,7 +54,7 @@ window.onload = (()=> {
           }
           
           if (car.driver === gameObject.race.results[i].driver) {
-           
+            
             car.points += pointsGranted;   
           }
         }
@@ -57,7 +63,7 @@ window.onload = (()=> {
     // sort cars by points
     gameObject.race.cars.sort( (a, b) => {
       
-      a.points < b.points ? -1 : 1;
+      return b.points - a.points;
     });
     
     // show standings
@@ -68,8 +74,8 @@ window.onload = (()=> {
       
       rank = ix + 1;
       
-      showStandings.innerHTML = showStandings.innerHTML + rank + '. ' + gameObject.race.cars[i].driver + 'points: '+ 
-        gameObject.race.cars[i].points + '. <br>';
+      showStandings.innerHTML = showStandings.innerHTML + rank + '. ' + gameObject.race.cars[ix].driver + ' points: '+ 
+        gameObject.race.cars[ix].points + '. <br>';
     }
   }
   

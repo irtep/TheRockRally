@@ -99,13 +99,13 @@ function aiDriverBrain(aiCar) {
   if (aiCar.statuses.dodgeRight) {bestResult = 'turn right';}
   if (aiCar.statuses.dodgeLeft) {bestResult = 'turn left';}
   
-  // stuck! this need to get better
+  // stuck! this need to get better as this might cause some problems now
   if (nForward !== 'clear' && nLeft !== 'clear' && nRight !== 'clear' && 
      mForward !== 'clear' && mLeft !== 'clear' && mRight !== 'clear' && 
      fForward !== 'clear' && fLeft !== 'clear' && fRight !== 'clear') {
       
     aiCar.statuses.break = false;
-    aiCar.statuses.reverse = true;
+    //aiCar.statuses.reverse = true;
   }  
   
   // execute wheel turning.

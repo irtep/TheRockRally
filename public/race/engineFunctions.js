@@ -537,8 +537,8 @@ function setupRace(){
     carInTurn.bestTime = null;
   });
   
-  // get track... now only one track is ready, so it is this:
-  gameObject.race.track.push(tracks[0]);
+  // track 0: factory, 1: city center
+  gameObject.race.track.push(tracks[1]);
   
   // laps and raceclock:
   gameObject.race.totalLaps = 4;
