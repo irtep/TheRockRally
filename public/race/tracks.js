@@ -2,7 +2,7 @@
 const canv = document.getElementById("kanveesi");
 
 const tracks = [
-  {name: 'factory', checkPoints: null, obstacles: [
+  {name: 'Finse Factory', checkPoints: null, obstacles: [
     // borders: RectObstacles: x, y, w, h, color, angle, name
     new RectObstacle(0, -55, canv.width, 60, 'black', 0, 'borderUp'),
     new RectObstacle(0, canv.height -5, canv.width, 30, 'black', 0, 'borderBottom'),
