@@ -61,11 +61,18 @@ function showCar() {
 function checkFields() {
   const nameF = document.getElementById('yourName');
   const carF = document.getElementById('selectCar');
+  const circuitF = document.getElementById('selectCircuit');
   const colorF = document.getElementById('selectColor');
   const colorF2 = document.getElementById('selectColor2');
   const carInfo = document.getElementById('carInfo');
               //name,  car,   color   color2
   let fields = [false, false, false, false];
+  
+  
+  if (circuitF.value !== 'Choose a circuit') {
+  
+    gameObject.race.track = circuitF.value;
+  }
   
   if (nameF.value !== '') {
     fields[0] = true;    
@@ -155,6 +162,15 @@ vehicles.forEach( (item) => {
    o.text = item.name;
    o.value = item.name;
    document.getElementById("selectCar").appendChild(o);
+});
+
+// Dropdown menu for circuits:
+tracks.forEach( (item) => { 
+   const o = document.createElement("option");
+  
+   o.text = item.name;
+   o.value = item.name;
+   document.getElementById("selectCircuit").appendChild(o);
 });
 
 // Dropdown menu for colors:

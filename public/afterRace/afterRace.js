@@ -84,6 +84,7 @@ window.onload = (()=> {
   if (gameObject.race.results.lenght === 0) {
     
     showResults.innerHTML = 'Results: <br><br> Nobody finished the race!';
+    console.log('nobody finished the race');
   } else {
     
     showResults.innerHTML = 'Results: <br><br>';

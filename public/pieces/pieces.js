@@ -71,7 +71,7 @@ const chassises = [
     },
    drawPoint: {x: 1.7, y: -1.5} // {x: -(partsToPaint.hull.w/1.5), y: -(partsToPaint.hull.h/1.5)}
   },
-  {name: 'Juggernaut XL', weight: 16, armour: 10, durability: 14, cost: 350,
+  {name: 'Juggernaut XL', weight: 16, armour: 10, durability: 14, cost: 70,
     pieces: {
       hull: {name: 'hull', x: 30, y: 500, h: 16, w: 45, color: 'darkGreen'},
       frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 1.5}
@@ -87,7 +87,7 @@ const motors = [
   {name: 'Beijing turbo', power: 2.2, maxSpeed: 34, weight: 7, durability: 5, cost: 100, desc: 'Racing motor with price of a normal civil motor! However, do not count on the durability.. too much'},
   {name: 'Zermeces-Lenz 2.5', power: 1.8, maxSpeed: 20, weight: 3, durability: 10, cost: 200, desc: 'Very light and reliable motor, with enough power for lighter cars.'},
   {name: 'Lion 1.6', power: 0.89, maxSpeed: 12, weight: 2, durability: 6, cost: 50, desc: 'Cheap, but not powerful or reliable.'},
-  {name: 'Vodkanov HD', power: 4.3, maxSpeed: 47, weight: 10, durability: 8, cost: 280, desc: 'This is motor designed for tanks. Lots of power. Heavy solution for heavy vehicle.'}
+  {name: 'Vodkanov HD', power: 4.3, maxSpeed: 47, weight: 10, durability: 8, cost: 90, desc: 'This is motor designed for tanks. Lots of power. Heavy solution for heavy vehicle.'}
 ];
 
 // Tires:
@@ -96,7 +96,7 @@ const tires = [
   {name: 'Rockstone racing', grip: 33, cost: 250, weight: 0, desc: 'racing versions of Rockstones. Pretty good set for racing indeed.'},
   {name: 'Mechelen Energy', grip: 27, cost: 120, weight: 0, desc: 'very good basic tires.'},
   {name: 'Xinghao X', grip: 20, cost: 50, weight: 1, desc: 'Cheap tire solution for low top speeds.'},
-  {name: 'Tank tracks', grip: 47, cost: 250, weight: 7, desc: 'Rubber tank tracks. Great grip but weight quite much.'}
+  {name: 'Tank tracks', grip: 47, cost: 120, weight: 7, desc: 'Rubber tank tracks. Great grip but weight quite much.'}
 ];
 
 // Armours:
@@ -104,5 +104,5 @@ const armours = [
   {name: 'Defender XL', weight: 5, value: 10, cost: 100, desc: 'big armour for big protection!'},
   {name: 'Defender Racing', weight: 3, value: 9, cost: 150, desc: 'good protection with reduced weight'},
   {name: 'Defender Lite', weight: 4, value: 6, cost: 90, desc: 'Standard solution for most civil based cars.'},
-  {name: 'Burton Military', weight: 9, value: 20, cost: 250, desc: 'Tank class armour. Heavy and reliable.'}
+  {name: 'Burton Military', weight: 9, value: 20, cost: 100, desc: 'Tank class armour. Heavy and reliable.'}
 ];
