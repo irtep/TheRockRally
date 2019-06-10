@@ -282,6 +282,38 @@ function paintAll(race) {
     ctx.fill; 
     ctx.closePath();
      
+  });  
+  
+  const paintDz = race.track[0].dangerZones.map( (cP) => {
+       
+    ctx.beginPath();
+    ctx.strokeStyle = 'purple';
+    ctx.strokeRect(cP.x, cP.y, cP.w, cP.h);
+    ctx.stroke();
+    ctx.closePath();
+    
+    ctx.beginPath();
+    ctx.fillStyle = 'purple';
+    ctx.fillText (cP.number, cP.x + cP.w/2, cP.y + cP.h/2);
+    ctx.fill; 
+    ctx.closePath();
+     
+  });  
+  
+  const paintDc = race.track[0].dangerClear.map( (cP) => {
+       
+    ctx.beginPath();
+    ctx.strokeStyle = 'green';
+    ctx.strokeRect(cP.x, cP.y, cP.w, cP.h);
+    ctx.stroke();
+    ctx.closePath();
+    
+    ctx.beginPath();
+    ctx.fillStyle = 'green';
+    ctx.fillText (cP.number, cP.x + cP.w/2, cP.y + cP.h/2);
+    ctx.fill; 
+    ctx.closePath();
+     
   });
   
 }

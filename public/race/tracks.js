@@ -45,6 +45,10 @@ const tracks = [
     new CheckPoint(45, 350, 60, 60, 7),
     new CheckPoint(40, 435, 100, 60, 8),
     new CheckPoint(320, 470, 100, 60, 9),
+  ],
+  dangerZones: [
+  ],
+  dangerClear: [
   ]
   },
   {name: 'City Centre', checkPoints: null, obstacles: [
@@ -86,15 +90,25 @@ const tracks = [
     new CheckPoint(720, 320, 100, 100, 2),
     new CheckPoint(750, 80, 100, 60, 3),
     new CheckPoint(680, 25, 100, 60, 4),
-    new CheckPoint(155, 9, 80, 60, 5),
+    new CheckPoint(125, 5, 80, 50, 5),
     new CheckPoint(10, 80, 100, 60, 6),
     new CheckPoint(135, 149, 70, 60, 7),
     new CheckPoint(455, 140, 100, 60, 8),
     new CheckPoint(500, 220, 100, 60, 9),
     new CheckPoint(455, 320, 100, 60, 10),
-    new CheckPoint(45, 350, 60, 60, 11),
+    new CheckPoint(65, 340, 60, 60, 11),
     new CheckPoint(40, 435, 100, 60, 12),
     new CheckPoint(320, 470, 100, 60, 13),
+  ],
+  dangerZones: [ // x, y, w, h, order number
+    new CheckPoint(355, 6, 80, 80, 14),
+    new CheckPoint(355, 145, 100, 60, 15),
+    new CheckPoint(690, 125, 150, 60, 18)
+  ],
+  dangerClear: [ // x, y, w, h, order number
+    new CheckPoint(235, 129, 70, 90, 16),
+    new CheckPoint(125, 450, 100, 120, 17),
+    new CheckPoint(650, 15, 100, 90, 19)
   ]
   }
 ];

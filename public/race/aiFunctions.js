@@ -66,13 +66,31 @@ function aiDriverBrain(aiCar) {
   
   if (safeSpeed > 8) {safeSpeed = 8}
   
-  if (distanceIfForward > 100 && aiCar.statuses.speed < safeSpeed && aiCar.statuses.dodgeLeft === false && aiCar.statuses.dodgeRight === false) {
+  if (aiCar.inDangerZone === true) { safeSpeed = 4};
+  
+  
+  let speedDifference = aiCar.statuses.speed - safeSpeed;
+  
+  if (distanceIfForward > 100 && aiCar.statuses.speed < safeSpeed && aiCar.statuses.dodgeLeft === false && aiCar.statuses.dodgeRight === false/* && aiCar.inDangerZone !== true*/) {
     
    aiCar.statuses.accelerate = true;
   } else {
     
-    aiCar.statuses.brake = true;
+    if (aiCar.statuses.speed > 4) {
+    
+      aiCar.statuses.brake = true;    
+    }
+    
   }
+  
+  // too much speed
+  /*
+  if (speedDifference > 2) {
+    
+    aiCar.statuses.brake = true;
+    aiCar.statuses.accelerate = false;
+  }
+  */
   
   // something right there, need to turn.
   if (mForward !== 'clear' && bestResult === 'forward' && aiCar.statuses.speed > 0.1) {
@@ -116,7 +134,7 @@ function aiDriverBrain(aiCar) {
   }
   
   // temporary "fix" for stuck cars problem:
-  if (aiCar.statuses.speed < 0.1) {
+  if (aiCar.statuses.speed < 1.5) {
     
     aiCar.statuses.accelerate = true;
   }

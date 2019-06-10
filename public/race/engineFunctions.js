@@ -334,9 +334,37 @@ function collisionTest(car) {
           }
         }
       }
-    }    
+    }
+    // AIs danger zones
+    for (let ix1 = 0; ix1 < gameObject.race.track[0].dangerZones.length; ix1++) {
+      const testResult = checkRectangleCollision(car, gameObject.race.track[0].dangerZones[ix1]);
+
+      if (testResult) {
+        
+        // cars start with undefined, so when entering first time set inDangerZone to 1.
+        // 0 and undefined is not in danger, all others yes.
+        /*if (car.inDangerZone === undefined || car.inDangerZone === false) {
+        */
+          car.inDangerZone = true;
+        //}
+      }
+    }
+    // AIs danger is clear
+    for (let ix2 = 0; ix2 < gameObject.race.track[0].dangerClear.length; ix2++) {
+      const testResult = checkRectangleCollision(car, gameObject.race.track[0].dangerClear[ix2]);
+
+      if (testResult) {
+        
+        // cars start with undefined, so when entering first time set inDangerZone to 1.
+        // 0 and undefined is not in danger, all others yes.
+        //if (car.inDangerZone === undefined || car.inDangerZone === false) {
+        
+          car.inDangerZone = false;
+        //}
+      }
+    }       
   
-  // first, check with checkPoints
+  // check with checkPoints
   for (let ind = 0; ind < gameObject.race.track[0].checkPoints.length; ind++) {
     const testResult = checkRectangleCollision(car, gameObject.race.track[0].checkPoints[ind]);
     
@@ -457,6 +485,15 @@ function updateXandY(cars) {
   gameObject.race.track[0].aiCheckPoints.forEach((cpInTurn) => {  
     cpInTurn.setCorners(cpInTurn.angle);
   }); 
+  // ai danger zones
+  gameObject.race.track[0].dangerZones.forEach((cpInTurn) => {  
+    cpInTurn.setCorners(cpInTurn.angle);
+  });  
+  // ai danger clear
+  gameObject.race.track[0].dangerClear.forEach((cpInTurn) => {  
+    cpInTurn.setCorners(cpInTurn.angle);
+  });
+  
 }
 
 function nameChecker(name1, name2) {
@@ -490,6 +527,16 @@ function setupRace(){
       gameObject.race.cars.push(createNewCar(aiCars[0], false));
       gameObject.race.cars.push(createNewCar(aiCars[1], false));
       gameObject.race.cars.push(createNewCar(aiCars[2], false));
+            // find selected track:
+      for (let i = 0; i < tracks.length; i++) {
+
+        if (tracks[i].name === gameObject.race.track) {
+
+          gameObject.race.track = [];
+          gameObject.race.track.push(tracks[i]);
+
+        }
+      }
     break;
       
     case 'FullRacingSeason':
@@ -499,6 +546,10 @@ function setupRace(){
       gameObject.race.cars.push(createNewCar(aiCars[0], false));
       gameObject.race.cars.push(createNewCar(aiCars[1], false));
       gameObject.race.cars.push(createNewCar(aiCars[2], false));
+      
+      // starting from track 1
+      gameObject.race.track = [];
+      gameObject.race.track.push(tracks[0]);
     break;
       
     default: console.log('not found in setupRace type of race');  
@@ -538,7 +589,11 @@ function setupRace(){
   });
   
   // track 0: factory, 1: city center
-  gameObject.race.track.push(tracks[1]);
+  // if track is not selected
+  if (gameObject.race.track.length === 0) {
+      
+    gameObject.race.track.push(tracks[0]);
+  }
   
   // laps and raceclock:
   gameObject.race.totalLaps = 4;
