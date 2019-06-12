@@ -5,6 +5,11 @@ function goToStart() {
   window.location = "https://therockrally.glitch.me/";
 }
 
+function nextRace() {
+  
+  window.location = "https://therockrally.glitch.me/race";
+}
+
 //  -------- ONLOAD:  ------------
 window.onload = (()=> { 
   
@@ -14,6 +19,7 @@ window.onload = (()=> {
   const showResults = document.getElementById('showResults');
   const showLapTimes = document.getElementById('showLapTimes');
   const showStandings = document.getElementById('showStandings');
+  const continueButton = document.getElementById('continueButton');
   let raceTypeSummary = null;
   console.log('afterRace ', gameObject);
   
@@ -60,6 +66,7 @@ window.onload = (()=> {
         }
       }
     });
+        
     // sort cars by points
     gameObject.race.cars.sort( (a, b) => {
       
@@ -77,7 +84,29 @@ window.onload = (()=> {
       showStandings.innerHTML = showStandings.innerHTML + rank + '. ' + gameObject.race.cars[ix].driver + ' points: '+ 
         gameObject.race.cars[ix].points + '. <br>';
     }
+    
+    
+    // if still left races.
+    if (gameObject.race.currentRace < tracks.length) {
+      
+     // make next race button
+      
+    continueButton.innerHTML = '<input type= "button" value= "start screen" onclick= "goToStart()">';
+     // change to next track 
+    } else {
+      // congratulate for completing the season.
+      
+      // show made achievements
+    }
   }
+  
+  // show lap times:
+  showLapTimes.innerHTML = 'Your lap times: <br><br>';
+    
+  gameObject.race.lastLaps.forEach( (lap) => {
+      
+    showLapTimes.innerHTML += lap.minutes + ':' + lap.seconds + ':' + lap.milliseconds + '<br>';
+  });
   
   raceType.innerHTML = raceTypeSummary;
   
