@@ -550,6 +550,7 @@ function setupRace(){
       // starting from track 1
       gameObject.race.track = [];
       gameObject.race.track.push(tracks[0]);
+      gameObject.race.currentRace = 1;
     break;
       
     default: console.log('not found in setupRace type of race');  
