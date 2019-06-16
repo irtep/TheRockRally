@@ -1,3 +1,4 @@
+let gameObject = null;
 
 function goToStart() {
   
@@ -6,15 +7,34 @@ function goToStart() {
 }
 
 function nextRace() {
+  // reset stuff from previous race
+  gameObject.race.cars = [];
+  gameObject.race.lastLaps = [];
+  gameObject.race.results = [];
+  gameObject.race.started = false;
+  gameObject.race.terminated = false;
   
+  // save gameObject
+  localStorage.setItem('Go', JSON.stringify(gameObject)); 
+  // lets go to race
   window.location = "https://therockrally.glitch.me/race";
+  /*
+  cars: (4) [{…}, {…}, {…}, {…}] 
+  currentLapTime: {minutes: 0, seconds: 0, milliseconds: 0}
+  currentRace: 1 
+  lastLaps: (3) [{…}, {…}, {…}] results: (3) [{…}, {…}, {…}] 
+  started: true terminated: true 
+  tests: {radarBars: null} 
+  totalLaps: 4 track: [{…}] 
+  typeOfRace: "FullRacingSeason"
+  */
 }
 
 //  -------- ONLOAD:  ------------
 window.onload = (()=> { 
   
   // load gameObject from localStorage:
-  const gameObject = JSON.parse(localStorage.getItem('Go'));
+  gameObject = JSON.parse(localStorage.getItem('Go'));
   const raceType = document.getElementById('raceType');
   const showResults = document.getElementById('showResults');
   const showLapTimes = document.getElementById('showLapTimes');
@@ -91,11 +111,26 @@ window.onload = (()=> {
       
      // make next race button
       
-    continueButton.innerHTML = '<input type= "button" value= "start screen" onclick= "goToStart()">';
+    continueButton.innerHTML = '<input type= "button" value= "Next Race" onclick= "nextRace()">';
      // change to next track 
+    //gameObject.race.track[0] = tracks[gameObject.race.currentRace];
+    gameObject.race.currentRace++;
+      /*
+    for (let i = 0; i < tracks.length; i++) {
+      
+      if (tracks[i].name === gameObject.race.track[0].name) {
+        
+        gameObject.race.track = [];
+        gameObject.race.track.push(tracks[i + 1]);
+        gameObject.race.currentRace++;
+        return;
+      }
+    }
+    */
     } else {
       // congratulate for completing the season.
       
+      raceTypeSummary = 'Congratulations for completing the season!';
       // show made achievements
     }
   }

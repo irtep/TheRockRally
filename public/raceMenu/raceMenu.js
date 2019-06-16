@@ -3,7 +3,7 @@
 
 let carForShow = null;
 
-const colors = ['white','green','darkGreen','black','navy','blue','cyan','orange','gold','yellow','red','crimson','silver','gray', 'pink'];
+const colors = ['white','green','darkGreen','black','navy','blue','cyan','orange','gold','yellow','red','crimson','silver','gray', 'pink', 'purple'];
 let gameObject = {
   playersName: null,                                                             
   car: {driver: null, name: null, color: null, chassis: null, motor: null, tires: null, armour: null, pieces: null, x: null, y: null, w: null, h: null, 
