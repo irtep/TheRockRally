@@ -548,9 +548,19 @@ function setupRace(){
       gameObject.race.cars.push(createNewCar(aiCars[2], false));
       
       // starting from track 1
-      gameObject.race.track = [];
-      gameObject.race.track.push(tracks[0]);
-      gameObject.race.currentRace = 1;
+      if (gameObject.race.currentRace === undefined) {
+        
+        gameObject.race.track = [];
+        gameObject.race.track.push(tracks[0]);
+        gameObject.race.currentRace = 0;  
+      } else {
+        
+        //gameObject.race.track[0] = tracks[gameObject.race.currentRace];
+        gameObject.race.track = [];
+        gameObject.race.track.push(tracks[gameObject.race.currentRace]);
+        gameObject.race.currentRace++;
+        //gameObject.race.track.push(tracks[0]);
+      }
     break;
       
     default: console.log('not found in setupRace type of race');  
@@ -569,6 +579,12 @@ function setupRace(){
   //createNewCar(aiCars[0], false);
   //createNewCar(aiCars[1], false);
   //createNewCar(aiCars[2], false); 
+   // track 0: factory, 1: city center
+  // if track is not selected
+  if (gameObject.race.track.length === 0) {
+      
+    gameObject.race.track.push(tracks[0]);
+  }
   
   // finish x and y setup and get angles.
   gameObject.race.cars.forEach((carInTurn) => {  
@@ -588,14 +604,7 @@ function setupRace(){
     carInTurn.lapTime = null;
     carInTurn.bestTime = null;
   });
-  
-  // track 0: factory, 1: city center
-  // if track is not selected
-  if (gameObject.race.track.length === 0) {
-      
-    gameObject.race.track.push(tracks[0]);
-  }
-  
+   
   // laps and raceclock:
   gameObject.race.totalLaps = 4;
   gameObject.race.currentLapTime = {minutes: 0, seconds: 0, milliseconds: 0};

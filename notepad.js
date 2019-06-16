@@ -11,8 +11,7 @@ Continue:
   - grand prix
     
   - grand prix season
-    after season screen, where you can continue to next gp
-    achievements
+    need to set somekind of points calculator..
     
   - sounds and music
 
