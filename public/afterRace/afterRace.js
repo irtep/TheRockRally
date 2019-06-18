@@ -6,14 +6,24 @@ function goToStart() {
   window.location = "https://therockrally.glitch.me/";
 }
 
-function nextRace() {
+function nextRace() {  
+  
+  gameObject.race.cars.forEach( (theCar) => {
+    const pointsEntry = {driver: theCar.driver, points: theCar.points}
+    
+    theCar.statuses.speed = 0;
+    theCar.statuses.heading = 0;
+    
+    gameObject.standings.push(pointsEntry);
+  });
+  
   // reset stuff from previous race
   gameObject.race.cars = [];
   gameObject.race.lastLaps = [];
   gameObject.race.results = [];
   gameObject.race.started = false;
   gameObject.race.terminated = false;
-  
+    
   // save gameObject
   localStorage.setItem('Go', JSON.stringify(gameObject)); 
   // lets go to race
@@ -59,11 +69,19 @@ window.onload = (()=> {
     
     // give championship points placeholders and points
     gameObject.race.cars.forEach( (car) => {
+      const oldPoints = gameObject.standings.filter( oldP => oldP.driver === car.driver );
       
       if (car.points === undefined) {
           
         car.points = 0;    
       } 
+      
+      //console.log('oldPoints.points', oldPoints[0].points);
+      // grant points from previous grand prix
+      if (oldPoints[0] !== undefined) {
+        
+        car.points += oldPoints[0].points;
+      }
       
       if (gameObject.race.results.length > 0) {
         
@@ -86,7 +104,7 @@ window.onload = (()=> {
         }
       }
     });
-        
+    
     // sort cars by points
     gameObject.race.cars.sort( (a, b) => {
       
