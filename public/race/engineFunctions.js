@@ -136,6 +136,9 @@ function updateCar(carOnCase) {
   return carOnCase;
 }
 
+/*
+      CREATE NEW CAR
+*/
 // this will create car to racetrack. playerCar indicates if this is for player or ai
 function createNewCar(newCar, playerCar){
   // search chassis, motor, tires, armour and pieces by cars name:
@@ -275,7 +278,11 @@ function damageDealer(obj1, obj2) {
   return damages;
 }
 
-/*  RECTANGLE BASED COLLISION TEST: */
+/*  
+
+  RECTANGLE BASED COLLISION TEST: 
+
+*/
 function pointInPoly(verties, testx, testy) { 
   var i;
   var j;
