@@ -33,8 +33,8 @@ const aiCars = [
   },
   
   {driver: 'Lucas',
-  name: 'Lion 205',
-  color: 'black', color2: 'white',
+  name: 'Zermeces E',
+  color: 'blue', color2: 'red',
   statuses : {
            speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
          }

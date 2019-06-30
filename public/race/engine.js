@@ -223,7 +223,10 @@ function animate(){
     }
 
     gameObject.race.cars.forEach( (vehicle) => {
-      carMovement(vehicle)
+      
+      if (vehicle.hitPoints > 0) {
+        carMovement(vehicle);
+      }
     }); 
 
     // check if all cars are disabled
@@ -240,7 +243,7 @@ function animate(){
     }
 
     paintAll(gameObject.race);
-    //giveStats();  // writes info to infoPlace.innerHTML
+    //giveStats();  // writes info to infoPlace.innerHTML as for bugfix purpose
 
     window.requestAnimationFrame(animate);
 
@@ -255,17 +258,17 @@ function animate(){
 function giveStats() {  // just informal stuff in development and bugfix purposes...
   const infoPlace = document.getElementById('infoPlace');
   const infoPlace2 = document.getElementById('infoPlace2');
-  
+  /*
   infoPlace.innerHTML = 'currentLap: ' + gameObject.race.cars[0].currentLap + ' last/next checkPoint: ' + 
   gameObject.race.cars[0].lastCheckPoint + '/' + gameObject.race.cars[0].nextCheckPoint + 'lap time: ' +
   gameObject.race.currentLapTime.minutes + ':' + gameObject.race.currentLapTime.seconds + ':' + gameObject.race.currentLapTime.milliseconds
+  */
   
-  /*
   infoPlace.innerHTML = 'speed: '+ gameObject.race.cars[0].statuses.speed+ ' HEadInG: '+ gameObject.race.cars[0].statuses.heading+
     ' isMoving, acce, bra, tL, tR '+ gameObject.race.cars[0].statuses.isMoving + ' '+ gameObject.race.cars[0].statuses.accelerate+
      gameObject.race.cars[0].statuses.accelerate + ' ' +gameObject.race.cars[0].statuses.braking + ' '+ gameObject.race.cars[0].statuses.turnLeft+
     ' '+ gameObject.race.cars[0].statuses.turnRight;
-  */
+  
 }
 
 //  -------- ONLOAD:  ------------

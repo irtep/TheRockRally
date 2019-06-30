@@ -250,8 +250,8 @@ function paintAll(race) {
       ctx.closePath();
     }
   });
-  // paint checkpoints. only on design/test purpose will be visibles
-  
+  // paint checkpoints. only on design/test/new trackmaking purpose will be visibles
+  // /*
   const paintCps = race.track[0].checkPoints.map( (cP) => {
        
     ctx.beginPath();
@@ -315,5 +315,5 @@ function paintAll(race) {
     ctx.closePath();
      
   });
-  
+  // */
 }
