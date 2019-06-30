@@ -8,11 +8,23 @@ function goToStart() {
 
 function nextRace() {  
   
+  // resets some stuff from cars:
+  gameObject.car.statuses.speed = 0;
+  gameObject.car.statuses.heading = 0;
+  gameObject.car.statuses.accelerate = false;
+  gameObject.car.statuses.reverse = false;
+  gameObject.car.statuses.turnRight = false;
+  gameObject.car.statuses.turnLeft = false;
+  
   gameObject.race.cars.forEach( (theCar) => {
     const pointsEntry = {driver: theCar.driver, points: theCar.points}
     
     theCar.statuses.speed = 0;
     theCar.statuses.heading = 0;
+    theCar.statuses.accelerate = false;
+    theCar.statuses.reverse = false;
+    theCar.statuses.turnRight = false;
+    theCar.statuses.turnLeft = false;
     
     gameObject.standings.push(pointsEntry);
   });

@@ -525,13 +525,23 @@ function setupRace(){
     case 'LapRecordHunt':
       // players car:
       gameObject.race.cars.push(createNewCar(gameObject.car, true));  
+       // find selected track:
+      for (let i = 0; i < tracks.length; i++) {
+
+        if (tracks[i].name === gameObject.race.track) {
+
+          gameObject.race.track = [];
+          gameObject.race.track.push(tracks[i]);
+
+        }
+      }
     break;
       
     case 'singleRace':
       // players car:
       gameObject.race.cars.push(createNewCar(gameObject.car, true));
       // ai cars:
-      gameObject.race.cars.push(createNewCar(aiCars[0], false));
+      gameObject.race.cars.push(createNewCar(aiCars[4], false));
       gameObject.race.cars.push(createNewCar(aiCars[1], false));
       gameObject.race.cars.push(createNewCar(aiCars[2], false));
             // find selected track:
@@ -550,7 +560,7 @@ function setupRace(){
       // players car:
       gameObject.race.cars.push(createNewCar(gameObject.car, true));
       // ai cars:
-      gameObject.race.cars.push(createNewCar(aiCars[0], false));
+      gameObject.race.cars.push(createNewCar(aiCars[4], false));
       gameObject.race.cars.push(createNewCar(aiCars[1], false));
       gameObject.race.cars.push(createNewCar(aiCars[2], false));
       
