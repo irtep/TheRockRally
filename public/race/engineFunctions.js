@@ -541,7 +541,7 @@ function setupRace(){
       // players car:
       gameObject.race.cars.push(createNewCar(gameObject.car, true));
       // ai cars:
-      gameObject.race.cars.push(createNewCar(aiCars[4], false));
+      gameObject.race.cars.push(createNewCar(aiCars[0], false));
       gameObject.race.cars.push(createNewCar(aiCars[1], false));
       gameObject.race.cars.push(createNewCar(aiCars[2], false));
             // find selected track:
@@ -560,7 +560,7 @@ function setupRace(){
       // players car:
       gameObject.race.cars.push(createNewCar(gameObject.car, true));
       // ai cars:
-      gameObject.race.cars.push(createNewCar(aiCars[4], false));
+      gameObject.race.cars.push(createNewCar(aiCars[0], false));
       gameObject.race.cars.push(createNewCar(aiCars[1], false));
       gameObject.race.cars.push(createNewCar(aiCars[2], false));
       
@@ -575,8 +575,6 @@ function setupRace(){
         //gameObject.race.track[0] = tracks[gameObject.race.currentRace];
         gameObject.race.track = [];
         gameObject.race.track.push(tracks[gameObject.race.currentRace]);
-        gameObject.race.currentRace++;
-        //gameObject.race.track.push(tracks[0]);
       }
     break;
       

@@ -111,7 +111,7 @@ const tracks = [
     new CheckPoint(650, 15, 100, 90, 19)
   ]
   },
-  {name: 'The Curwas', checkPoints: null, obstacles: [
+  {name: 'Las Curvas', checkPoints: null, obstacles: [
     // borders: RectObstacles: x, y, w, h, color, angle, name
     new RectObstacle(0, -55, canv.width, 60, 'black', 0, 'borderUp'),
     new RectObstacle(0, canv.height -5, canv.width, 30, 'black', 0, 'borderBottom'),
@@ -144,28 +144,26 @@ const tracks = [
   ], 
   aiCheckPoints: [ // x, y, w, h, order number
     new CheckPoint(660, 430, 150, 160, 1),
-    new CheckPoint(720, 320, 100, 100, 2),
-    new CheckPoint(750, 80, 100, 60, 3),
-    new CheckPoint(680, 25, 100, 60, 4),
-    new CheckPoint(125, 5, 80, 50, 5),
-    new CheckPoint(10, 80, 100, 60, 6),
-    new CheckPoint(135, 149, 70, 60, 7),
-    new CheckPoint(455, 140, 100, 60, 8),
-    new CheckPoint(500, 220, 100, 60, 9),
-    new CheckPoint(455, 320, 100, 60, 10),
+    new CheckPoint(720, 320, 100, 80, 2),
+    new CheckPoint(350, 320, 100, 60, 3),
+    new CheckPoint(355, 130, 100, 60, 4),
+    new CheckPoint(710, 125, 80, 50, 5),
+    new CheckPoint(700, 30, 100, 60, 6),
+    new CheckPoint(55, 35, 70, 60, 7),
+    new CheckPoint(35, 130, 70, 60, 8),
+    new CheckPoint(160, 130, 70, 60, 9),
+    new CheckPoint(205, 290, 100, 60, 10),
     new CheckPoint(65, 340, 60, 60, 11),
-    new CheckPoint(40, 435, 100, 60, 12),
+    new CheckPoint(20, 435, 100, 60, 12),
     new CheckPoint(320, 470, 100, 60, 13),
   ],
   dangerZones: [ // x, y, w, h, order number
-    new CheckPoint(355, 6, 80, 80, 14),
-    new CheckPoint(355, 145, 100, 60, 15),
-    new CheckPoint(690, 125, 150, 60, 18)
+    new CheckPoint(445, 430, 151, 162, 14),
+    new CheckPoint(255, 30, 100, 80, 15)
   ],
   dangerClear: [ // x, y, w, h, order number
-    new CheckPoint(235, 129, 70, 90, 16),
-    new CheckPoint(125, 450, 100, 120, 17),
-    new CheckPoint(650, 15, 100, 90, 19)
+    new CheckPoint(519, 30, 101, 90, 16),
+    new CheckPoint(125, 450, 100, 120, 17)
   ]
   }
 ];

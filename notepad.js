@@ -11,19 +11,14 @@ Continue:
   - grand prix
     
   - grand prix season
-    Players car starts with old heading and might even move to old dir almost if like it "would have moved" after race
-    finishes, it completes that movement. also when happens, controls sometimes get like stuck...
-    something is not reseting now..
     
   - sounds and music
 
   - career mode
   
-  - more tracks
+  - more tracks!
   
-  - more cars
-  
-  - colors for afterScreen
+  - more cars!
   
   - better visual face
   

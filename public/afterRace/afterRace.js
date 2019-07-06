@@ -2,7 +2,6 @@ let gameObject = null;
 
 function goToStart() {
   
-  
   window.location = "https://therockrally.glitch.me/";
 }
 
@@ -15,6 +14,8 @@ function nextRace() {
   gameObject.car.statuses.reverse = false;
   gameObject.car.statuses.turnRight = false;
   gameObject.car.statuses.turnLeft = false;
+  // reset standings place:
+  gameObject.standings = [];
   
   gameObject.race.cars.forEach( (theCar) => {
     const pointsEntry = {driver: theCar.driver, points: theCar.points}
@@ -40,16 +41,6 @@ function nextRace() {
   localStorage.setItem('Go', JSON.stringify(gameObject)); 
   // lets go to race
   window.location = "https://therockrally.glitch.me/race";
-  /*
-  cars: (4) [{…}, {…}, {…}, {…}] 
-  currentLapTime: {minutes: 0, seconds: 0, milliseconds: 0}
-  currentRace: 1 
-  lastLaps: (3) [{…}, {…}, {…}] results: (3) [{…}, {…}, {…}] 
-  started: true terminated: true 
-  tests: {radarBars: null} 
-  totalLaps: 4 track: [{…}] 
-  typeOfRace: "FullRacingSeason"
-  */
 }
 
 //  -------- ONLOAD:  ------------
@@ -92,7 +83,10 @@ window.onload = (()=> {
       // grant points from previous grand prix
       if (oldPoints[0] !== undefined) {
         
-        car.points += oldPoints[0].points;
+        for (let ii = 0; ii < oldPoints.length; ii++) {
+          
+          car.points += oldPoints[ii].points;  
+        }
       }
       
       if (gameObject.race.results.length > 0) {
@@ -137,26 +131,14 @@ window.onload = (()=> {
     
     
     // if still left races.
-    if (gameObject.race.currentRace < tracks.length) {
-      
+    if (gameObject.race.currentRace + 1 < tracks.length) {
+      console.log('c r, t l', gameObject.race.currentRace, tracks.length);
      // make next race button
       
     continueButton.innerHTML = '<input type= "button" value= "Next Race" onclick= "nextRace()">';
      // change to next track 
     //gameObject.race.track[0] = tracks[gameObject.race.currentRace];
     gameObject.race.currentRace++;
-      /*
-    for (let i = 0; i < tracks.length; i++) {
-      
-      if (tracks[i].name === gameObject.race.track[0].name) {
-        
-        gameObject.race.track = [];
-        gameObject.race.track.push(tracks[i + 1]);
-        gameObject.race.currentRace++;
-        return;
-      }
-    }
-    */
     } else {
       // congratulate for completing the season.
       
@@ -181,15 +163,32 @@ window.onload = (()=> {
     console.log('nobody finished the race');
   } else {
     
-    showResults.innerHTML = 'Results: <br><br>';
+    showResults.innerHTML = 'Results of cars that crossed the goal line: <br><br>';
     
     for (let i = 0; i < gameObject.race.results.length; i++) {
       let standing = null;
+      let colors = ['black', 'white'];
       
+      if (gameObject.race.results[i].driver === gameObject.car.driver) {
+        
+        colors[0] = gameObject.car.color;
+        colors[1] = gameObject.car.color2;
+      } else {
+        // find colors if not player
+        for (let ix = 0; ix < aiCars.length; ix++) {
+          
+          if (gameObject.race.results[i].driver === aiCars[ix].driver) {
+              
+            colors[0] = aiCars[ix].color;
+            colors[1] = aiCars[ix].color2;
+          }
+        }
+      }
       standing = i + 1;
       
-      showResults.innerHTML = showResults.innerHTML + standing + '. ' + gameObject.race.results[i].driver + ' driving ' + 
-        gameObject.race.results[i].name + '. <br>';
+      showResults.innerHTML = showResults.innerHTML + standing + '. <span class= "resultColors" style= "color:'+colors[0]+
+        '; background-color:'+colors[1]+'">' + gameObject.race.results[i].driver + ' driving ' + 
+        gameObject.race.results[i].name + '. </span><br>';
     }
   }
 });
