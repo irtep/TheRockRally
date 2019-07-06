@@ -315,5 +315,5 @@ function paintAll(race) {
     ctx.closePath();
      
   });
-  // */
+ // */
 }
