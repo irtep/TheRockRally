@@ -3,12 +3,12 @@
 Continue: 
   
   - Ai movements: 
-    cars sometimes get stuck... atm. no solution if need to reverse (not sure if needs as quite smooth atm.?)
+    -maybe somekind of dangerous zone should be made if accident?
   
   - time attack
     maybe could make the database connection soon to save best lap times.
     
-  - grand prix
+  - grand prix:
     
   - grand prix season
     

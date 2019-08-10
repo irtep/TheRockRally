@@ -83,15 +83,6 @@ function aiDriverBrain(aiCar) {
     
   }
   
-  // too much speed
-  /*
-  if (speedDifference > 2) {
-    
-    aiCar.statuses.brake = true;
-    aiCar.statuses.accelerate = false;
-  }
-  */
-  
   // something right there, need to turn.
   if (mForward !== 'clear' && bestResult === 'forward' && aiCar.statuses.speed > 0.1) {
     aiCar.statuses.accelerate = false;
