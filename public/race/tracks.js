@@ -165,6 +165,55 @@ const tracks = [
     new CheckPoint(519, 30, 101, 90, 16),
     new CheckPoint(125, 450, 100, 120, 17)
   ]
+  },
+  {name: 'Alleys', checkPoints: null, obstacles: [
+    // borders: RectObstacles: x, y, w, h, color, angle, name
+    new RectObstacle(0, -55, canv.width, 60, 'black', 0, 'borderUp'),
+    new RectObstacle(0, canv.height -5, canv.width, 30, 'black', 0, 'borderBottom'),
+    new RectObstacle(-25, 0, 30, canv.height, 'black', 0, 'borderLeft'),
+    new RectObstacle(canv.width-5, 0, 30, canv.height, 'black', 0, 'borderRight'),
+    // buildings:
+    new RectObstacle(100, 150, 300, 100, 'black', 0, 'house1'), 
+    new RectObstacle(240, 250, 400, 150, 'black', 0, 'house2'),
+    new RectObstacle(720, 80, 200, 200, 'black', 0, 'house4')/*,
+    new RectObstacle(880, 0, 20, 600, 'black', 0, 'house5')*/
+  ],
+  trackMarkings: [
+    // finish line:
+    new RectObstacle(630, 420, 10, 180, 'white', 0, 'finishLine'),
+    // indicator arrows: 
+    /*
+    new RectObstacle(235, 505, 50, 5, 'white', 0, 'arrowShaft'),
+    new RectObstacle(275, 490, 22, 5, 'white', 45, 'arrowPoint1'),
+    new RectObstacle(275, 520, 22, 5, 'white', -45, 'arrowPoint2') */
+  ],
+  arrows: [ // arrows: fromX, fromY, toX, toY, r
+    new Arrow(235, 515, 295, 515, 10),
+    new Arrow(300, 515, 395, 515, 10), 
+    new Arrow(223, 240, 300, 240, 10),
+    new Arrow(240, 200, 340, 210, 10)
+  ],
+  checkPoints: [ // x, y, w, h, order number
+    new CheckPoint(650, 430, 180, 160, 1),
+    new CheckPoint(550, 205, 180, 60, 2),
+    new CheckPoint(10, 350, 380, 60, 3)
+  ], 
+  aiCheckPoints: [ // x, y, w, h, order number
+    new CheckPoint(660, 430, 150, 160, 1),
+    new CheckPoint(630, 110, 100, 100, 2),
+    new CheckPoint(220, 30, 100, 60, 3),
+    new CheckPoint(10, 85, 70, 60, 4),
+    new CheckPoint(15, 250, 80, 60, 5),
+    new CheckPoint(240, 520, 100, 60, 6)
+  ],
+  dangerZones: [ // x, y, w, h, order number
+    new CheckPoint(455, 430, 151, 162, 14),
+    new CheckPoint(255, 30, 100, 80, 15)
+  ],
+  dangerClear: [ // x, y, w, h, order number
+    new CheckPoint(459, 30, 151, 190, 16),
+    new CheckPoint(135, 350, 150, 150, 17)
+  ]
   }
 ];
 
