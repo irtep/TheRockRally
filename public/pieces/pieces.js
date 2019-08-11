@@ -18,7 +18,7 @@ const vehicles = [
   description: 'Huge monster of a vehicle running on rubber tracks. Build mostly of parts of tank so if you are a friend of brutal power, this is a "car" for you.',
     },
   {name: 'Ferrgini Enzolago', chassis: 'Enzolago', motor: 'Ferrgini V12', tires: 'Rockstone racing', armour: 'Defender Lite',
-  description: 'Latest masterpiece from italian supercar legend. Enjoy.',
+  description: 'Latest masterpiece from italian supercar legend. This fast car is extremely difficult to drive, so be careful, champ!.',
     }
 ];
 // ideas: high ace, MBW, Ozel Sorca
