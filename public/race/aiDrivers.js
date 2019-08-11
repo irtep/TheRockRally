@@ -1,7 +1,7 @@
 
 const aiCars = [
   {driver: 'Axel',
-  name: 'Zermeces E',
+  name: 'Ferrgini Enzolago', // Zermeces E
   color: 'red', color2: 'white',
   statuses : {
            speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
@@ -17,7 +17,7 @@ const aiCars = [
   },
   
   {driver: 'Yaco',
-  name: 'Rond Comet mk1',
+  name: 'Zermeces E',
   color: 'cornsilk', color2: 'white',
   statuses : {
            speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
@@ -35,6 +35,14 @@ const aiCars = [
   {driver: 'Lucas',
   name: 'Zermeces E',
   color: 'blue', color2: 'red',
+  statuses : {
+           speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
+         }
+  },
+  
+  {driver: 'Pontus',
+  name: 'Ferrgini Enzolago',
+  color: 'white', color2: 'black',
   statuses : {
            speed: 0, brakingValue: 0.6, originalFriction: 0.06, turnRate: 5, friction: 0.06, heading: 0, isMoving: false, reverse: false, outOfControl: false
          }

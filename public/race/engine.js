@@ -8,7 +8,7 @@ function carMovement(car) {
   let slipFactory = 0;
   
   // maximum damage with one collision
-  const maxDam = car.maxHitPoints / 2;
+  const maxDam = car.maxHitPoints / 4;
   // need these old values if collisions
   let oldX = JSON.parse(JSON.stringify(car.x));
   let oldY = JSON.parse(JSON.stringify(car.y));
@@ -174,7 +174,7 @@ function animate(){
     }
 
     paintAll(gameObject.race);
-    giveStats();  // writes info to infoPlace.innerHTML as for bugfix purpose
+    //giveStats();  // writes info to infoPlace.innerHTML as for bugfix purpose
 
     window.requestAnimationFrame(animate);
 
