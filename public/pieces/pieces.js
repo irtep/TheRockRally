@@ -3,7 +3,7 @@
 // Vehicles:
 const vehicles = [
   {name: 'Rond Comet mk1', chassis: 'Rond Comet', motor: 'Rond V8', tires: 'Rockstone standard', armour: 'Defender XL',
-  description: 'Classic from iconic fabricant Rond. Comet has powerful engine and good armours. Fast, but hard to control in fast speeds.',
+  description: 'Classic from iconic fabricant Rond. Comet has powerful engine and good armours. Fast, but heavy.',
     },
   {name: 'Rond Comet R', chassis: 'Rond Comet lite', motor: 'Rond V10', tires: 'Rockstone racing', armour: 'Defender XL',
   description: 'Racing version of Comet mk1, somewhat lighter with better engine and racing tires. It is a racing car, so while it is fast, it is not easy to drive!',
@@ -16,9 +16,12 @@ const vehicles = [
     },
   {name: 'Juggernaut', chassis: 'Juggernaut XL', motor: 'Vodkanov HD', tires: 'Tank tracks', armour: 'Burton Military',
   description: 'Huge monster of a vehicle running on rubber tracks. Build mostly of parts of tank so if you are a friend of brutal power, this is a "car" for you.',
+    },
+  {name: 'Ferrgini Enzolago', chassis: 'Enzolago', motor: 'Ferrgini V12', tires: 'Rockstone racing', armour: 'Defender Lite',
+  description: 'Latest masterpiece from italian supercar legend. This fast car is extremely difficult to drive, so be careful, champ!.',
     }
 ];
-// ideas: ferrargini, high ace, MBW, Ozel Sorca
+// ideas: high ace, MBW, Ozel Sorca
 
 // Chassises:
 const chassises = [
@@ -59,6 +62,18 @@ const chassises = [
     },
    drawPoint: {x: 1.7, y: -1.5} // {x: -(partsToPaint.hull.w/1.5), y: -(partsToPaint.hull.h/1.5)}
   },
+  {name: 'Enzolago', weight: 5, armour: 1, durability: 9, cost: 270,
+    pieces: {
+      hull: {name: 'hull', x: 30, y: 500, h: 13, w: 30, color: 'red'},
+      leftFrontWindow: {name: 'leftFrontWindow', color: 'lightBlue', h: 1},
+      rightFrontWindow: {name: 'rightFrontWindow', color: 'lightBlue', h: 1},
+      frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 2.5},
+      leftRearWindow: {name: 'leftRearWindow', color: 'lightBlue', h: 0.2},
+      rightRearWindow: {name: 'rightRearWindow', color: 'lightBlue', h: 0.2},
+      rearWindow: {name: 'rearWindow', color: 'lightBlue', w: 0.5}
+    },
+   drawPoint: {x: 1.7, y: -1.5} // {x: -(partsToPaint.hull.w/1.5), y: -(partsToPaint.hull.h/1.5)}
+  },
   {name: 'Lion 205S', weight: 2, armour: 1, durability: 7, cost: 50,
     pieces: {
       hull: {name: 'hull', x: 30, y: 500, h: 10, w: 25, color: 'black'},
@@ -87,7 +102,8 @@ const motors = [
   {name: 'Beijing turbo', power: 2.2, maxSpeed: 34, weight: 7, durability: 5, cost: 100, desc: 'Racing motor with price of a normal civil motor! However, do not count on the durability.. too much'},
   {name: 'Zermeces-Lenz 2.5', power: 1.8, maxSpeed: 20, weight: 3, durability: 10, cost: 200, desc: 'Very light and reliable motor, with enough power for lighter cars.'},
   {name: 'Lion 1.6', power: 0.89, maxSpeed: 12, weight: 2, durability: 6, cost: 50, desc: 'Cheap, but not powerful or reliable.'},
-  {name: 'Vodkanov HD', power: 4.3, maxSpeed: 47, weight: 10, durability: 8, cost: 90, desc: 'This is motor designed for tanks. Lots of power. Heavy solution for heavy vehicle.'}
+  {name: 'Vodkanov HD', power: 4.3, maxSpeed: 47, weight: 10, durability: 8, cost: 90, desc: 'This is motor designed for tanks. Lots of power. Heavy solution for heavy vehicle.'},
+  {name: 'Ferrgini V12', power: 2, maxSpeed: 25, weight: 5, durability: 10, cost: 300, desc: 'Powerful Ferrgini race motor.'},
 ];
 
 // Tires:
