@@ -6,8 +6,11 @@ Continue:
     -maybe somekind of dangerous zone should be made if accident?
   
   - time attack
-    maybe could make the database connection soon to save best lap times.
+    could make the database connection soon to save best lap times.
     
+  - car handling:
+    to change the sliding system so that it adds turnRate or few ticks of turning and a bit of speed if sliding...or similar
+  
   - grand prix:
     
   - grand prix season
