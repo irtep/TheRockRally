@@ -6,7 +6,7 @@ let carForShow = null;
 const colorsAll = ['white','green','darkGreen','black','navy','blue','cyan','orange','gold','yellow','red','crimson','silver','gray', 'pink', 'purple', 'cornsilk',
                'navajowhite', 'aqua', 'aquamarine', 'blueviolet', 'burlyWood', 'cadetBlue', 'cornFlowerBlue', 'coral', 'darkBlue',
                'darkMagenta', 'magenta', 'darkOrange', 'darkSeaGreen', 'deepPink', 'deepSkyBlue', 'fuchsia', 'greenYellow', 'hotPink', 'violet', 'yellowGreen'];
-const colors = colorsAll.sort(colorsAll);
+const colors = colorsAll.sort();
 
 let gameObject = {
   playersName: null,                                                             
