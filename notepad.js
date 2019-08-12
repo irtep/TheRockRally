@@ -2,29 +2,12 @@
 
 Continue: 
   
-  - Ai movements: 
-    -maybe somekind of dangerous zone should be made if accident?
+ Engine 0.1 ready.
+ add: 
+ - database connect for champions and lap records.
+ - sounds and music.
   
-  - time attack
-    could make the database connection soon to save best lap times.
-    
-  - car handling:
-    to change the sliding system so that it adds turnRate or few ticks of turning and a bit of speed if sliding...or similar
-  
-  - grand prix:
-    
-  - grand prix season
-    
-  - sounds and music
-
-  - career mode
-  
-  - more tracks!
-  
-  - more cars!
-  
-  - better visual face
-  
+bug at db: "doubles" entry....
 minors:
 
 */

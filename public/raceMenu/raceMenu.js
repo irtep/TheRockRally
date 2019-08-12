@@ -194,3 +194,12 @@ colors.forEach( (item) => {
    document.getElementById("selectColor2").appendChild(o);
 });
 
+//  -------- ONLOAD:  ------------
+window.onload = (()=> { 
+
+  // fetch top drivers and lap records entries from database.
+  
+  // add them to their place.
+  
+});
+
