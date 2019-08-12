@@ -191,4 +191,10 @@ window.onload = (()=> {
         gameObject.race.results[i].name + '. </span><br>';
     }
   }
+  // fetch best laps of this circuit
+  updateListsFromDB();
+  // compare best laps of circuit to players fresh lap times, if folder is empty or new record, add it there.
+  
+  // if data was modificated, make the update.
+  
 });
