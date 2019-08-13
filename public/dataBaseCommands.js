@@ -1,16 +1,24 @@
 function compareLaps(lap1, lap2){
-  let lap1IsBetter = false;
+  let lap1IsBetter = true;
   
-  if (lap1[0] < lap2[0]) {
-    lap1IsBetter = true;
+  if (lap1[0] > lap2[0]) {
+    lap1IsBetter = false; console.log('slower 0', lap1[0], lap2[0]);
+    return lap1IsBetter;
+  } else if (lap1[0] < lap2[0]) {
+    return lap1IsBetter;           
   }
-  if (lap1[1] < lap2[1]) {
-    lap1IsBetter = true;
+  if (lap1[1] > lap2[1]) {
+    lap1IsBetter = false; console.log('slower 1', lap1[1], lap2[1]);
+    return lap1IsBetter;
+  } else if (lap1[1] < lap2[1]) {
+    return lap1IsBetter;           
   }
-  if (lap1[2] < lap2[2]) {
-    lap1IsBetter = true;
+  if (lap1[2] > lap2[2]) {
+    lap1IsBetter = false; console.log('slower 2', lap1[2], lap2[2]);
+    return lap1IsBetter;
+  } else if (lap1[2] < lap2[2]) {
+    return lap1IsBetter;           
   }
-  return lap1IsBetter;
 }
 
 // this gets lists from database
@@ -58,32 +66,34 @@ function updateListsFromDB(){
         const newIsBetter = compareLaps(bestLap, currentRace[0].times[i].bestLap);
         console.log('comparing ', bestLap, currentRace[0].times[i].bestLap);
         newIsBetter ? console.log('faster'): console.log('slower');
+          
+        const playerEntry = {
+          driver: gameObject.car.driver,
+          car: gameObject.car.name,
+          colors: [
+            gameObject.car.color,
+            gameObject.car.color2
+          ],
+          bestLap: bestLap,
+          circuit: currentCircuit
+          }
         // new top3 time
         if (newIsBetter) {
-          const playerEntry = {
-            driver: gameObject.car.driver,
-            car: gameObject.car.name,
-            colors: [
-              gameObject.car.color,
-              gameObject.car.color2
-            ],
-            bestLap: bestLap,
-            circuit: currentCircuit
-          }
           
           currentRace[0].times.splice(i, 0, playerEntry);
           //console.log('r', records);
           if (currentRace[0].times.length > 3) { currentRace[0].times.pop(); }
           updateListsInDB(records);
+          // return as no more loops are wished
+          console.log('times now: ', currentRace[0].times);
           return;
-        } else {
+        } /*else {
         // no new top3 time, lets push it anyways, as if not enough laptimes there.
           currentRace[0].times.push(playerEntry);
-        }
-        // if more than 3 times
+        }*/
         
       }
-      console.log('times now: ', currentRace[0].times);
+      
       // .pop removes at end of array
       // unshift adds to start
       

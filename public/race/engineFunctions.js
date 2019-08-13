@@ -396,7 +396,7 @@ function collisionTest(car) {
           // if players car
           if (car.driver  === gameObject.car.driver) { 
             // push result of lap clock to 
-            if (car.currentLap > 0) {
+            if (car.currentLap > 0 && car.currentLap < 4) {
               
               gameObject.race.lastLaps.push(JSON.parse(JSON.stringify(gameObject.race.currentLapTime)));
             }
