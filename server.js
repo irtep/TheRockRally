@@ -37,7 +37,8 @@ app.get("/", (request, response) => {
   console.log("get received");
   response.sendFile(__dirname + '/views/raceMenu/raceMenu.html');
 });
-
+/* res.sendFile(path.join(__dirname, '../public', 'index1.html')); */
+/* response.sendFile(__dirname + '/views/race/race.html'); */
 app.get("/race", (request, response) => {
   console.log("get received race");
   response.sendFile(__dirname + '/views/race/race.html');
@@ -83,8 +84,8 @@ app.post('/updateAll', (request, response) => {
   console.log('received: ', received);
   const listQuery = { name:  'lapRecords' };  
   
-  const listEntry = received.updatedLists[0];
-  console.log('r' ,listEntry);
+  const listEntry = received.updatedLists[0].lapRecords;
+  console.log('r' ,listEntry.lapRecords);
 
   lapRecordsModel.update(listQuery, {
     lapRecords: listEntry
@@ -92,10 +93,10 @@ app.post('/updateAll', (request, response) => {
         console.log("recordList updated"); 
       }); 
 
-      const sending = JSON.stringify('Database updated successfully!');
-      console.log("responding with data ");
-      response.writeHead(200, {'Content-Type': 'text/plain'});
-      response.end(sending); 
+  const sending = JSON.stringify('Database updated successfully!');
+  console.log("responding with data ");
+  response.writeHead(200, {'Content-Type': 'text/plain'});
+  response.end(sending); 
   
 });
 // --------------------- LISTEN PORT ---------------------

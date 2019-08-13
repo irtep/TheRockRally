@@ -2,7 +2,7 @@ let gameObject = null;
 
 function goToStart() {
   
-  window.location = "https://therockrally.glitch.me/";
+  window.location = "https://driveorlose.glitch.me/";
 }
 
 function nextRace() {  
@@ -40,7 +40,7 @@ function nextRace() {
   // save gameObject
   localStorage.setItem('Go', JSON.stringify(gameObject)); 
   // lets go to race
-  window.location = "https://therockrally.glitch.me/race";
+  window.location = "https://driveorlose.glitch.me/race";
 }
 
 //  -------- ONLOAD:  ------------

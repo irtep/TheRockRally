@@ -138,7 +138,7 @@ function start() {
   // save gameObject
   localStorage.setItem('Go', JSON.stringify(gameObject)); 
   // lets go to race
-  window.location = "https://therockrally.glitch.me/race";
+  window.location = "https://driveorlose.glitch.me/race";
 }
 
 function quickStart() {
@@ -156,7 +156,7 @@ function quickStart() {
   gameObject.race.typeOfRace = getRadioVal(document.getElementById('typeOfRace'), 'raceType');
   // save gameObject
   localStorage.setItem('Go', JSON.stringify(gameObject)); 
-  window.location = "https://therockrally.glitch.me/race";
+  window.location = "https://driveorlose.glitch.me/race";
 }
 
 // Dropdown menu for cars:
