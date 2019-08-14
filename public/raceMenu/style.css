@@ -1,7 +1,10 @@
 #startButton {
   opacity: 0;
 }
-
+/* creates shadows to text*/
+.resultColors {
+  text-shadow: 1px 0 0 grey, -1px 0 0 grey, 0 1px 0 grey, 0 -1px 0 grey, 1px 1px grey, -1px -1px 0 grey, 1px -1px 0 grey, -1px 1px 0 grey; 
+}
 #kanveesi {
   
   display: none;
@@ -11,6 +14,16 @@
   border-radius: 5px;
   border-width: 6px;
   border-color: black;*/ 
+}
+
+td {
+  width: 16%;
+  border-style: solid;
+}
+
+#gameTitle {
+  
+  font-family: 'Audiowide', cursive;
 }
 
 /* Grid 1 */
@@ -33,46 +46,80 @@
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr  1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-areas: 
       'theHead theHead theHead'
       'theForm theRecords theRecords'
       'theForm theRecords theRecords'
+      'theForm theRecords theRecords'
+      'theForm theRecords theRecords'
+      'theFooter theFooter theFooter'
+      'theFooter theFooter theFooter'
       'theFooter theFooter theFooter'
       'theFooter theFooter theFooter';
       grid-gap: 1px;
   }
+}
+#theHeader { 
+  grid-area: theHead;
+  border-style: solid;
+  text-align: center;
+  font-size: 50px;
+}
+#idForm { 
+  grid-area: theForm;
+  border-style: solid;
+}
+#lapRecords { 
+  grid-area: theRecords;
+  border-style: solid;
+}
+#theFoot {
+  grid-area: theFooter;
+  border-style: solid;
 }
 
 .divs {
   
   padding: 10px;
 }
-#theHeader {
-  
-  grid-area: theHead;
+
+/* grid 2, where are lap records*/
+/*
+          <div id= "finseFactory"></div>
+          <div id= "cityCentre"></div>
+          <div id= "lasCurvas"></div>
+          <div id= "alleys"></div>
+          <div id= "champs"></div>
+*/
+#container2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas: 
+      'fFactory cCentre'
+      'lCurvas alleys'
+      'champs champs';
+      grid-gap: 1px; 
+}
+#finseFactory {
+  grid-area: fFactory;
+  border-style: solid;
+}
+#cityCentre {
+  grid-area: cCentre;
+  border-style: solid;
+}
+#lasCurvas {
+  grid-area: lCurvas;
+  border-style: solid;
+}
+#alleys {
+  grid-area: alleys;
+  border-style: solid;
+}
+#champs {
+  grid-area: champs;
   border-style: solid;
 }
 
-#idForm {
-  
-  grid-area: theForm;
-  border-style: solid;
-}
-
-#lapRecords {
-  
-  grid-area: theRecords;
-  border-style: solid;
-}
-
-#theFoot {
-  
-  grid-area: theFooter;
-  border-style: solid;
-}
-
-td {
-  width: 16%;
-  border-style: solid;
-}

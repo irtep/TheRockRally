@@ -21,7 +21,7 @@ function compareLaps(lap1, lap2){
   }
 }
 
-// fetch data from db for only show purposes:
+// fetch data from db and add to main page:
 function showListFromDB() {
   const http = new XMLHttpRequest();
   const url = '/showAll';
@@ -34,10 +34,28 @@ function showListFromDB() {
     
     if (http.readyState == 4 && http.status == 200) {
       const records = JSON.parse(http.responseText);
+      const lapData = records[0].lapRecords;
+      const track1 = document.getElementById('finseFactory');
+      const track2 = document.getElementById('cityCentre');
+      const track3 = document.getElementById('lasCurvas');
+      const track4 = document.getElementById('alleys');
+      const allTracks = [track1, track2, track3, track4];
+      const champs = document.getElementById('champs');
       //const forShow1 = sahaList.join('<br>');
       console.log("update ready!: ", records[0].lapRecords);
+      
+      allTracks.forEach( tracki => {tracki.innerHTML += '<br>';});
       // write it..
-      document.getElementById('lapRecords').innerHTML = records[0];
+      for (let i = 0; i < lapData.length; i++) {
+        
+        for (let ii = 0; ii < lapData[i].times.length; ii++) {
+          const info = lapData[i].times[ii];
+          const position = ii + 1;
+          
+          allTracks[i].innerHTML += '<b>'+position+'.<span class= "resultColors" style= "color: '+info.colors[0]+'; background-color: '+info.colors[1]+'">' + info.driver+
+          '</b></span>. Car: '+ info.car + ' Time: '+ info.bestLap[0]+ ':'+ info.bestLap[1]+ ':'+ info.bestLap[2]+ ' <br>';
+        }
+      }
 
     }
   }
