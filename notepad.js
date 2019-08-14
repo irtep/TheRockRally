@@ -6,8 +6,10 @@ Continue:
  add: 
  - database connect for champions and lap records.
  - sounds and music.
-  
-bug at db: doesn't save them in correct order.
+ - selecting card could paint it table box.
+ - check out of grip... should work quite opposite.... 
+ - finish showing of lap records.
+
 minors:
 
 */

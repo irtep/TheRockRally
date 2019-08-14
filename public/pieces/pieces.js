@@ -4,21 +4,27 @@
 const vehicles = [
   {name: 'Rond Comet mk1', chassis: 'Rond Comet', motor: 'Rond V8', tires: 'Rockstone standard', armour: 'Defender XL',
   description: 'Classic from iconic fabricant Rond. Comet has powerful engine and good armours. Fast, but heavy.',
+   stats: 'Acceleration: ** <br> TopSpeed: **** <br> Grip: ** <br> Recommendation: Good for practice, hard to make records.'
     },
   {name: 'Rond Comet R', chassis: 'Rond Comet lite', motor: 'Rond V10', tires: 'Rockstone racing', armour: 'Defender XL',
   description: 'Racing version of Comet mk1, somewhat lighter with better engine and racing tires. It is a racing car, so while it is fast, it is not easy to drive!',
+   stats: 'Acceleration: *** <br> TopSpeed: **** <br> Grip: **** <br> Recommendation: Good car for any use!'
     },
   {name: 'Zermeces E', chassis: 'Zermeces standard', motor: 'Zermeces-Lenz 2.5', tires: 'Rockstone standard', armour: 'Defender Lite',
   description: 'Quick racing car from "leading star" Zermeces-Lenz. Not recommended for inexperienced drivers, but in experienced hands this is fast.',
+   stats: 'Acceleration: ***** <br> TopSpeed: *** <br> Grip: ***** <br> Recommendation: Quick, but so quick that it is hard to drive.'
     },
   {name: 'Lion 205', chassis: 'Lion 205S', motor: 'Lion 1.6', tires: 'Mechelen Energy', armour: 'Defender Lite',
   description: 'Basic car from traditional french manufacturer. Good for a new driver as it is very easy to drive.',
+   stats: 'Acceleration: * <br> TopSpeed: * <br> Grip: ***** <br> Recommendation: Good for practice, hard to make records.'
     },
   {name: 'Juggernaut', chassis: 'Juggernaut XL', motor: 'Vodkanov HD', tires: 'Tank tracks', armour: 'Burton Military',
   description: 'Huge monster of a vehicle running on rubber tracks. Build mostly of parts of tank so if you are a friend of brutal power, this is a "car" for you.',
+   stats: 'Acceleration: ** <br> TopSpeed: ** <br> Grip: *** <br> Recommendation: Good for practice, hard to make records. Survives damage quite ok'
     },
   {name: 'Ferrgini Enzolago', chassis: 'Enzolago', motor: 'Ferrgini V12', tires: 'Rockstone racing', armour: 'Defender Lite',
   description: 'Latest masterpiece from italian supercar legend. This fast car is extremely difficult to drive, so be careful, champ!.',
+   stats: 'Acceleration: ***** <br> TopSpeed: ***** <br> Grip: ***** <br> Recommendation: Super fast, but very hard to drive.'
     }
 ];
 // ideas: high ace, MBW, Ozel Sorca
