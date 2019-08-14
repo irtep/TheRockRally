@@ -2,10 +2,77 @@
   opacity: 0;
 }
 
-#kanveesi {/*
+#kanveesi {
+  
+  display: none;
+  /*
   background-color: lightGrey;
   border-style: solid;
   border-radius: 5px;
   border-width: 6px;
   border-color: black;*/ 
+}
+
+/* Grid 1 */
+
+#container {
+  
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-template-areas: 
+    'theHead'
+    'theForm'
+    'theFooter'
+    'theRecords';
+    grid-gap: 1px;
+}
+
+@media (min-width: 400px){
+  #container {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr  1fr;
+    grid-template-areas: 
+      'theHead theHead theHead'
+      'theForm theRecords theRecords'
+      'theForm theRecords theRecords'
+      'theFooter theFooter theFooter'
+      'theFooter theFooter theFooter';
+      grid-gap: 1px;
+  }
+}
+
+.divs {
+  
+  padding: 10px;
+}
+#theHeader {
+  
+  grid-area: theHead;
+  border-style: solid;
+}
+
+#idForm {
+  
+  grid-area: theForm;
+  border-style: solid;
+}
+
+#lapRecords {
+  
+  grid-area: theRecords;
+  border-style: solid;
+}
+
+#theFoot {
+  
+  grid-area: theFooter;
+  border-style: solid;
+}
+
+td {
+  width: 16%;
+  border-style: solid;
 }

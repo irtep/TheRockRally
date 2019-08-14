@@ -21,7 +21,33 @@ function compareLaps(lap1, lap2){
   }
 }
 
-// this gets lists from database
+// fetch data from db for only show purposes:
+function showListFromDB() {
+  const http = new XMLHttpRequest();
+  const url = '/showAll';
+  const params = 'MSG=show';
+  
+  http.open('POST', url, true);
+  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+  http.onreadystatechange = () => {//Call a function when the state changes.
+    
+    if (http.readyState == 4 && http.status == 200) {
+      const records = JSON.parse(http.responseText);
+      //const forShow1 = sahaList.join('<br>');
+      console.log("update ready!: ", records[0].lapRecords);
+      // write it..
+      document.getElementById('lapRecords').innerHTML = records[0];
+
+    }
+  }
+  http.send(params); 
+  //feedback.innerHTML = "getting info from database, wait!";
+  
+  
+}
+
+// this gets lists from database and updates it
 function updateListsFromDB(){
   
   //const armyList = JSON.stringify(armyList);

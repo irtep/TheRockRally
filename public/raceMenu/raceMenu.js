@@ -68,7 +68,7 @@ function checkFields() {
   const circuitF = document.getElementById('selectCircuit');
   const colorF = document.getElementById('selectColor');
   const colorF2 = document.getElementById('selectColor2');
-  const carInfo = document.getElementById('carInfo');
+  //const carInfo = document.getElementById('carInfo');
               //name,  car,   color   color2
   let fields = [false, false, false, false];
   
@@ -92,7 +92,8 @@ function checkFields() {
     gameObject.car.name = carF.value;
     
     // create selected car for to show it
-    carForShow = createNewCar(gameObject.car, true);
+    /* not showing selected car now
+    //carForShow = createNewCar(gameObject.car, true);
     //carForShow.x = 20; carForShow.y = 70;
     const carDesc = vehicles.filter((machine) => machine.name === carF.value);
     const powerValue = carForShow.statuses.power * 10;
@@ -105,7 +106,8 @@ function checkFields() {
       'turning: ' + carForShow.statuses.grip + '<br>' +
       'cost: ' + carForShow.cost + '<br><br>' +
       carDesc[0].description;
-    showCar();
+    //showCar();
+    */
   } else {
     fields[1] = false;  
   }  
@@ -196,9 +198,24 @@ colors.forEach( (item) => {
 
 //  -------- ONLOAD:  ------------
 window.onload = (()=> { 
-
-  // fetch top drivers and lap records entries from database.
+  const insideFoot = document.getElementById('insideFoot');
   
+  // Table to show car details:
+  
+  vehicles.forEach( (vehicle) => {
+    insideFoot.innerHTML += '<td><b>' +vehicle.name +'</b><br>'+ vehicle.stats + '<br><br>' + vehicle.description +'</td>';
+  }); 
+  
+  
+  // show car details below:
+  /*
+ name: 'Ferrgini Enzolago', chassis: 'Enzolago', motor: 'Ferrgini V12', tires: 'Rockstone racing', armour: 'Defender Lite',
+  description: 'Latest masterpiece from italian supercar legend. This fast car is extremely difficult to drive, so be careful, champ!.',
+    }
+  */
+  
+  // fetch top drivers and lap records entries from database.
+  showListFromDB();
   // add them to their place.
   
 });
