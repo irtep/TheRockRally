@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../raceMenu/style.css">
     <!-- Special fonts: -->
     <link href="https://fonts.googleapis.com/css?family=Courgette|El+Messiri" rel="stylesheet">
+	  <link href="https://fonts.googleapis.com/css?family=Anton|Audiowide" rel="stylesheet">
     
     <title>Drive Or Lose.</title>
   </head>
@@ -15,7 +16,7 @@
   <body>
     <div id= "container">
       
-      <header id= "theHeader" class= "divs"> Drive Or Lose.</header>
+      <header id= "theHeader" class= "divs"> <span id= "gameTitle">Drive Or Lose.</span></header>
 
       <div id= "idForm" class= "divs">
         Your name: <br>
@@ -65,8 +66,14 @@
       <input id= "quickButton" type= "button" value= "Quick Start" onclick= "quickStart()">
       </div>
       
-      <div id= "lapRecords" class= "divs">
-        lap records etc. here
+      <div id= "lapRecords">
+        <div container2>
+          <div id= "finseFactory" class= "divs">Finse Factory Top 3 laps:</div>
+          <div id= "cityCentre" class= "divs">City Centre Top 3 laps:</div>
+          <div id= "lasCurvas" class= "divs">Las Curvas Top 3 laps:</div>
+          <div id= "alleys" class= "divs">Alleys Top 3 laps:</div>
+          <div id= "champs" class= "divs">loading data...</div>
+        </div>
       </div>
 
       <footer id= "theFoot" class= "divs">
