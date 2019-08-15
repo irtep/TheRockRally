@@ -205,7 +205,7 @@ class Car extends AllRects {
       if (this.statuses.speed < this.statuses.grip) {
         this.statuses.heading -= this.statuses.turnRate - (this.statuses.speed/7);
       } else {
-        this.statuses.heading -= this.statuses.turnRate - (this.statuses.speed/7) + (this.statuses.grip/2);
+        this.statuses.heading -= this.statuses.turnRate - (this.statuses.speed/7) - (this.statuses.grip/4);
       }
     }
   }
@@ -216,7 +216,7 @@ class Car extends AllRects {
       if (this.statuses.speed < this.statuses.grip) {
         this.statuses.heading += this.statuses.turnRate - (this.statuses.speed/7);
       } else {
-        this.statuses.heading += this.statuses.turnRate - (this.statuses.speed/7) + (this.statuses.grip/2);
+        this.statuses.heading += this.statuses.turnRate - (this.statuses.speed/7) + (this.statuses.grip/4);
       }
     }
   }

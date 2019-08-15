@@ -41,7 +41,7 @@ function showListFromDB() {
       const track4 = document.getElementById('alleys');
       const allTracks = [track1, track2, track3, track4];
       const champs = document.getElementById('champs');
-      //const forShow1 = sahaList.join('<br>');
+      
       console.log("update ready!: ", records[0].lapRecords);
       
       allTracks.forEach( tracki => {tracki.innerHTML += '<br>';});
@@ -90,6 +90,23 @@ function updateListsFromDB(){
     if (lapTimes[i].milliseconds < bestLap[2]) {
       bestLap[0] = lapTimes[i].minutes; bestLap[1] = lapTimes[i].seconds; bestLap[2] = lapTimes[i].milliseconds;
     }
+    /*
+    bug: from this list
+0:11:39
+0:12:15
+0:13:80
+
+took 0:12:15 to compare.
+
+0:6:71
+0:7:64
+0:6:83 <-
+
+0:10:8
+0:9:91
+0:10:24 <-
+
+    */
   }
   
   http.open('POST', url, true);

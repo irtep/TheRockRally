@@ -5,7 +5,7 @@ let gameObject = null;
 
 function carMovement(car) {
   const stats = car.statuses;
-  let slipFactory = 0;
+  //let slipFactory = 0;
   
   // maximum damage with one collision
   const maxDam = car.maxHitPoints / 4;
@@ -25,11 +25,12 @@ function carMovement(car) {
     stats.speed -= stats.friction; 
    
     // if too much speed for grip and turning, car is out of control:
+    /*
     if (stats.speed > stats.grip) {
       
       slipFactory = stats.speed - stats.grip;
     }
-     
+    */ 
     car.x += -speeds.x;
     car.y += speeds.y;
     // collision test:
@@ -116,7 +117,7 @@ function carMovement(car) {
     // modifications caused by possibly too much speed:
     // save original value:
     const origVal = JSON.parse(JSON.stringify(car.statuses.turnRate));
-    car.statuses.turnRate -= slipFactory;
+    //car.statuses.turnRate -= slipFactory;
     
     if (stats.turnRight === true && stats.outOfControl === false) { 
       car.turnRight();
