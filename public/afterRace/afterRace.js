@@ -149,7 +149,7 @@ window.onload = (()=> {
       // congratulate for completing the season.
       raceTypeSummary = 'Congratulations for completing the season!';
       // add champ if champ
-      if (gameObject.car.driver === gameObject.standings[0].driver) {
+      if (gameObject.car.driver === gameObject.race.cars[0].driver) {
           
         raceTypeSummary += 'You are the champion!';
         /*
@@ -157,7 +157,7 @@ window.onload = (()=> {
         //const testChamp = [{name: 'kek', car: 'ferrari', colors: ['white', 'green']}];
         //addChampion(testChamp);
         */
-        const newChamp = [{name: gameObject.car.driver, car: gameObject.car.name, colors: [gameObject.car.color, gameObject.car.colo2]}];
+        const newChamp = [{name: gameObject.car.driver, car: gameObject.car.name, colors: [gameObject.car.color, gameObject.car.color2]}];
         addChampion(newChamp);
       }
     }
