@@ -140,7 +140,7 @@ function terminateRace(gameObj) {
   window.setInterval( () => {
     // to next screen
     window.location = "https://driveorlose.glitch.me/afterRace";
-  }, 5000);
+  }, 2000);
   
 }
 
