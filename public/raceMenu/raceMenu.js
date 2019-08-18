@@ -19,6 +19,34 @@ let gameObject = {
   standings: []
 }
 
+function typeChanged() {
+  const raceType= getRadioVal(document.getElementById('typeOfRace'), 'raceType');
+  const selectCircuitForm = document.getElementById('selectCircuitForm');
+  //console.log('type changed!', selectCircuitForm.selected);
+  console.log('type changed!', raceType);
+  /*
+  
+raceMenu.js:25 type changed! FullRacingSeason
+raceMenu.js:25 type changed! singleRace
+raceMenu.js:25 type changed! LapRecordHunt
+var element = document.createElement('select');
+element.style.width = "100px";
+  */
+  switch (raceType) {
+      
+    case 'LapRecordHunt':
+      selectCircuitForm.style.opacity = 1;
+    break;
+    case 'singleRace':
+      selectCircuitForm.style.opacity = 1;
+    break;
+    case 'FullRacingSeason':
+      selectCircuitForm.style.opacity = 0;
+    break;
+    default: console.log('racetype not found!');
+  }
+}
+
 // get value of radioButtons
 function getRadioVal(form, name) {
   const selectedValue = form.elements[name].value;
@@ -215,8 +243,14 @@ window.onload = (()=> {
   */
   
   // fetch top drivers and lap records entries from database.
-  showListFromDB();
+  showListFromDB(false); // lap records
+  
+  // add champ to test:
+  //const testChamp = [{name: 'kek', car: 'ferrari', colors: ['white', 'green']}];
+  //addChampion(testChamp);
+  showListFromDB(true);  // top drivers
   // add them to their place.
+  
   
 });
 

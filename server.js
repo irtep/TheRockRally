@@ -2,7 +2,6 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 
-
 app.use(express.static('public'));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -15,9 +14,15 @@ mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 const Schema = mongoose.Schema;
 
-const topDriversSchema = new Schema( {
-  topDrivers: {
-    type: Array    
+const champsSchema = new Schema( {
+  name: {
+    type: String    
+  },
+  car: {
+    type: String
+  },
+  colors: {
+    type: Array
   } 
 });
 const lapRecordsSchema = new Schema( {
@@ -26,7 +31,7 @@ const lapRecordsSchema = new Schema( {
   } 
 });
 
-const topDriversModel = mongoose.model('topDriversModel', topDriversSchema ); 
+const champsModel = mongoose.model('champsModel', champsSchema ); 
 const lapRecordsModel = mongoose.model('lapRecordsModel', lapRecordsSchema ); 
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -73,10 +78,28 @@ app.post('/showAll', (request, response) => {
         response.end(sending);      
       }, 1000); //timer
     break;  
+    case ('showChamps'):
+      var resp = null;
+      champsModel.find((err, results) => {
+
+      if (err) console.log(err);
+        console.log('result for champs search at show champs: ', results);
+        resp = results;  
+      });
+      
+      setTimeout(() => {  // timed so that there is time to add the data
+        const sending = JSON.stringify(resp);
+        console.log("responding with data ");
+        console.log('lists now: ', responding);
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.end(sending);      
+      }, 1000); //timer
+    break; 
   }
   
   //console.log(request.headers);
 });
+// updates lap records:
 app.post('/updateAll', (request, response) => {
   console.log('update list request received');
   
@@ -99,6 +122,62 @@ app.post('/updateAll', (request, response) => {
   response.end(sending); 
   
 });
+
+// this will be to add champion:
+// '/addChamp';
+app.post('/addChamp', (request, response) => {
+  console.log('add champs');
+  const received = JSON.parse(request.body.MSG);
+  console.log('received new champ: ', received);
+  const theQuery = { name: 'champs'};
+  let champsList = null;
+  let listEntry = null;
+  
+  // a document instance
+  const newChamp = new champsModel({
+    name: received[0].name, 
+    car: received[0].car,
+    colors: received[0].colors
+    });
+ 
+  // save model to database
+  newChamp.save(function (err, champion) {
+    if (err) return console.error(err);
+    console.log(champion.name + " saved to champs collection.");
+  });
+      
+  
+  /*
+  champsModel.find((err, results) => {
+    if (err) console.log(err);
+    console.log('result for champs search: ', results);
+    console.log('champslist', listEntry);
+  });
+  */
+  //console.log('listEntry ', listEntry);
+  /*
+  champsModel.update(theQuery, {
+    champs: listEntry
+  }, (err) => {
+    console.log('champs updated');
+  });
+  */
+  //save model to database
+
+  /* 
+  lapRecordsModel.update(listQuery, {
+    lapRecords: listEntry
+  }, (err, numberAffected, rawResponse) => {
+        console.log("recordList updated"); 
+      }); 
+*/
+  const sending = JSON.stringify('Database updated successfully!');
+  console.log("responding with data ");
+  response.writeHead(200, {'Content-Type': 'text/plain'});
+  response.end(sending); 
+  
+});
+
 // --------------------- LISTEN PORT ---------------------
 
 const listener = app.listen(process.env.PORT, () => {

@@ -33,7 +33,7 @@ const vehicles = [
 const chassises = [
   {name: 'Rond Comet', weight: 10, armour: 5, durability: 8, cost: 200,
     pieces: {
-      hull: {name: 'hull', x: 30, y: 500, h: 12, w: 37, color: 'crimson'},
+      hull: {name: 'hull', x: 10, y: 450, h: 12, w: 37, color: 'crimson'},
       leftFrontWindow: {name: 'leftFrontWindow', color: 'lightBlue', h: 1},
       rightFrontWindow: {name: 'rightFrontWindow', color: 'lightBlue', h: 1},
       frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 1.5},
@@ -45,7 +45,7 @@ const chassises = [
   },
   {name: 'Rond Comet lite', weight: 9, armour: 4, durability: 9, cost: 350,
     pieces: {
-      hull: {name: 'hull', x: 30, y: 500, h: 12, w: 37, color: 'crimson'},
+      hull: {name: 'hull', x: 10, y: 450, h: 12, w: 37, color: 'crimson'},
       leftFrontWindow: {name: 'leftFrontWindow', color: 'lightBlue', h: 1},
       rightFrontWindow: {name: 'rightFrontWindow', color: 'lightBlue', h: 1},
       frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 1.5},
@@ -58,7 +58,7 @@ const chassises = [
   },
   {name: 'Zermeces standard', weight: 5, armour: 1, durability: 9, cost: 270,
     pieces: {
-      hull: {name: 'hull', x: 30, y: 500, h: 10, w: 30, color: 'white'},
+      hull: {name: 'hull', x: 10, y: 450, h: 10, w: 30, color: 'white'},
       leftFrontWindow: {name: 'leftFrontWindow', color: 'lightBlue', h: 1},
       rightFrontWindow: {name: 'rightFrontWindow', color: 'lightBlue', h: 1},
       frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 1.5},
@@ -70,7 +70,7 @@ const chassises = [
   },
   {name: 'Enzolago', weight: 5, armour: 1, durability: 9, cost: 270,
     pieces: {
-      hull: {name: 'hull', x: 30, y: 500, h: 13, w: 30, color: 'red'},
+      hull: {name: 'hull', x: 10, y: 450, h: 13, w: 30, color: 'red'},
       leftFrontWindow: {name: 'leftFrontWindow', color: 'lightBlue', h: 1},
       rightFrontWindow: {name: 'rightFrontWindow', color: 'lightBlue', h: 1},
       frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 2.5},
@@ -82,7 +82,7 @@ const chassises = [
   },
   {name: 'Lion 205S', weight: 2, armour: 1, durability: 7, cost: 50,
     pieces: {
-      hull: {name: 'hull', x: 30, y: 500, h: 10, w: 25, color: 'black'},
+      hull: {name: 'hull', x: 10, y: 450, h: 10, w: 25, color: 'black'},
       leftFrontWindow: {name: 'leftFrontWindow', color: 'lightBlue', h: 1},
       rightFrontWindow: {name: 'rightFrontWindow', color: 'lightBlue', h: 1},
       frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 1.5},
@@ -94,7 +94,7 @@ const chassises = [
   },
   {name: 'Juggernaut XL', weight: 16, armour: 10, durability: 14, cost: 70,
     pieces: {
-      hull: {name: 'hull', x: 30, y: 500, h: 16, w: 45, color: 'darkGreen'},
+      hull: {name: 'hull', x: 10, y: 450, h: 16, w: 45, color: 'darkGreen'},
       frontWindow: {name: 'frontWindow', color: 'lightBlue', w: 1.5}
     },
    drawPoint: {x: 1.7, y: -1.5} // {x: -(partsToPaint.hull.w/1.5), y: -(partsToPaint.hull.h/1.5)}

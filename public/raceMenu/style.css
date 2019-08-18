@@ -68,15 +68,12 @@ td {
 }
 #idForm { 
   grid-area: theForm;
-  border-style: solid;
 }
 #lapRecords { 
   grid-area: theRecords;
-  border-style: solid;
 }
 #theFoot {
   grid-area: theFooter;
-  border-style: solid;
 }
 
 .divs {
@@ -85,41 +82,56 @@ td {
 }
 
 /* grid 2, where are lap records*/
-/*
-          <div id= "finseFactory"></div>
-          <div id= "cityCentre"></div>
-          <div id= "lasCurvas"></div>
-          <div id= "alleys"></div>
-          <div id= "champs"></div>
-*/
 #container2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-areas: 
-      'fFactory cCentre'
-      'lCurvas alleys'
-      'champs champs';
-      grid-gap: 1px; 
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: 
+    'fFactory cCentre'
+    'lCurvas alleys'
+    'champs champs';
+  grid-gap: 1px; 
 }
 #finseFactory {
   grid-area: fFactory;
-  border-style: solid;
 }
 #cityCentre {
   grid-area: cCentre;
-  border-style: solid;
 }
 #lasCurvas {
   grid-area: lCurvas;
-  border-style: solid;
 }
 #alleys {
   grid-area: alleys;
-  border-style: solid;
 }
 #champs {
   grid-area: champs;
-  border-style: solid;
+  border-top: solid;
+  border-color: gray;
+}
+/* grid 3 where are info place and form*/
+#container3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    'form helps';
+  grid-gap: 1px;
+}
+#menus {
+  grid-area: form;
 }
 
+#helps{
+  grid-area: helps;
+  border-left: solid;
+  border-right: solid;
+  border-color: gray;
+  padding: 10px;
+  font-size: 10px;
+}
+
+/* this can be enabled if need to test something*/
+#quickButton {
+  display: none;
+}

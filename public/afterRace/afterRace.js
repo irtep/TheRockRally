@@ -106,6 +106,12 @@ window.onload = (()=> {
           if (car.driver === gameObject.race.results[i].driver) {
             
             car.points += pointsGranted;   
+            // to test champion adder:
+            /*
+            if (car.driver === 'superTester') {
+              car.points += 11;
+            }
+            */
           }
         }
       }
@@ -141,9 +147,19 @@ window.onload = (()=> {
     gameObject.race.currentRace++;
     } else {
       // congratulate for completing the season.
-      
       raceTypeSummary = 'Congratulations for completing the season!';
-      // show made achievements
+      // add champ if champ
+      if (gameObject.car.driver === gameObject.standings[0].driver) {
+          
+        raceTypeSummary += 'You are the champion!';
+        /*
+        // add champ to test:
+        //const testChamp = [{name: 'kek', car: 'ferrari', colors: ['white', 'green']}];
+        //addChampion(testChamp);
+        */
+        const newChamp = [{name: gameObject.car.driver, car: gameObject.car.name, colors: [gameObject.car.color, gameObject.car.colo2]}];
+        addChampion(newChamp);
+      }
     }
   }
   

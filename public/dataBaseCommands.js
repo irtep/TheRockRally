@@ -21,11 +21,30 @@ function compareLaps(lap1, lap2){
   }
 }
 
+// add champion
+function addChampion(who) {
+  const http = new XMLHttpRequest();
+  const url = '/addChamp';
+  const champ = who;
+  const champJSON = JSON.stringify(who);
+  let params = 'MSG='+ champJSON;
+  
+  http.open('POST', url, true);
+  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+  http.onreadystatechange = () => {
+    
+    console.log('sending champ: ', params);
+  }
+  http.send(params); 
+}
+
 // fetch data from db and add to main page:
-function showListFromDB() {
+function showListFromDB(onlyChamps) { // param true if want to see champions, false for lap records
   const http = new XMLHttpRequest();
   const url = '/showAll';
-  const params = 'MSG=show';
+  let params = 'MSG=show';
+  onlyChamps ? params = 'MSG=showChamps' : console.log('lapRecords');
   
   http.open('POST', url, true);
   http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -34,29 +53,39 @@ function showListFromDB() {
     
     if (http.readyState == 4 && http.status == 200) {
       const records = JSON.parse(http.responseText);
-      const lapData = records[0].lapRecords;
-      const track1 = document.getElementById('finseFactory');
-      const track2 = document.getElementById('cityCentre');
-      const track3 = document.getElementById('lasCurvas');
-      const track4 = document.getElementById('alleys');
-      const allTracks = [track1, track2, track3, track4];
-      const champs = document.getElementById('champs');
       
-      console.log("update ready!: ", records[0].lapRecords);
-      
-      allTracks.forEach( tracki => {tracki.innerHTML += '<br>';});
-      // write it..
-      for (let i = 0; i < lapData.length; i++) {
-        
-        for (let ii = 0; ii < lapData[i].times.length; ii++) {
-          const info = lapData[i].times[ii];
-          const position = ii + 1;
+      if (onlyChamps) {
+        const champs = document.getElementById('champs');
+        //const champEntries = records.champs;
+        console.log('onyC ', records);
+        records.forEach( campeon => {
           
-          allTracks[i].innerHTML += '<b>'+position+'.<span class= "resultColors" style= "color: '+info.colors[0]+'; background-color: '+info.colors[1]+'">' + info.driver+
-          '</b></span>. Car: '+ info.car + ' Time: '+ info.bestLap[0]+ ':'+ info.bestLap[1]+ ':'+ info.bestLap[2]+ ' <br>';
+          champs.innerHTML += '<span class= "resultColors" style= "color: '+campeon.colors[0]+'; background-color: '+campeon.colors[1]+'">'+
+            campeon.name +'. driving: '+ campeon.car + '</span>.   ';
+        }); 
+      } else {
+        const lapData = records[0].lapRecords;
+        const track1 = document.getElementById('finseFactory');
+        const track2 = document.getElementById('cityCentre');
+        const track3 = document.getElementById('lasCurvas');
+        const track4 = document.getElementById('alleys');
+        const allTracks = [track1, track2, track3, track4];
+
+        console.log("update ready!: ", records[0].lapRecords);
+
+        allTracks.forEach( tracki => {tracki.innerHTML += '<br>';});
+        // write it..
+        for (let i = 0; i < lapData.length; i++) {
+
+          for (let ii = 0; ii < lapData[i].times.length; ii++) {
+            const info = lapData[i].times[ii];
+            const position = ii + 1;
+
+            allTracks[i].innerHTML += '<b>'+position+'.<span class= "resultColors" style= "color: '+info.colors[0]+'; background-color: '+info.colors[1]+'">' + info.driver+
+            '</b></span>. Car: '+ info.car + ' Time: '+ info.bestLap[0]+ ':'+ info.bestLap[1]+ ':'+ info.bestLap[2]+ ' <br>';
+          }
         }
       }
-
     }
   }
   http.send(params); 
@@ -78,37 +107,6 @@ function updateListsFromDB(){
   let bestLap = [30, 10, 10];
   console.log("updating from DB");
   
-  // find best lap:
-  for (let i = 0; i < lapTimes.length; i++) {
-    
-    if (lapTimes[i].minutes < bestLap[0]) {
-      bestLap[0] = lapTimes[i].minutes; bestLap[1] = lapTimes[i].seconds; bestLap[2] = lapTimes[i].milliseconds;
-    }
-    if (lapTimes[i].seconds < bestLap[1]) {
-      bestLap[0] = lapTimes[i].minutes; bestLap[1] = lapTimes[i].seconds; bestLap[2] = lapTimes[i].milliseconds;
-    }
-    if (lapTimes[i].milliseconds < bestLap[2]) {
-      bestLap[0] = lapTimes[i].minutes; bestLap[1] = lapTimes[i].seconds; bestLap[2] = lapTimes[i].milliseconds;
-    }
-    /*
-    bug: from this list
-0:11:39
-0:12:15
-0:13:80
-
-took 0:12:15 to compare.
-
-0:6:71
-0:7:64
-0:6:83 <-
-
-0:10:8
-0:9:91
-0:10:24 <-
-
-    */
-  }
-  
   http.open('POST', url, true);
   http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
@@ -120,6 +118,13 @@ took 0:12:15 to compare.
       console.log("update ready!: ", records[0].lapRecords);
       const currentRace = records[0].lapRecords.filter( circuit => circuit.name === currentCircuit);
       console.log('cR ', currentRace);
+      
+      lapTimes.forEach( time => {
+        const timeEntry = [time.minutes, time.seconds, time.milliseconds];
+        const timeIsBetter = compareLaps(timeEntry, bestLap);
+        
+        timeIsBetter ? bestLap = timeEntry : console.log('no change');
+      });
       
       // check if players time is top3 time:
       for (let i = 0; i < currentRace[0].times.length; i++) {
