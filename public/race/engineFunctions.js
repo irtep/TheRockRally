@@ -166,7 +166,7 @@ function createNewCar(newCar, playerCar){
   newCar = updateCar(newCar);
   
   // if not first car, lets change x and y:
-  playerCar ? newCar.pieces.hull.x = 10 : newCar.pieces.hull.x += gameObject.race.cars.length * 100; 
+  playerCar ? newCar.pieces.hull.x = 10 : newCar.pieces.hull.y += (30 * gameObject.race.cars.length);
   
   // add statuses.dodgeLeft and statuses.dodgeRight for ai purposes also aiCheckPoints
   if (playerCar !== true) {
