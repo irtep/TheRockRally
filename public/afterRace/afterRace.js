@@ -1,7 +1,9 @@
 let gameObject = null;
 
 function goToStart() {
-  
+  const driverInfo = {what: 'savedID', name: gameObject.car.driver, color1: gameObject.car.color, color2: gameObject.car.color2};
+  // save name, car, color1 and color 2
+  localStorage.setItem('driverInfo', JSON.stringify(driverInfo)); 
   window.location = "https://driveorlose.glitch.me/";
 }
 
