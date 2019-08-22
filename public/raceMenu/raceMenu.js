@@ -23,7 +23,7 @@ function typeChanged() {
   const raceType= getRadioVal(document.getElementById('typeOfRace'), 'raceType');
   const selectCircuitForm = document.getElementById('selectCircuitForm');
   //console.log('type changed!', selectCircuitForm.selected);
-  console.log('type changed!', raceType);
+  //console.log('type changed!', raceType);
   /*
   
 raceMenu.js:25 type changed! FullRacingSeason
@@ -227,7 +227,25 @@ colors.forEach( (item) => {
 //  -------- ONLOAD:  ------------
 window.onload = (()=> { 
   const insideFoot = document.getElementById('insideFoot');
+  const nameF = document.getElementById('yourName');
+  const colorF = document.getElementById('selectColor');
+  const colorF2 = document.getElementById('selectColor2');
+  /*
+  const nameF = document.getElementById('yourName');
+  const carF = document.getElementById('selectCar');
+  const circuitF = document.getElementById('selectCircuit');
+  const colorF = document.getElementById('selectColor');
+  const colorF2 = document.getElementById('selectColor2');
+  yourName
+
+selectCar
+selectColor
+selectColor2dI  
+	.	Object
+	.	color1: "white" color2: "deepSkyBlue" name: "Pete" what: "savedID" __proto__: Object 
   
+document.getElementById("Mobility").selectedIndex = 12; //Option 10
+  */
   // Table to show car details:
   
   vehicles.forEach( (vehicle) => {
@@ -251,6 +269,14 @@ window.onload = (()=> {
   showListFromDB(true);  // top drivers
   // add them to their place.
   
+  // get possible saved driver info
+  const driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
+  //console.log('dI ', driverInfo);
+  if (driverInfo !== null) {
+    nameF.value = driverInfo.name;
+    colorF.value = driverInfo.color1;
+    colorF2.value = driverInfo.color2;
+  }
   
 });
 
