@@ -63,6 +63,15 @@ function showListFromDB(onlyChamps) { // param true if want to see champions, fa
           champs.innerHTML += '<span class= "resultColors" style= "color: '+campeon.colors[0]+'; background-color: '+campeon.colors[1]+'">'+
             campeon.name +'. driving: '+ campeon.car + '</span>.   ';
         }); 
+        /*
+        i'll change this to "support" better multichampions.. records looks like this:
+        	.	Array(3)
+	.	0:
+	.	car: "Zermeces E" colors: (2) ["crimson", "gold"] name: "Pete" __v: 0 _id: "5d5906edb21f330074d5a568" __proto__: Object 
+	.	1: {colors: Array(2), _id: "5d5c3001ab7e1d00743a0651", name: "_Janne", car: "Zermeces E", __v: 0} 
+  2: {colors: Array(2), _id: "5d5ee3b7971c9f0076549db7", name: "Pete", car: "Rond Comet R", __v: 0} 
+  length: 3 
+        */
       } else {
         const lapData = records[0].lapRecords;
         const track1 = document.getElementById('finseFactory');

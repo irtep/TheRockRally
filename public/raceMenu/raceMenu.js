@@ -22,16 +22,7 @@ let gameObject = {
 function typeChanged() {
   const raceType= getRadioVal(document.getElementById('typeOfRace'), 'raceType');
   const selectCircuitForm = document.getElementById('selectCircuitForm');
-  //console.log('type changed!', selectCircuitForm.selected);
-  //console.log('type changed!', raceType);
-  /*
   
-raceMenu.js:25 type changed! FullRacingSeason
-raceMenu.js:25 type changed! singleRace
-raceMenu.js:25 type changed! LapRecordHunt
-var element = document.createElement('select');
-element.style.width = "100px";
-  */
   switch (raceType) {
       
     case 'LapRecordHunt':
@@ -96,10 +87,9 @@ function checkFields() {
   const circuitF = document.getElementById('selectCircuit');
   const colorF = document.getElementById('selectColor');
   const colorF2 = document.getElementById('selectColor2');
-  //const carInfo = document.getElementById('carInfo');
+  
               //name,  car,   color   color2
   let fields = [false, false, false, false];
-  
   
   if (circuitF.value !== 'Choose a circuit') {
   
@@ -120,7 +110,7 @@ function checkFields() {
     gameObject.car.name = carF.value;
     
     // create selected car for to show it
-    /* not showing selected car now
+    /* not showing selected car now, but maybe this can be used for something in later versions..
     //carForShow = createNewCar(gameObject.car, true);
     //carForShow.x = 20; carForShow.y = 70;
     const carDesc = vehicles.filter((machine) => machine.name === carF.value);
@@ -230,53 +220,25 @@ window.onload = (()=> {
   const nameF = document.getElementById('yourName');
   const colorF = document.getElementById('selectColor');
   const colorF2 = document.getElementById('selectColor2');
-  /*
-  const nameF = document.getElementById('yourName');
-  const carF = document.getElementById('selectCar');
-  const circuitF = document.getElementById('selectCircuit');
-  const colorF = document.getElementById('selectColor');
-  const colorF2 = document.getElementById('selectColor2');
-  yourName
-
-selectCar
-selectColor
-selectColor2dI  
-	.	Object
-	.	color1: "white" color2: "deepSkyBlue" name: "Pete" what: "savedID" __proto__: Object 
   
-document.getElementById("Mobility").selectedIndex = 12; //Option 10
-  */
   // Table to show car details:
-  
   vehicles.forEach( (vehicle) => {
     insideFoot.innerHTML += '<td><b>' +vehicle.name +'</b><br>'+ vehicle.stats + '<br><br>' + vehicle.description +'</td>';
   }); 
   
-  
-  // show car details below:
-  /*
- name: 'Ferrgini Enzolago', chassis: 'Enzolago', motor: 'Ferrgini V12', tires: 'Rockstone racing', armour: 'Defender Lite',
-  description: 'Latest masterpiece from italian supercar legend. This fast car is extremely difficult to drive, so be careful, champ!.',
-    }
-  */
-  
   // fetch top drivers and lap records entries from database.
   showListFromDB(false); // lap records
-  
-  // add champ to test:
-  //const testChamp = [{name: 'kek', car: 'ferrari', colors: ['white', 'green']}];
-  //addChampion(testChamp);
   showListFromDB(true);  // top drivers
   // add them to their place.
   
   // get possible saved driver info
   const driverInfo = JSON.parse(localStorage.getItem('driverInfo'));
-  //console.log('dI ', driverInfo);
+  
   if (driverInfo !== null) {
+    
     nameF.value = driverInfo.name;
     colorF.value = driverInfo.color1;
     colorF2.value = driverInfo.color2;
   }
-  
 });
 
