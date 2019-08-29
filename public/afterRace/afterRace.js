@@ -151,7 +151,7 @@ window.onload = (()=> {
       // congratulate for completing the season.
       raceTypeSummary = 'Congratulations for completing the season!';
       // add champ if champ
-      if (gameObject.car.driver === gameObject.race.cars[0].driver) {
+      if (gameObject.car.driver === gameObject.race.cars[0].driver && gameObject.standings[0].points > 0) {
           
         raceTypeSummary += 'You are the champion!';
         /*

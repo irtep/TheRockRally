@@ -1,3 +1,14 @@
+function findIndex(toFind, source) {
+  //console.log('cheking champ: ', toFind, source);
+  for (let i = 0; i < source.length; i++) {
+    //console.log('comparing: ', toFind, source[i].name);
+    if (toFind === source[i].name) {
+   //   console.log('returning: ', i);
+      return i;
+    }
+  }
+}
+
 function compareLaps(lap1, lap2){
   let lap1IsBetter = true;
   
@@ -57,21 +68,76 @@ function showListFromDB(onlyChamps) { // param true if want to see champions, fa
       if (onlyChamps) {
         const champs = document.getElementById('champs');
         //const champEntries = records.champs;
+        // continue here:
+        let champsList = [];
         console.log('onyC ', records);
+        
         records.forEach( campeon => {
-          
+          // continue with this...
+          if (champsList.length === 0) {
+            // if first of a list
+            champsList.push(campeon);
+            const carOfEntry = JSON.parse(JSON.stringify(champsList[0].car));
+            let testArray = null
+            champsList[0].car = [{name: carOfEntry, color1: champsList[0].colors[0], color2: champsList[0].colors[1]}];
+            //console.log('ta', testArray);
+          } else {
+            const multipChamps = champsList.filter( champ => champ.name === campeon.name);
+            //console.log('multiChamps: ', multipChamps);
+            if (multipChamps.length > 0) {
+              const indexOfChamp = findIndex(campeon.name, champsList);
+              console.log('found multichamp ', campeon.car);
+              const carEntry = {name: campeon.car, color1: campeon.colors[0], color2: campeon.colors[1]};
+              //champsList[indexOfChamp].extraCar = carEntry;
+              
+              champsList[indexOfChamp].car.push(carEntry);
+              /*
+              console.log('found multichamp: ', multipChamps);
+              console.log('champslist: ', champsList);
+              */
+            } else {
+              
+              //console.log('iOc', indexOfChamp);
+              // carEntry here too.
+              const carOfEntry = JSON.parse(JSON.stringify(campeon.car));
+              champsList.push(campeon);
+              const indexOfChamp = findIndex(campeon.name, champsList);
+              console.log('c.List ', champsList);
+              champsList[indexOfChamp].car = [{name: carOfEntry, color1: champsList[indexOfChamp].colors[0], color2: champsList[indexOfChamp].colors[1]}];
+            }
+          }
+          //*/
+          /*
           champs.innerHTML += '<span class= "resultColors" style= "color: '+campeon.colors[0]+'; background-color: '+campeon.colors[1]+'">'+
             campeon.name +'. driving: '+ campeon.car + '</span>.   ';
+*/
         }); 
-        /*
-        i'll change this to "support" better multichampions.. records looks like this:
-        	.	Array(3)
-	.	0:
-	.	car: "Zermeces E" colors: (2) ["crimson", "gold"] name: "Pete" __v: 0 _id: "5d5906edb21f330074d5a568" __proto__: Object 
-	.	1: {colors: Array(2), _id: "5d5c3001ab7e1d00743a0651", name: "_Janne", car: "Zermeces E", __v: 0} 
-  2: {colors: Array(2), _id: "5d5ee3b7971c9f0076549db7", name: "Pete", car: "Rond Comet R", __v: 0} 
-  length: 3 
-        */
+        
+        champsList.forEach( campeon => {
+          const championships = campeon.car.length;
+          let timesOrTime = 'time';
+          let carOrCars = 'car';
+          let cars = '<span class= "resultColors" style= "color: '+campeon.car[0].color1+'; background-color: '+
+          campeon.car[0].color2+'">'+campeon.car[0].name+ '</span>';
+          
+          // if multichampion:
+          if (championships > 1) {
+            
+            timesOrTime = 'times'; 
+            carOrCars = 'cars'
+            
+            for (let i = 1; i < campeon.car.length; i++ ) {
+              const writeCar = '<span class= "resultColors" style= "color: '+
+              campeon.car[i].color1+'; background-color: '+
+              campeon.car[i].color2+'">'+campeon.car[i].name+ '</span>';
+              
+              cars += ', ' + writeCar;
+            }
+          }
+          
+          champs.innerHTML += championships+ ' ' +timesOrTime+ ' champion: <b>'+ campeon.name + '</b>. ' + 
+          carOrCars+ ': '+ cars + '.<br>';
+        });
       } else {
         const lapData = records[0].lapRecords;
         const track1 = document.getElementById('finseFactory');
