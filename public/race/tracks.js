@@ -31,7 +31,7 @@ const tracks = [
     new Arrow(240, 200, 340, 210, 10)
   ],
   checkPoints: [ // x, y, w, h, order number
-    new CheckPoint(640, 430, 180, 160, 1),
+    new CheckPoint(640, 400, 190, 160, 1),
     new CheckPoint(700, 35, 180, 60, 2),
     new CheckPoint(10, 430, 180, 60, 3)
   ], 
@@ -194,7 +194,7 @@ const tracks = [
     new Arrow(240, 200, 340, 210, 10)
   ],
   checkPoints: [ // x, y, w, h, order number
-    new CheckPoint(650, 430, 180, 160, 1),
+    new CheckPoint(650, 350, 300, 160, 1),
     new CheckPoint(550, 205, 180, 60, 2),
     new CheckPoint(10, 350, 380, 60, 3)
   ], 

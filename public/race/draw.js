@@ -251,7 +251,7 @@ function paintAll(race) {
     }
   });
   // paint checkpoints. only on design/test/new trackmaking purpose will be visibles
-  /*
+   /*
   const paintCps = race.track[0].checkPoints.map( (cP) => {
        
     ctx.beginPath();
