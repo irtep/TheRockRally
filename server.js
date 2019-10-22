@@ -42,8 +42,7 @@ app.get("/", (request, response) => {
   console.log("get received");
   response.sendFile(__dirname + '/views/raceMenu/raceMenu.html');
 });
-/* res.sendFile(path.join(__dirname, '../public', 'index1.html')); */
-/* response.sendFile(__dirname + '/views/race/race.html'); */
+
 app.get("/race", (request, response) => {
   console.log("get received race");
   response.sendFile(__dirname + '/views/race/race.html');
@@ -58,46 +57,55 @@ app.get("/afterRace", (request, response) => {
 app.post('/showAll', (request, response) => {
   
   const received = request.body.MSG;
-  let topLists;
-  let responding;
+  let responding = null;
   
   console.log('Post with showAll received: ', received);
   switch (received){
     case ('show'):
-      lapRecordsModel.find((err, results) => {
-      if (err) console.log(err);
-      topLists = results;   
-        console.log('result for toplist search: ', results);
+      const newDbConnect = new Promise( (resolve, reject) => {
+      
+        lapRecordsModel.find((err, results) => {
+          
+          if (results !== null) {
+            
+            resolve(results);
+          } 
+        });  
       });
-      setTimeout(() => {  // timed so that there is time to add the data
-        responding = topLists;  
+      
+      newDbConnect.then( (results) => {
+        
+        responding = results;
         const sending = JSON.stringify(responding);
         console.log("responding with data ");
         console.log('lists now: ', responding);
         response.writeHead(200, {'Content-Type': 'text/plain'});
-        response.end(sending);      
-      }, 1000); //timer
+        response.end(sending); 
+      });
     break;  
     case ('showChamps'):
-      var resp = null;
-      champsModel.find((err, results) => {
-
-      if (err) console.log(err);
-        console.log('result for champs search at show champs: ', results);
-        resp = results;  
+      const newDbConnect2 = new Promise( (resolve, reject) => {
+      
+        champsModel.find((err, results) => {
+          
+          if (results !== null) {
+            
+            resolve(results);
+          } 
+        });  
       });
       
-      setTimeout(() => {  // timed so that there is time to add the data
-        const sending = JSON.stringify(resp);
+      newDbConnect2.then( (results) => {
+        
+        responding = results;
+        const sending = JSON.stringify(responding);
         console.log("responding with data ");
         console.log('lists now: ', responding);
         response.writeHead(200, {'Content-Type': 'text/plain'});
-        response.end(sending);      
-      }, 1000); //timer
+        response.end(sending); 
+      });
     break; 
   }
-  
-  //console.log(request.headers);
 });
 // updates lap records:
 app.post('/updateAll', (request, response) => {
@@ -124,7 +132,6 @@ app.post('/updateAll', (request, response) => {
 });
 
 // this will be to add champion:
-// '/addChamp';
 app.post('/addChamp', (request, response) => {
   console.log('add champs');
   const received = JSON.parse(request.body.MSG);
@@ -146,31 +153,6 @@ app.post('/addChamp', (request, response) => {
     console.log(champion.name + " saved to champs collection.");
   });
       
-  
-  /*
-  champsModel.find((err, results) => {
-    if (err) console.log(err);
-    console.log('result for champs search: ', results);
-    console.log('champslist', listEntry);
-  });
-  */
-  //console.log('listEntry ', listEntry);
-  /*
-  champsModel.update(theQuery, {
-    champs: listEntry
-  }, (err) => {
-    console.log('champs updated');
-  });
-  */
-  //save model to database
-
-  /* 
-  lapRecordsModel.update(listQuery, {
-    lapRecords: listEntry
-  }, (err, numberAffected, rawResponse) => {
-        console.log("recordList updated"); 
-      }); 
-*/
   const sending = JSON.stringify('Database updated successfully!');
   console.log("responding with data ");
   response.writeHead(200, {'Content-Type': 'text/plain'});
