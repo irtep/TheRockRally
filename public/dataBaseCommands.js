@@ -45,7 +45,7 @@ function addChampion(who) {
 
   http.onreadystatechange = () => {
     
-    console.log('sending champ: ', params);
+    //console.log('sending champ: ', params);
   }
   http.send(params); 
 }
@@ -86,7 +86,7 @@ function showListFromDB(onlyChamps) { // param true if want to see champions, fa
             //console.log('multiChamps: ', multipChamps);
             if (multipChamps.length > 0) {
               const indexOfChamp = findIndex(campeon.name, champsList);
-              console.log('found multichamp ', campeon.car);
+              //console.log('found multichamp ', campeon.car);
               const carEntry = {name: campeon.car, color1: campeon.colors[0], color2: campeon.colors[1]};
               //champsList[indexOfChamp].extraCar = carEntry;
               
@@ -102,7 +102,7 @@ function showListFromDB(onlyChamps) { // param true if want to see champions, fa
               const carOfEntry = JSON.parse(JSON.stringify(campeon.car));
               champsList.push(campeon);
               const indexOfChamp = findIndex(campeon.name, champsList);
-              console.log('c.List ', champsList);
+              //console.log('c.List ', champsList);
               champsList[indexOfChamp].car = [{name: carOfEntry, color1: champsList[indexOfChamp].colors[0], color2: champsList[indexOfChamp].colors[1]}];
             }
           }
@@ -146,7 +146,7 @@ function showListFromDB(onlyChamps) { // param true if want to see champions, fa
         const track4 = document.getElementById('alleys');
         const allTracks = [track1, track2, track3, track4];
 
-        console.log("update ready!: ", records[0].lapRecords);
+        //console.log("update ready!: ", records[0].lapRecords);
 
         allTracks.forEach( tracki => {tracki.innerHTML += '<br>';});
         // write it..
@@ -180,7 +180,7 @@ function updateListsFromDB(){
   const currentCircuit = gameObject.race.track[0].name;
   const lapTimes = gameObject.race.lastLaps;
   let bestLap = [30, 10, 10];
-  console.log("updating from DB");
+  //console.log("updating from DB");
   
   http.open('POST', url, true);
   http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -190,9 +190,9 @@ function updateListsFromDB(){
     if (http.readyState == 4 && http.status == 200) {
       const records = JSON.parse(http.responseText);
       //const forShow1 = sahaList.join('<br>');
-      console.log("update ready!: ", records[0].lapRecords);
+      //console.log("update ready!: ", records[0].lapRecords);
       const currentRace = records[0].lapRecords.filter( circuit => circuit.name === currentCircuit);
-      console.log('cR ', currentRace);
+      //console.log('cR ', currentRace);
       
       lapTimes.forEach( time => {
         const timeEntry = [time.minutes, time.seconds, time.milliseconds];
@@ -205,8 +205,8 @@ function updateListsFromDB(){
       for (let i = 0; i < currentRace[0].times.length; i++) {
         
         const newIsBetter = compareLaps(bestLap, currentRace[0].times[i].bestLap);
-        console.log('comparing ', bestLap, currentRace[0].times[i].bestLap);
-        newIsBetter ? console.log('faster'): console.log('slower');
+        //console.log('comparing ', bestLap, currentRace[0].times[i].bestLap);
+        //newIsBetter ? console.log('faster'): console.log('slower');
           
         const playerEntry = {
           driver: gameObject.car.driver,
@@ -226,25 +226,10 @@ function updateListsFromDB(){
           if (currentRace[0].times.length > 3) { currentRace[0].times.pop(); }
           updateListsInDB(records);
           // return as no more loops are wished
-          console.log('times now: ', currentRace[0].times);
+          //console.log('times now: ', currentRace[0].times);
           return;
-        } /*else {
-        // no new top3 time, lets push it anyways, as if not enough laptimes there.
-          currentRace[0].times.push(playerEntry);
-        }*/
-        
+        } 
       }
-      
-      // .pop removes at end of array
-      // unshift adds to start
-      
-      //armiesInDb = armyList[0].armyList;
-      //feedback.innerHTML = "Received data from database successfully.";
-      /*
-      setTimeout(() => {
-        clearFeedback();
-      }, 1000);
-      */
     }
   }
   http.send(params); 
@@ -266,12 +251,6 @@ function updateListsInDB(updatedLists){
     if(http.readyState == 4 && http.status == 200) {
       
       console.log(http.responseText);
-     // feedback.innerHTML = http.responseText;
-      /*
-      setTimeout(() => {
-        clearFeedback();
-      }, 1000);
-      */
     }
   }
   http.send(params);
