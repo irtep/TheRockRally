@@ -1,4 +1,9 @@
 /*
+Bugs:
+
+- for some reason, once i tried to play i got error that can't find race of undefined in switch at engineFunctions...
+need to investigate if i get that bug again... 13jan19
+
 
 Continue: 
   
